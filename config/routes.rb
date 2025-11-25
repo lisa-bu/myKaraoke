@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
-    resources :playlists_songs, only: [:new, :create]
+    resources :playlist_songs, only: [:new, :create]
   end
 
-  resources :playlists_songs, only: [:destroy]
+  resources :playlist_songs, only: [:destroy]
 
   resources :songs, only: [:show] do
     resources :difficulty_ratings, only: [:create]

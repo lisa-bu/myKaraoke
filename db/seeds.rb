@@ -31,21 +31,38 @@ haris  = User.create!(name:'haris', email:"haris@email.com", password: "123456!"
 users = [alesya, matt, tan, haris]
 puts "Created #{users.count} users"
 
-# Faker song
-puts "Creating fake songs with Faker..."
 
-songs = []
-100.times do |i|
-  song = Song.create!(
-    name: Faker::Music::RockBand.song,
-    artist: Faker::Music.band,
-    ISRC: Faker::Alphanumeric.alphanumeric(number: 12).upcase,
-    availability: ['spotify'].sample,
-    difficulty_average: 0.0
-  )
-  songs << song
-  puts "Created song #{i + 1}: #{song.name} by #{song.artist}"
+puts "Fetching songs from Manana Karaoke API..."
+
+song_titles = ["love", "missing", "summer", "winter", "dream"]
+
+songs = song_titles.map do |song|
+  url = "https://api.manana.kr/karaoke/song/#{song}.json"
+  data = JSON.parse(URI.open(url).read)
+  data
 end
+
+english_songs = songs.flatten.select do |song|
+  title = song["title"]
+  singer = song["singer"]
+  isrc = song["no"]
+  brand = song["brand"]
+
+  title.is_a?(String) && singer.is_a?(String) &&
+    isrc.present? && brand.present? &&
+    title.match?(/\A[\p{Alnum}\p{Space}\p{Punct}]+\z/) &&
+    singer.match?(/\A[\p{Alnum}\p{Space}\p{Punct}]+\z/)
+end
+
+songs = english_songs.map do |song_data|
+  Song.find_or_create_by!(ISRC: song_data["no"]) do |song|
+    song.name = song_data["title"]
+    song.artist = song_data["singer"]
+    song.availability = song_data["brand"]
+    song.difficulty_average = 0.0
+  end
+end
+
 
 # create playlist
 puts "Creating playlists..."

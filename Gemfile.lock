@@ -88,6 +88,8 @@ GEM
       mutex_m
       securerandom (>= 0.3)
       tzinfo (~> 2.0)
+    acts_as_favoritor (6.0.2)
+      activerecord (>= 5.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     autoprefixer-rails (10.4.21.0)
@@ -133,6 +135,8 @@ GEM
     erb (6.0.0)
     erubi (1.13.1)
     execjs (2.10.0)
+    faker (3.5.2)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-aarch64-linux-musl)
     ffi (1.17.2-arm-linux-gnu)
@@ -336,6 +340,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  acts_as_favoritor
   autoprefixer-rails
   bootsnap
   bootstrap (~> 5.3)
@@ -343,6 +348,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  faker
   font-awesome-sass (~> 6.1)
   importmap-rails
   jbuilder

@@ -9,73 +9,55 @@
 #   end
 require "open-uri"
 require "json"
+require "faker"
 
 puts "Cleaning database..."
 
 Friendship.destroy_all
 DifficultyRating.destroy_all
+PlaylistSong.destroy_all
 Playlist.destroy_all
 Song.destroy_all
 User.destroy_all
-PlaylistSong.destroy_all
+
 
 puts 'Creating users...'
 
-alesya = User.create!(nickname: "lisa",  email:"alesya@email.com", password: "123456!")
-matt   = User.create!(nickname: "matty", email:"matt@email.com",   password: "123456!")
-tan    = User.create!(nickname: "tanty", email:"tan@email.com",    password: "123456!")
-haris  = User.create!(nickname: "harisu",email:"haris@email.com",  password: "123456!")
+alesya = User.create!(name:'alesya' ,email:"alesya@email.com", password: "123456!")
+matt   = User.create!(name:'matt', email:"matt@email.com", password: "123456!")
+tan    = User.create!(name:'tan', email:"tan@email.com", password: "123456!")
+haris  = User.create!(name:'haris', email:"haris@email.com", password: "123456!")
 
 users = [alesya, matt, tan, haris]
 puts "Created #{users.count} users"
 
-# API
-
-puts "Fetching songs from API..."
+# Faker song
+puts "Creating fake songs with Faker..."
 
 songs = []
-song_titles.each do |title|
-  begin
-    url = "https://api.manana.kr/karaoke/song/#{URI.encode_www_form_component(title)}.json"
-    response   = URI.open(url).read
-    songs_data = JSON.parse(response)
-
-    if songs_data.is_a?(Array)
-      songs_data.first(3).each do |song_data|
-        song = Song.create!(
-          name:  song_data["title"],
-          artists: song_data["singer"],
-          ISRC: "#{song_data['brand']}-#{song_data['no']}",
-          availability: song_data["brand"],
-          difficulty_average: 0.0
-        )
-        songs << song
-        puts "Created song: #{song.name} by #{song.artists}"
-      end
-    end
-  rescue => e
-    puts "Error fetching '#{title}': #{e.message}"
-  end
-
-  sleep(0.5)
+100.times do |i|
+  song = Song.create!(
+    name: Faker::Music::RockBand.song,
+    artist: Faker::Music.band,
+    ISRC: Faker::Alphanumeric.alphanumeric(number: 12).upcase,
+    availability: ['spotify'].sample,
+    difficulty_average: 0.0
+  )
+  songs << song
+  puts "Created song #{i + 1}: #{song.name} by #{song.artist}"
 end
 
-puts "Created #{songs.count} songs from API"
-
 # create playlist
-
 puts "Creating playlists..."
 
 playlists = users.map do |user|
   Playlist.create!(
-    name: "#{user.nickname}'s playlist",
+    name: "#{user.email.split('@').first.capitalize}'s playlist",
     user: user
   )
 end
 
-
 # fill playlists
-
 puts "Adding songs to playlists..."
 
 playlists.each do |playlist|
@@ -88,15 +70,16 @@ playlists.each do |playlist|
   end
 end
 
-
 # friendship
+puts "Creating friendships..."
 
 Friendship.create!(asker: alesya, receiver: matt)
-Friendship.create!(asker: matt,   receiver: tan)
-Friendship.create!(asker: tan,    receiver: haris)
-Friendship.create!(asker: haris,  receiver: alesya)
+Friendship.create!(asker: matt, receiver: tan)
+Friendship.create!(asker: tan, receiver: haris)
+Friendship.create!(asker: haris, receiver: alesya)
 
 # difficulty rating
+puts "Creating difficulty ratings..."
 
 users.each do |user|
   songs.sample([5, songs.count].min).each do |song|
@@ -113,4 +96,4 @@ songs.each do |song|
   song.update!(difficulty_average: avg || 0.0)
 end
 
-puts "finish"
+puts "Finished!"

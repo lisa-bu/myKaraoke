@@ -75,3 +75,4 @@ group :test do
 end
 
 gem 'acts_as_favoritor'
+gem 'faker'

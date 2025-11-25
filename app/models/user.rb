@@ -21,4 +21,9 @@ class User < ApplicationRecord
            class_name: "Friendship",
            foreign_key: "receiver_id"
 
+           def friends
+             asked_friends + received_friends
+           end
+
+
 end

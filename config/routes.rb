@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  get "service_worker.js", to: "service_worker#service_worker"
-  get "manifest.json", to: "service_worker#manifest"
+  # get "service_worker.js", to: "service_worker#service_worker"
+  # get "manifest.json", to: "service_worker#manifest"
 
   devise_for :users
   root to: "pages#home"

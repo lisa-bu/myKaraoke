@@ -1,1 +1,18 @@
 // Specific CSS for your home-page
+.home-screen {
+  width: 100%;
+  height: 100vh;
+
+  background-image: image-url("kong.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}

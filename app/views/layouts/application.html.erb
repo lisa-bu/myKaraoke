@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" href="/assets/icons/mykaraoke.png" />
+    <meta name="theme-color" content="#000000">
+    <!-- iOS support -->
+    <link rel="apple-touch-icon" href="/assets/icons/mykaraoke.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service_worker.js");
+      }
+    </script>
   </head>
-
   <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
-
+    <%= render "shared/flashes" %>
     <%= yield %>
   </body>
 </html>

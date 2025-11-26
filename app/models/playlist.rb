@@ -5,4 +5,5 @@ class Playlist < ApplicationRecord
 
   validates :name, presence: true
   validates :user_id, presence: true
+  acts_as_favoritable
 end

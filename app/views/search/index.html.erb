@@ -1,2 +1,26 @@
-<h1>Search#index</h1>
 <p>Find me in app/views/search/index.html.erb</p>
+<h1>Search Songs</h1>
+<%= form_with url: "/search", method: :get, local: true do %>
+  <%= text_field_tag :q, params[:q], placeholder: "Search for a song" %>
+  <%= submit_tag "Search" %>
+<% end %>
+<% if @tracks.present? %>
+  <h2>Results</h2>
+  <% @tracks.each do |track| %>
+    <div class="track">
+      <% if track.album.images.any? %>
+        <img src="<%= track.album.images.first['url'] %>" width="80">
+      <% end %>
+      <strong><%= track.name %></strong><br>
+      <%= track.artists.map(&:name).join(", ") %><br>
+      <% if track.preview_url.present? %>
+        <audio controls>
+          <source src="<%= track.preview_url %>" type="audio/mpeg">
+        </audio>
+      <% else %>
+        <p>No preview available</p>
+      <% end %>
+    </div>
+    <hr>
+  <% end %>
+<% end %>

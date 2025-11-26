@@ -11,15 +11,18 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
     resources :playlists_songs, only: [:new, :create]
+    resource :favorite, only: [:create, :destroy]
   end
 
   resources :playlists_songs, only: [:destroy]
 
   resources :songs, only: [:show] do
     resources :difficulty_ratings, only: [:create]
+    resource :favorite, only: [:create, :destroy]
   end
 
   resources :difficulty_ratings, only: [ :update]
 
   resources :friendships, only: [:create, :update, :destroy]
+
 end

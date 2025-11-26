@@ -1,19 +1,22 @@
-<h1>Add Song to Playlist</h1>
-
-<%= form_with model: [@playlist, @playlist_song] do |f| %>
+<h1>By Mood</h1>
 
   <div class="field">
-    <%= f.label :song_id %>
-    <%= f.number_field :song_id %>
+    <%= @playlist %>
+
   </div>
 
+<h1>Based on queue</h1>
+
   <div class="field">
-    <%= f.label :position %>
-    <%= f.number_field :position %>
+    <%= @playlist %>
+
   </div>
+
+<h1>Based on library</h1>
 
   <div class="actions">
-    <%= f.submit "Add Song" %>
+    <%= @playlist %>
+
   </div>
 
-<% end %>
+<button type="button" class="btn btn-warning">Surprise Me!</button>

@@ -7,5 +7,5 @@ class Song < ApplicationRecord
   validates :artist, presence: true
   validates :ISRC, presence: true, uniqueness: true
   validates :availability, presence: true
-
+  acts_as_favoritable
 end

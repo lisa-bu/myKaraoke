@@ -20,10 +20,5 @@ class User < ApplicationRecord
   has_many :received_friendships,
            class_name: "Friendship",
            foreign_key: "receiver_id"
-
-           def friends
-             asked_friends + received_friends
-           end
-
-
+  acts_as_favoritor
 end

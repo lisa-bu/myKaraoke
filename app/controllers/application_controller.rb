@@ -18,4 +18,13 @@ class ApplicationController < ActionController::Base
   # def skip_pundit?
   #   devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
   # end
+
+  def home
+    @current_playlist = current_user.playlists.find_by(id: current_user.current_playlist_id)
+    if @current_playlist.nil?
+      @current_playlist = current_user.playlists.create!( name: "Playlist #{current_user.playlists.count + 1}"
+    )
+      current_user.update!(current_playlist_id: @current_playlist.id)
+    end
+  end
 end

@@ -1,6 +1,5 @@
 class PlaylistsSongsController < ApplicationController
   def new
-
   end
 
   def create

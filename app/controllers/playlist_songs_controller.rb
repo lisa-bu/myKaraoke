@@ -23,12 +23,16 @@ class PlaylistSongsController < ApplicationController
 
   private
 
+  def set_playlist
+    @playlist = Playlist.find(params[:playlist_id])
+  end
+
   def set_playlist_song
     @playlist_song = PlaylistSong.find(params[:id])
   end
 
   def playlist_song_params
-    params.require(:playlists_song).permit(:song_id, :position)
+    params.require(:playlist_song).permit(:song_id, :position)
   end
 
 end

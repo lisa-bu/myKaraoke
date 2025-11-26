@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
-  # include Pundit::Authorization
+  include Pundit::Authorization
 
   # Pundit: allow-list approach
   # after_action :verify_authorized, except: :index, unless: :skip_pundit?
@@ -15,16 +15,7 @@ class ApplicationController < ActionController::Base
 
   # private
 
-  # def skip_pundit?
-  #   devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
-  # end
-
-  def home
-    @current_playlist = current_user.playlists.find_by(id: current_user.current_playlist_id)
-    if @current_playlist.nil?
-      @current_playlist = current_user.playlists.create!( name: "Playlist #{current_user.playlists.count + 1}"
-    )
-      current_user.update!(current_playlist_id: @current_playlist.id)
-    end
+  def skip_pundit?
+    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
   end
 end

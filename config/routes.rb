@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'search/index'
   devise_for :users
 
   root to: "pages#home"
@@ -7,6 +8,10 @@ Rails.application.routes.draw do
   get "/auth/spotify",          to: "spotify_auth#login",    as: :spotify_login
   get "/auth/spotify/callback", to: "spotify_auth#callback"
   get "/spotify/token",         to: "spotify_auth#token"
+  # ----------------------------
+
+  # --- Spotify Search ---
+  get "search", to: "search#index"
   # ----------------------------
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

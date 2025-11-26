@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  # get "service_worker.js", to: "service_worker#service_worker"
+  # get "manifest.json", to: "service_worker#manifest"
+
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -10,11 +14,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
-    resources :playlists_songs, only: [:new, :create]
-    resource :favorite, only: [:create, :destroy]
+  resources :playlist_songs, only: [:new, :create]
   end
 
-  resources :playlists_songs, only: [:destroy]
+  resources :playlist_songs, only: [:destroy]
 
   resources :songs, only: [:show] do
     resources :difficulty_ratings, only: [:create]

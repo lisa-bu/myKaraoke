@@ -76,3 +76,4 @@ end
 
 gem 'acts_as_favoritor'
 gem 'faker'
+gem 'pundit'

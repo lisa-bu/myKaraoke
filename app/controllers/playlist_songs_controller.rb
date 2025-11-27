@@ -42,7 +42,7 @@ class PlaylistSongsController < ApplicationController
   end
 
   def playlist_song_params
-    params.permit(:position, :song_id, :playlist_id)
+    params.require(:playlist_song).permit(:position, :song_id, :playlist_id)
   end
 
 end

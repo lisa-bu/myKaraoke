@@ -6,32 +6,18 @@
 <section class="content">
 
 <div class="scrolling-wrapper">
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
+  <% @songs.each do |song|%>
+  <div class="card"><h2> <%= song.name %></h2></div>
+  <% end  %>
+
 </div>
-
-
 
 <h1>Based on Spotify library</h1>
 
 <div class="scrolling-wrapper">
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-  <div class="card"><h2>Card</h2></div>
-</div>
+  <% @songs.each do |song|%>
+  <div class="card"><h2> <%= song.name %></h2></div>
+  <% end  %>
 
 
 <button type="button" class="btn btn-warning">Surprise Me!</button>

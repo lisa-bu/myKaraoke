@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_25_084126) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_27_031833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,8 +87,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_25_084126) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
     t.bigint "current_playlist_id"
+    t.string "name"
+    t.string "spotify_uid"
+    t.string "spotify_access_token"
+    t.string "spotify_refresh_token"
+    t.datetime "spotify_expires_at"
     t.index ["current_playlist_id"], name: "index_users_on_current_playlist_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

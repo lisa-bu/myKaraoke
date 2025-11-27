@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get 'search/index'
   get "/auth/spotify/callback", to: "spotify_auth#callback"
+  get "/auth/failure",          to: "spotify_auth#failure"
 
   # Defines the root path route ("/")
   # root "posts#index"

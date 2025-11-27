@@ -21,4 +21,7 @@
   <h1>Pages#home</h1>
   <p>Find me in app/views/pages/home.html.erb</p>
 </div>
-<%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post %>
+<%#  If the current user is already authenticated on Spotify, don't show %>
+<% unless current_user.spotify_access_token %>
+  <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post %>
+<% end %>

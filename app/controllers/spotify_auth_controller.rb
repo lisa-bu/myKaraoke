@@ -1,8 +1,18 @@
 class SpotifyAuthController < ApplicationController
   def callback
-    spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
-# Come back later
-    raise
-    redirect_to root_path
+    auth = request.env["omniauth.auth"]
+
+    current_user.update!(
+      spotify_uid:          auth.uid,
+      spotify_access_token: auth.credentials.token,
+      spotify_refresh_token: auth.credentials.refresh_token,
+      spotify_expires_at:   Time.at(auth.credentials.expires_at)
+    )
+
+    redirect_to root_path, notice: "Spotify connected!"
+  end
+
+  def failure
+    redirect_to root_path, alert: "Spotify authentication failed."
   end
 end

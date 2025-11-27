@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationController
-  # before_action :set_playlist
+  before_action :set_playlist, only: [:show, :create, :update, :destroy ]
   def index
     authorize Playlist
     @playlists = policy_scope(Playlist)
@@ -7,7 +7,6 @@ class PlaylistsController < ApplicationController
   end
 
   def show
-    @playlist = Playlist.find(params[:id])
     authorize @playlist
   end
 
@@ -17,7 +16,6 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    @playlist = Playlist.new(playlist_params)
     authorize @playlist
     if @playlist.save
       redirect_to playlist_path(@playlist)
@@ -27,13 +25,7 @@ class PlaylistsController < ApplicationController
 
   end
 
-  def edit
-    @playlist = Playlist.find(params[:id])
-    authorize @playlist
-  end
-
   def update
-    @playlist = Playlist.find(params[:id])
     if @playlist.update(playlist_params)
       redirect_to playlist_path(@playlist)
     else
@@ -42,7 +34,6 @@ class PlaylistsController < ApplicationController
   end
 
   def destroy
-    @playlist = Playlist.find(params[:id])
     authorize @playlist
     unless @playlist.id == current_user.current_playlist_id
       @playlist.destroy

@@ -5,6 +5,7 @@ class PlaylistSongsController < ApplicationController
 
   def new
     @playlist_song = PlaylistSong.new
+    authorize PlaylistSong
     @songs = Song.all
   end
 
@@ -13,6 +14,7 @@ class PlaylistSongsController < ApplicationController
     @playlist_song.position = 0
     @playlist_song.playlist = @playlist
     @playlist_song.song_id = params[:playlist_song][:song_id]
+    authorize @playlist_song
 
     unless @playlist.songs.empty?
       @playlist_song.position = @playlist.songs.count + 1
@@ -27,6 +29,8 @@ class PlaylistSongsController < ApplicationController
   end
 # plyalistid position
   def destroy
+    authorize @playlist_song
+
     @playlist_song.destroy
     redirect_to @playlist, notice: "Song removed!"
   end

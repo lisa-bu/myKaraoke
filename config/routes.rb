@@ -1,14 +1,8 @@
 Rails.application.routes.draw do
   get 'search/index'
   devise_for :users
-
   root to: "pages#home"
-
-  # --- Spotify OAuth Routes ---
-  get "/auth/spotify",          to: "spotify_auth#login",    as: :spotify_login
-  get "/auth/spotify/callback", to: "spotify_auth#callback"
-  get "/spotify/token",         to: "spotify_auth#token"
-  # ----------------------------
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # --- Spotify Search ---
   get "search", to: "search#index"
@@ -18,15 +12,14 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-   # --- Playlist Routes ---
+  # Defines the root path route ("/")
+  # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
   resources :playlist_songs, only: [:new, :create]
   end
 
   resources :playlist_songs, only: [:destroy]
-  # -------------------------
 
-  # --- Songs & Difficulty Ratings ---
   resources :songs, only: [:show] do
     resources :difficulty_ratings, only: [:create]
     resource :favorite, only: [:create, :destroy]
@@ -35,6 +28,5 @@ Rails.application.routes.draw do
   resources :difficulty_ratings, only: [ :update]
 
   resources :friendships, only: [:create, :update, :destroy]
-   # ---------------------------------
 
 end

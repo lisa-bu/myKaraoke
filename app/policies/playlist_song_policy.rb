@@ -12,7 +12,16 @@ class PlaylistSongPolicy < ApplicationPolicy
     # end
   end
 
-  def new?
-    true
+  def new
+    @create
+  end
+
+  def create?
+    user
+  end
+
+
+  def destroy?
+    user
   end
 end

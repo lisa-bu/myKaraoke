@@ -11,4 +11,13 @@ class UserPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def update?
+    user == record
+  end
+
+  def stop_singing?
+    user == record
+  end
+
 end

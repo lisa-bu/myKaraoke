@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
    # --- Playlist Routes ---
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
-  resources :playlist_songs, only: [:new, :create]
+    resources :playlist_songs, only: [:new, :create]
   end
 
   resources :playlist_songs, only: [:destroy]
@@ -32,4 +32,11 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :update, :destroy]
    # ---------------------------------
 
+  # --- Update user's current playlist ---
+  resources :users, only: [:update] do
+    member  do
+      patch :stop_singing
+    end
+  end
+  # ---------------------------------
 end

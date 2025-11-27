@@ -3,6 +3,8 @@ class PlaylistSongsController < ApplicationController
 
   def new
     @playlist_song = PlaylistSong.new
+
+    authorize @playlist_song
   end
 
   def create

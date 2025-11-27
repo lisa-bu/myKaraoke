@@ -1,29 +1,31 @@
 <main>
-<div class="container">
-
-<h1>Based on queue</h1>
-
-<section class="content">
-
-<div class="scrolling-wrapper">
-  <% @songs.each do |song|%>
-  <div class="card"><h2> <%= song.name %></h2></div>
-  <% end  %>
-
-</div>
-
-<h1>Based on Spotify library</h1>
-
-<div class="scrolling-wrapper">
-  <% @songs.each do |song|%>
-  <div class="card"><h2> <%= song.name %></h2></div>
-  <% end  %>
-
-
-<button type="button" class="btn btn-warning">Surprise Me!</button>
-</section>
-</div>
-<%# add to our playlist %>
-<%# div that flex and overflows %>
-<%# form %>
+  <div class="container">
+    <h1>Based on queue</h1>
+    <section class="content">
+      <div class="scrolling-wrapper">
+        <% @songs.each do |song|%>
+          <div class="card">
+            <h2> <%= song.name %></h2>
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
+      <h1>Based on Spotify library</h1>
+      <div class="scrolling-wrapper">
+        <% @songs.each do |song|%>
+          <div class="card">
+            <h2> <%= song.name %></h2>
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
+    </section>
+  </div>
+  <button type="button" class="btn btn-warning">Surprise Me!</button>
 </main>

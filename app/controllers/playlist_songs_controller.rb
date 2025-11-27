@@ -1,5 +1,7 @@
 class PlaylistSongsController < ApplicationController
-  before_action :set_playlist, only: [:destroy]
+  before_action :set_playlist, only: [:new, :create]
+  before_action :set_playlist_song, only: [:destroy]
+
 
   def new
     @playlist_song = PlaylistSong.new
@@ -8,15 +10,22 @@ class PlaylistSongsController < ApplicationController
 
   def create
     @playlist_song = PlaylistSong.new(playlist_song_params)
+    @playlist_song.position = 0
     @playlist_song.playlist = @playlist
+    @playlist_song.song_id = params[:playlist_song][:song_id]
+
+    unless @playlist.songs.empty?
+      @playlist_song.position = @playlist.songs.count + 1
+    end
 
     if @playlist_song.save
-      redirect_to @playlist, notice: "Song added!"
+      redirect_to root_path, notice: "Song added!"
     else
+      @songs = Song.all
       render :new, status: :unprocessable_entity
     end
   end
-
+# plyalistid position
   def destroy
     @playlist_song.destroy
     redirect_to @playlist, notice: "Song removed!"
@@ -33,7 +42,7 @@ class PlaylistSongsController < ApplicationController
   end
 
   def playlist_song_params
-    params.require(:playlist_song).permit(:song_id, :position)
+    params.permit(:position, :song_id, :playlist_id)
   end
 
 end

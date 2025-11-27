@@ -26,4 +26,10 @@ Rails.application.routes.draw do
   resources :difficulty_ratings, only: [ :update]
 
   resources :friendships, only: [:create, :update, :destroy]
+
+  resources :users, only: [:update] do
+    member  do
+      patch :stop_singing
+    end
+  end
 end

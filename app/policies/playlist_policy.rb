@@ -9,22 +9,26 @@ class PlaylistPolicy < ApplicationPolicy
       record.user == user
     end
 
+    def index?
+      true
+    end
+
     def create?
-      show?
+      record.user == user
     end
 
     def update?
-      show?
+      record.user == user
     end
 
     def destroy?
-      show?
+      record.user == user
     end
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.all
+      scope.where(user: user)
     end
   end
 end

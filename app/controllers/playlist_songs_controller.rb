@@ -5,6 +5,8 @@ class PlaylistSongsController < ApplicationController
 
   def new
     @playlist_song = PlaylistSong.new
+    authorize PlaylistSong
+    @songs = Song.all
   end
 
   def create
@@ -46,5 +48,4 @@ class PlaylistSongsController < ApplicationController
   def playlist_song_params
     params.require(:playlist_song).permit(:position, :song_id, :playlist_id)
   end
-
 end

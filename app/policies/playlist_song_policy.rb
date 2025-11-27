@@ -11,4 +11,17 @@ class PlaylistSongPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def new
+    @create
+  end
+
+  def create?
+    user
+  end
+
+
+  def destroy?
+    user
+  end
 end

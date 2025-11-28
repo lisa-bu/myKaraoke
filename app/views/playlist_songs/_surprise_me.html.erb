@@ -1,7 +1,10 @@
-<h1>surprise</h1>
-<p>your song today is...</p>
-<%= image_tag "kong.png", alt: "kong", style: "width: 100px" %>
-<p>song name</p>
-<p>by</p>
-<p>artist</p>
-<button>add song</button>
+<turbo-frame id="playlist_content">
+  <div class="surprise-container">
+    <h1>Surprise</h1>
+    <p>Your random song today is...</p>
+    <%= image_tag "kong.png", alt: "kong", style: "width: 100px" %>
+    <h2> <%= song.name %> </h2>
+    <p>by <%= song.artist  %> </p>
+    <button>add song</button>
+  </div>
+</turbo-frame>

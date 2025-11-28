@@ -58,7 +58,7 @@ class SpotifyClient
 
   # General example
   # SpotifyClient.instance.search_tracks("Drake")
-  def search_tracks(query, market: "US", limit: 10)
+  def search_tracks(query, market: "US", limit: 50)
     RSpotify::Track.search(query, market: market, limit: limit)
   end
 
@@ -70,6 +70,7 @@ class SpotifyClient
     RSpotify::Album.search(query, limit: limit)
   end
 
+  # Need to test lol
   def search_playlists(query, limit: 10)
     RSpotify::Playlist.search(query, limit: limit)
   end

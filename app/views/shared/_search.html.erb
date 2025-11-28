@@ -1,16 +1,22 @@
 <!-- Input -->
-<div class="row justify-content-center">
-  <div class="col-sm-8 my-3">
-    <%= form_with url: (local_assigns[:url] || playlists_path),
-              method: :get,
-              local: true,
-              class: "d-flex gap-2 my-3" do %>
+<div class="searchInput">
+  <%= form_with url: playlist ? playlist_path(playlist) : playlists_path,
+                method: :get,
+                local: true,
+                class: "playlist-search-form" do %>
+
+    <div class="playlist-search-pill">
+
+      <%# <span class="playlist-search-icon"></span> %>
+
       <%= text_field_tag :query,
                         params[:query],
-                        placeholder: "Search song, artist...",
-                        class: "form-control" %>
+                        placeholder: "Search in playlist",
+                        class: "playlist-search-input" %>
 
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+      <%= submit_tag "search", class: "playlist-search-button" %>
+
+    </div>
+
+  <% end %>
 </div>

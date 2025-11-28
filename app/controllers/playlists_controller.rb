@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationController
-  before_action :set_playlist, only: [:show, :create, :update, :destroy ]
+  before_action :set_playlist, only: [:show, :update, :destroy ]
   def index
     authorize Playlist
     @playlists = policy_scope(Playlist)
@@ -16,11 +16,14 @@ class PlaylistsController < ApplicationController
   end
 
   def create
+    @playlist = Playlist.new(playlist_params)
+    @playlist.user = current_user
     authorize @playlist
     if @playlist.save
       redirect_to playlist_path(@playlist)
     else
-      render :new, status: :unprocessable_entity
+      @playlists = policy_scope(Playlist)
+      render :index, status: :unprocessable_entity
     end
 
   end

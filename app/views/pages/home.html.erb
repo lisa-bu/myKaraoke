@@ -1,5 +1,7 @@
 <div class="container">
-  <%# <p> <%= render 'shared/search_form' %>
+  <div class="search-form">
+    <%= render 'shared/search' %>
+  </div>
   <div class="recommend-buttons">
     <div class="recommendations">
       <%= link_to "Recommend",  new_playlist_playlist_song_path(@current_playlist), class: "btn btn-info" %>
@@ -26,10 +28,8 @@
       <p>No songs added yet! Search for one at the top or get one recommended</p>
     <% end %>
   </div>
-  <h1>Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
 </div>
-<%#  If the current user is already authenticated on Spotify, don't show %>
+<%# If the current user is already authenticated on Spotify, don't show %>
 <% unless current_user.spotify_access_token %>
   <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post %>
 <% end %>

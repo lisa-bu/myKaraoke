@@ -16,11 +16,11 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#newBookmarkModal">Make a new playlist!</button>
+  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
 </div>
 <h1>Playlists</h1>
 <% @playlists.each do |playlist| %>
-  <div class="card">
+  <div class="playlist-card">
     <%= link_to playlist.name, playlist_path(playlist) %>
     <% alert = playlist.id == current_user.current_playlist_id ? "Cannot delete currently playing playlist" : "Are you sure you want to delete this playlist?" %>
     <%= link_to playlist_path(playlist), data: { turbo_method: :delete, turbo_confirm: alert }, class: "delete-btn" do %>

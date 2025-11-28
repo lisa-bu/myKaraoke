@@ -7,9 +7,6 @@ class PlaylistSongsController < ApplicationController
     authorize PlaylistSong
 
     @song = Song.order("RANDOM()").first
-
-    render partial: "playlist_songs/surprise_me",
-      locals: { playlist: @playlist, song: @song }
   end
 
   def new
@@ -31,6 +28,7 @@ class PlaylistSongsController < ApplicationController
 
     if @playlist_song.save
       if current_user.current_playlist_id == @playlist.id
+        # raise
         redirect_to root_path, notice: "Song added!"
       else
         redirect_to playlist_path(@playlist), notice: "Song added!"

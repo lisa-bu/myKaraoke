@@ -27,7 +27,7 @@
     <% end %>
   </div>
 </div>
-<%#  If the current user is already authenticated on Spotify, don't show %>
+<%# If the current user is already authenticated on Spotify, don't show %>
 <% unless current_user.spotify_access_token %>
   <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post %>
 <% end %>

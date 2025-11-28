@@ -1,32 +1,32 @@
-<%= render "shared/search" %>
-
 <div class="container">
-  <div class="modal fade" id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
+  <%= render "shared/search" %>
+  <div class="modal fade " id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newPlaylistModalLabel">Make a new playlist!</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content bg-secondary">
+        <div class="modal-header text-light">
+          <h5 class="modal-title text-light" id="newPlaylistModalLabel">Make a new playlist!</h5>
+          <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-light">
           <%= simple_form_for @playlist do |f| %>
             <%= f.input :name %>
-            <%= f.submit 'Submit', class: 'btn btn-info' %>
+            <%= f.submit 'Submit', class: 'btn btn-warning' %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
-</div>
-<h1>Playlists</h1>
-<% @playlists.each do |playlist| %>
-  <div class="playlist-card">
-    <%= link_to playlist.name, playlist_path(playlist) %>
-    <% alert = playlist.id == current_user.current_playlist_id ? "Cannot delete currently playing playlist" : "Are you sure you want to delete this playlist?" %>
-    <%= link_to playlist_path(playlist), data: { turbo_method: :delete, turbo_confirm: alert }, class: "delete-btn" do %>
-      <i class="fa-solid fa-xmark"></i>
+  <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
+  <div class="playlist-container row g-4">
+    <% @playlists.each do |playlist| %>
+      <div class="col-6 h-100 playlist-card position-relative">
+        <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
+          <div class="playlist-card-image"></div>
+          <div class="card-body">
+            <h5 class="card-title text-white"><%= playlist.name %></h5>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
 </div>

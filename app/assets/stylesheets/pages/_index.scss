@@ -1,2 +1,79 @@
 // Import page-specific CSS files here.
 @import "home";
+
+.playlist-container {
+  // Ensure proper spacing on mobile
+  margin: 0 -8px;
+  padding: 0 8px;
+}
+
+.playlist-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #e8e8e8;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  // Remove fixed height - let aspect-ratio handle it
+}
+
+.playlist-card {
+  border: none;
+  background: transparent;
+  // Ensure card doesn't overflow
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 8px 4px;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 0;
+  // Prevent text overflow on small screens
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Adjust for larger screens
+@media (min-width: 576px) {
+  .card-title {
+    font-size: 0.9rem;
+  }
+}
+
+.delete-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  z-index: 10;
+  transition: background 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  // Prevent text selection
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.delete-btn:hover,
+.delete-btn:active {
+  background: rgba(0,0,0,0.9);
+}
+
+// Better touch targets for mobile
+@media (max-width: 575px) {
+  .delete-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}

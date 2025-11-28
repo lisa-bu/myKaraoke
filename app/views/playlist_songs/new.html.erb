@@ -1,6 +1,27 @@
-<turbo-frame id="playlist_content">
-  <main>
-    <div class="container">
+<main>
+  <div class="container">
+    <div style="text-align: center;">
+      <h1 style="
+    text-align: center;
+    background: #e0e0e0;
+    padding: 10px 20px;
+    border-radius: 40px;
+    display: inline-block;
+    font-size: 20px;
+    width: 340px;
+  ">Based on queue</h1>
+    </div>
+    <section class="content">
+      <div class="scrolling-wrapper">
+        <% @songs.each do |song|%>
+          <div class="scrolling-card">
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit "+ #{song.name}", class: "add-button" %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
       <div style="text-align: center;">
         <h1 style="
       color: #504f4fff;
@@ -50,10 +71,9 @@
         </div>
       </section>
       <%= link_to "Surprise Me!",
-        surprise_playlist_playlist_songs_path(@playlist),
-        data: { turbo_frame: "playlist_content" },
-        class: "btn btn-warning"
-      %>
+      surprise_playlist_playlist_songs_path(@playlist),
+      class: "btn btn-warning"
+    %>
     </div>
   </main>
 </turbo-frame>

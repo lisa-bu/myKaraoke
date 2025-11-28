@@ -1,4 +1,12 @@
 class Song < ApplicationRecord
+  include PgSearch::Model
+
+  pg_search_scope :search_by_name_and_artist,
+    against: [:name, :artist],
+    using: {
+      tsearch: { prefix: true }
+    }
+
   has_many :playlist_songs, dependent: :destroy
   has_many :playlists, through: :playlist_songs
   has_many :difficulty_ratings, dependent: :destroy

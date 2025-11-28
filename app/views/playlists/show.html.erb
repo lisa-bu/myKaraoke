@@ -1,14 +1,63 @@
 <div class="container">
-  <h1><%= @playlist.name %></h1>
-  <ul>
-    <% @playlist.playlist_songs.each do |playlist_song| %>
-      <li>
-        <strong><%= playlist_song.song.name %></strong>
-        — <%= playlist_song.song.artist %>
-      </li>
+  <%= render "shared/search", url: playlist_path(@playlist) %>
+
+  <% if @playlist.user == current_user %>
+    <% if params[:query].present? %>
+
+      <h1><%= @playlist.name %></h1>
+            <%= link_to "Back to playlist",
+                  playlist_path(@playlist),
+                  class: "btn btn-secondary mt-3" %>
+      <h2>Search Results</h2>
+
+      <% if @songs.any? %>
+        <ul>
+          <% @songs.each do |song| %>
+            <li>
+              <%= song.name %> — <%= song.artist %>
+
+              <%= form_with url: playlist_playlist_songs_path(@playlist),
+                            method: :post,
+                            local: true do %>
+                <%= hidden_field_tag "playlist_song[song_id]", song.id %>
+                <%= submit_tag "Add", class: "btn btn-sm btn-primary" %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No songs found.</p>
+      <% end %>
+
+    <% else %>
+      <!-- not search yes -->
+      <h1><%= @playlist.name %></h1>
+
+      <ul>
+        <% @playlist.playlist_songs.each do |playlist_song| %>
+          <li>
+            <strong><%= playlist_song.song.name %></strong>
+            <%= playlist_song.song.artist %>
+          </li>
+        <% end %>
+      </ul>
+
+      <%= link_to "Make Current Playlist",
+                  user_path(current_user, current_playlist_id: @playlist.id),
+                  data: { turbo_method: :patch },
+                  class: "btn btn-success mt-3" %>
     <% end %>
-    <%= link_to "Make Current Playlist", user_path(current_user, current_playlist_id: @playlist.id),
-            data: { turbo_method: :patch },
-            class: "btn btn-success" %>
-  </ul>
+
+  <% else %>
+    <!--playlist(read-only) -->
+    <h1><%= @playlist.name %></h1>
+    <ul>
+      <% @playlist.playlist_songs.each do |playlist_song| %>
+        <li>
+          <strong><%= playlist_song.song.name %></strong>
+          – <%= playlist_song.song.artist %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>

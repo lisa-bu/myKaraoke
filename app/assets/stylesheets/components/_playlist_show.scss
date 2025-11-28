@@ -1,0 +1,40 @@
+// .playlist-song-row {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   gap: 12px;
+//    padding-right: 20px;
+// }
+
+.playlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playlist-add-btn {
+  width: 60px;
+  height: 30px;
+  color: orange;
+  padding: 0;
+  font-weight: 800;
+  border-radius: 15%;
+  background-color: #fff;
+  // line-height: 32px;
+  // text-align: center;
+  font-size: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+.playlist-add-btn:hover {
+  background-color: orange;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+.playlist-add-btn:active {
+  transform: scale(0.95);
+}

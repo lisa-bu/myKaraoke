@@ -21,8 +21,11 @@ class PlaylistSongsController < ApplicationController
     end
 
     if @playlist_song.save
-      # redirect_to root_path, notice: "Song added!"
-      redirect_to playlist_path(@playlist), notice: "Song added!"
+      if current_user.current_playlist_id == @playlist.id
+        redirect_to root_path, notice: "Song added!"
+      else
+        redirect_to playlist_path(@playlist), notice: "Song added!"
+      end
     else
       @songs = Song.all
       render :new, status: :unprocessable_entity

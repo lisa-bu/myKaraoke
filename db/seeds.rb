@@ -13,11 +13,15 @@ require "faker"
 
 puts "Cleaning database..."
 
-Friendship.destroy_all
-DifficultyRating.destroy_all
+User.update_all(current_playlist_id: nil)
+
 PlaylistSong.destroy_all
+DifficultyRating.destroy_all
+Friendship.destroy_all
+
 Playlist.destroy_all
 Song.destroy_all
+
 User.destroy_all
 
 
@@ -54,7 +58,7 @@ english_songs = songs.flatten.select do |song|
     singer.match?(/\A[\p{Alnum}\p{Space}\p{Punct}]+\z/)
 end
 
-songs = english_songs.map do |song_data|
+songs = english_songs.shuffle.take(1000).map do |song_data|
   Song.find_or_create_by!(ISRC: song_data["no"]) do |song|
     song.name = song_data["title"]
     song.artist = song_data["singer"]

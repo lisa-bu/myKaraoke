@@ -62,7 +62,6 @@
                     data: { turbo_method: :patch },
                     class: "btn btn-success mt-3 playlist-current-btn" %>
       <% end %>
-
     <% else %>
       <!-- read only playlist-->
       <h1 class="playlist-title"><%= @playlist.name %></h1>
@@ -76,7 +75,24 @@
           </li>
         <% end %>
       </ul>
+      <%= link_to "Make Current Playlist",
+                  user_path(current_user, current_playlist_id: @playlist.id),
+                  data: { turbo_method: :patch },
+                  class: "btn btn-success mt-3" %>
     <% end %>
-
-  </div>
+    <%= link_to "Back", playlists_path, class: "btn btn-info" %>
+    <% alert = @playlist.id == current_user.current_playlist_id ? "Cannot delete currently playing playlist" : "Are you sure you want to delete this playlist?" %>
+    <%= link_to "Delete", playlist_path(@playlist),class: "btn btn-danger top-0 end-0 m-2", data: { turbo_method: :delete, turbo_confirm: alert } %>
+  <% else %>
+    <!--playlist(read-only) -->
+    <h1><%= @playlist.name %></h1>
+    <ul>
+      <% @playlist.playlist_songs.each do |playlist_song| %>
+        <li>
+          <strong><%= playlist_song.song.name %></strong>
+          – <%= playlist_song.song.artist %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>

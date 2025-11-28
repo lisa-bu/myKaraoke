@@ -12,6 +12,10 @@ class PlaylistSongPolicy < ApplicationPolicy
     # end
   end
 
+  def surprise?
+    true
+  end
+
   def new
     @create
   end

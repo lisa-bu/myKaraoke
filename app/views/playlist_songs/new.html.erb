@@ -45,9 +45,11 @@
           <% end  %>
         </div>
       </section>
-    </div>
-    <div style="text-align: center;">
-      <button type="button" class="surprise-button">Surprise Me!</button>
+      <%= link_to "Surprise Me!",
+        surprise_playlist_playlist_songs_path(@playlist),
+        data: { turbo_frame: "playlist_content" },
+        class: "btn btn-warning"
+      %>
     </div>
   </main>
 </turbo-frame>

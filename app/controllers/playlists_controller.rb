@@ -1,21 +1,36 @@
 class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:show, :create, :update, :destroy ]
+
   def index
     authorize Playlist
     @playlists = policy_scope(Playlist)
     @playlist = Playlist.new
+
+    return unless params[:query].present?
+
+    # query   = params[:query].strip
+    # pattern = "%#{query}%"
+    # @playlists = Playlist.where("name ILIKE ?", pattern)
+    query = params[:query].strip
+    @playlists = @playlists.search_by_name(query)
   end
 
   def show
+    @playlist = Playlist.find(params[:id])
+    @songs = []
     authorize @playlist
-  end
 
-  def new
-    @playlist = Playlist.new
-    authorize Playlist
+    return unless params[:query].present?
+
+    # query   = params[:query].strip
+    # pattern = "%#{query}%"
+    # @songs = Song.where("name ILIKE ? OR artist ILIKE ?", pattern, pattern)
+    query = params[:query].strip
+    @songs = Song.search_by_name_and_artist(query)
   end
 
   def create
+    @playlist = Playlist.new(playlist_params)
     authorize @playlist
     if @playlist.save
       redirect_to playlist_path(@playlist)
@@ -26,6 +41,7 @@ class PlaylistsController < ApplicationController
   end
 
   def update
+    @playlist = Playlist.find(params[:id])
     if @playlist.update(playlist_params)
       redirect_to playlist_path(@playlist)
     else
@@ -35,13 +51,14 @@ class PlaylistsController < ApplicationController
 
   def destroy
     authorize @playlist
-    unless @playlist.id == current_user.current_playlist_id
-      @playlist.destroy
-    else
+    if @playlist.id == current_user.current_playlist_id
       flash[:notice] = "Cannot delete your singing now playlist"
       @playlists = policy_scope(Playlist)
       @playlist = Playlist.new
+    else
+      @playlist.destroy
     end
+
     redirect_to playlists_path
   end
 

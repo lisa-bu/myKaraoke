@@ -30,7 +30,7 @@
     <!---------------------------END-SONG-&-ARTIST---------------------------->
     <!---------------------------ADD-SONG-BUTTON---------------------------->
     <div class="text-center mb-5">
-      <%= simple_form_for [playlist, PlaylistSong.new] do |f| %>
+      <%= simple_form_for [playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
         <%= f.hidden_field :song_id, value: song.id %>
         <%= f.button :submit, "+", class: "btn btn-light border rounded-circle px-4 py-2 fs-4 shadow-sm" %>
       <% end %>

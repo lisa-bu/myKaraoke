@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :playlists, dependent: :destroy
-  has_many :playlist_songs, dependent: :destroy
+  has_many :playlist_songs, through: :playlists
   has_many :difficulty_ratings
   has_many :songs, through: :difficulty_ratings
 

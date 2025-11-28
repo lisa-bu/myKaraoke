@@ -7,9 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-require "open-uri"
-require "json"
-require "faker"
 
 puts "Cleaning database..."
 
@@ -32,37 +29,52 @@ users = [alesya, matt, tan, haris]
 puts "Created #{users.count} users"
 
 
-puts "Fetching songs from Manana Karaoke API..."
+puts "Fetching songs from Spotify API..."
 
-song_titles = ["love", "missing", "summer", "winter", "dream"]
+artists = [
+  "Taylor Swift",
+  "Drake",
+  "The Weeknd",
+  "Bad Bunny",
+  "Billie Eilish",
+  "Ariana Grande",
+  "Justin Bieber",
+  "Dua Lipa",
+  "Olivia Rodrigo",
+  "Post Malone",
+  "Travis Scott",
+  "SZA",
+  "Doja Cat",
+  "Ed Sheeran",
+  "Kendrick Lamar",
+  "Metro Boomin",
+  "Future",
+  "J Balvin",
+  "Karol G",
+  "Rosalía",
+  "BTS",
+  "NewJeans",
+  "The Kid LAROI",
+  "Jung Kook",
+  "Harry Styles"
+]
 
-songs = song_titles.map do |song|
-  url = "https://api.manana.kr/karaoke/song/#{song}.json"
-  data = JSON.parse(URI.open(url).read)
-  data
+tracks = artists.map do |artist|
+  puts artist
+  SpotifyClient.instance.search_tracks(artist)
 end
 
-english_songs = songs.flatten.select do |song|
-  title = song["title"]
-  singer = song["singer"]
-  isrc = song["no"]
-  brand = song["brand"]
-
-  title.is_a?(String) && singer.is_a?(String) &&
-    isrc.present? && brand.present? &&
-    title.match?(/\A[\p{Alnum}\p{Space}\p{Punct}]+\z/) &&
-    singer.match?(/\A[\p{Alnum}\p{Space}\p{Punct}]+\z/)
+tracks.flatten.each do |track|
+  puts track.name
+  Song.find_or_create_by!(ISRC: track.external_ids["isrc"]) do |song|
+      song.name = track.name
+      song.artist = track.artists.first.name
+      song.difficulty_average = 0.0
+      song.image_url = track.album.images.first["url"]
+      song.ISRC =  track.external_ids["isrc"]
+      song.availability = "n/a"
+    end
 end
-
-songs = english_songs.map do |song_data|
-  Song.find_or_create_by!(ISRC: song_data["no"]) do |song|
-    song.name = song_data["title"]
-    song.artist = song_data["singer"]
-    song.availability = song_data["brand"]
-    song.difficulty_average = 0.0
-  end
-end
-
 
 # create playlist
 puts "Creating playlists..."

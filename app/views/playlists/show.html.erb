@@ -1,53 +1,88 @@
-<div class="container">
-  <%= render "shared/search", url: playlist_path(@playlist) %>
+<div class="home-screen">
+  <div class="playlist-container">
 
-  <% if @playlist.user == current_user %>
-    <% if params[:query].present? %>
+    <%= render "shared/search", playlist: @playlist %>
 
-      <h1><%= @playlist.name %></h1>
-            <%= link_to "Back to playlist",
-                  playlist_path(@playlist),
-                  class: "btn btn-secondary mt-3" %>
-      <h2>Search Results</h2>
+    <% if @playlist.user == current_user %>
+      <% if params[:query].present? %>
 
-      <% if @songs.any? %>
-        <ul>
-          <% @songs.each do |song| %>
-            <li>
-              <%= song.name %> — <%= song.artist %>
+        <!-- search mode -->
+        <div class="playlist-header">
+        <h1 class="playlist-title" style="color: black"><%= @playlist.name %></h1>
 
-              <%= form_with url: playlist_playlist_songs_path(@playlist),
-                            method: :post,
-                            local: true do %>
-                <%= hidden_field_tag "playlist_song[song_id]", song.id %>
-                <%= submit_tag "Add", class: "btn btn-sm btn-primary" %>
-              <% end %>
+        <%= link_to "Back",
+                    playlist_path(@playlist),
+                    class: "btn btn-light btn-sm playlist-back-btn",
+                    style: "color: orange"%>
+        </div>
+
+        <h2 class="playlist-subtitle" style="color: black">Search Results</h2>
+        <% if @songs.any? %>
+         <ul class="playlist-song-list">
+            <% @songs.each do |song| %>
+              <li class="playlist-song-row d-flex justify-content-between align-items-center">
+                <div class="playlist-song-text">
+                  <span class="playlist-song-name"><%= song.name %></span>
+                  <span class="playlist-song-artist"> — <%= song.artist %></span>
+                </div>
+
+                <%= simple_form_for PlaylistSong.new,
+                      url: playlist_playlist_songs_path(@playlist),
+                      html: { class: "playlist-add-form mb-0" } do |f| %>
+
+                  <%= f.hidden_field :song_id, value: song.id %>
+
+                  <%= f.button :submit, "+",
+                        class: "playlist-add-btn btn btn-light btn-sm",
+                        style: "color: orange" %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No songs found.</p>
+        <% end %>
+      <% else %>
+
+        <!-- not search yet  -->
+        <h1 class="playlist-title" style="color: black"><%= @playlist.name %></h1>
+        <ul class="playlist-song-list">
+          <% @playlist.playlist_songs.each do |playlist_song| %>
+            <li class="playlist-song-row">
+              <div class="playlist-song-text">
+                <span class="playlist-song-name"><%= playlist_song.song.name %></span>
+                <span class="playlist-song-artist"> — <%= playlist_song.song.artist %></span>
+              </div>
             </li>
           <% end %>
         </ul>
-      <% else %>
-        <p>No songs found.</p>
+
+        <%= link_to "Make Current Playlist",
+                    user_path(current_user, current_playlist_id: @playlist.id),
+                    data: { turbo_method: :patch },
+                    class: "btn btn-success mt-3 playlist-current-btn" %>
       <% end %>
-
     <% else %>
-      <!-- not search yes -->
-      <h1><%= @playlist.name %></h1>
-
-      <ul>
+      <!-- read only playlist-->
+      <h1 class="playlist-title"><%= @playlist.name %></h1>
+      <ul class="playlist-song-list">
         <% @playlist.playlist_songs.each do |playlist_song| %>
-          <li>
-            <strong><%= playlist_song.song.name %></strong>
-            <%= playlist_song.song.artist %>
+          <li class="playlist-song-row">
+            <div class="playlist-song-text">
+              <span class="playlist-song-name"><%= playlist_song.song.name %></span>
+              <span class="playlist-song-artist"> — <%= playlist_song.song.artist %></span>
+            </div>
           </li>
         <% end %>
       </ul>
-
       <%= link_to "Make Current Playlist",
                   user_path(current_user, current_playlist_id: @playlist.id),
                   data: { turbo_method: :patch },
                   class: "btn btn-success mt-3" %>
     <% end %>
-
+    <%= link_to "Back", playlists_path, class: "btn btn-info" %>
+    <% alert = @playlist.id == current_user.current_playlist_id ? "Cannot delete currently playing playlist" : "Are you sure you want to delete this playlist?" %>
+    <%= link_to "Delete", playlist_path(@playlist),class: "btn btn-danger top-0 end-0 m-2", data: { turbo_method: :delete, turbo_confirm: alert } %>
   <% else %>
     <!--playlist(read-only) -->
     <h1><%= @playlist.name %></h1>

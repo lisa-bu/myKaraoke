@@ -10,11 +10,15 @@
 
 puts "Cleaning database..."
 
-Friendship.destroy_all
-DifficultyRating.destroy_all
+User.update_all(current_playlist_id: nil)
+
 PlaylistSong.destroy_all
+DifficultyRating.destroy_all
+Friendship.destroy_all
+
 Playlist.destroy_all
 Song.destroy_all
+
 User.destroy_all
 
 

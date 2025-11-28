@@ -2,6 +2,15 @@ class PlaylistSongsController < ApplicationController
   before_action :set_playlist, only: [:new, :create]
   before_action :set_playlist_song, only: [:destroy]
 
+  def surprise
+    @playlist = Playlist.find(params[:playlist_id])
+    authorize PlaylistSong
+
+    @song = Song.order("RANDOM()").first
+
+    render partial: "playlist_songs/surprise_me",
+      locals: { playlist: @playlist, song: @song }
+  end
 
   def new
     @playlist_song = PlaylistSong.new

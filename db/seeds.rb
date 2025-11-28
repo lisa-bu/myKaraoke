@@ -77,8 +77,10 @@ tracks.flatten.each do |track|
       song.image_url = track.album.images.first["url"]
       song.ISRC =  track.external_ids["isrc"]
       song.availability = "n/a"
-    end
+  end
 end
+
+songs = Song.all
 
 # create playlist
 puts "Creating playlists..."

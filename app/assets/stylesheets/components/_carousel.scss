@@ -4,19 +4,22 @@
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  background-color: white;
 
-  .card {
+  .scrolling-card {
     display: inline-block;
   }
 }
 
-.card {
+.scrolling-card {
   border: 2px solid;
   width: 300px;
-  height: 300px;
+  height: 160px;
   background: grey;
   font-size: 6px;
+  border-radius: 16px;
 }
+
 
 .scrolling-wrapper, .scrolling-wrapper-flexbox {
   height: 160px;

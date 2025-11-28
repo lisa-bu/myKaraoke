@@ -1,0 +1,39 @@
+.add-button {
+  background-color: rgba(255, 255, 255, 0.564);
+  color: rgb(79, 78, 78);
+  padding: 10px 20px;
+  width: 265px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+
+  position: relative;
+  bottom: -100px;           // distance from bottom of div
+  left: 15px;         // distance from left of div
+
+  &:hover {
+    background-color: #6a6a6a;
+  }
+}
+
+.surprise-button {
+  background-color: #ff7f00;   // bright orange
+  color: white;                // text color
+  padding: 16px 40px;          // makes it big
+  font-size: 18px;             // larger text
+  border-radius: 12px;         // rounded edges
+  border: none;                // remove default border
+  cursor: pointer;             // pointer on hover
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    background-color: #ff9500; // slightly brighter on hover
+    transform: scale(1.05);    // subtle grow effect
+  }
+
+  &:active {
+    transform: scale(0.95);    // pressed effect
+  }
+}

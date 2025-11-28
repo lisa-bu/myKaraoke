@@ -1,10 +1,53 @@
+<!--------------------------------TURBO------------------------------>
 <turbo-frame id="playlist_content">
-  <div class="surprise-container">
-    <h1>Surprise</h1>
-    <p>Your random song today is...</p>
-    <%= image_tag "kong.png", alt: "kong", style: "width: 100px" %>
-    <h2> <%= song.name %> </h2>
-    <p>by <%= song.artist  %> </p>
-    <button>add song</button>
+  <div class="container py-4">
+    <!---------------------------SURPRISE---------------------------->
+    <div class="text-center mb-4">
+      <button class="btn btn-lg btn-warning w-100 rounded-pill py-3">
+        Surprise!
+      </button>
+    </div>
+    <!---------------------------END-SURPRISE---------------------------->
+    <!---------------------------SUBTITLE---------------------------->
+    <div class="text-center mb-4">
+      <h4 class="fw-semibold text-dark">Your song today is...</h4>
+      <p class="text-muted mb-0">Your randomly generated song for today!</p>
+    </div>
+    <!---------------------------END-SUBTITLE---------------------------->
+    <!---------------------------ALBUM-ARTWORK---------------------------->
+    <div class="card shadow-sm mx-auto mb-4" style="max-width: 320px;">
+      <div class="card-img-top">
+        <%= image_tag "dk.png", class: "img-fluid rounded-top" %>
+      </div>
+    </div>
+    <!---------------------------END-ALBUM-ARTWORK---------------------------->
+    <!---------------------------SONG-&-ARTIST---------------------------->
+    <div class="text-center mb-4">
+      <h3 class="fw-bold"><%= song.name %></h3>
+      <p class="text-muted mb-0">by</p>
+      <h5 class="fw-semibold"><%= song.artist %></h5>
+    </div>
+    <!---------------------------END-SONG-&-ARTIST---------------------------->
+    <!---------------------------ADD-SONG-BUTTON---------------------------->
+    <div class="text-center mb-5">
+      <%= simple_form_for [playlist, PlaylistSong.new] do |f| %>
+        <%= f.hidden_field :song_id, value: song.id %>
+        <%= f.button :submit, "+", class: "btn btn-light border rounded-circle px-4 py-2 fs-4 shadow-sm" %>
+      <% end %>
+    </div>
+    <!---------------------------END-ADD-SONG-BUTTON---------------------------->
+    <!---------------------------TRY-AGAIN--&-BACK-BUTTON---------------------------->
+    <div class="text-center">
+      <%= link_to "Try Again",
+            surprise_playlist_playlist_songs_path(playlist),
+            data: { turbo_frame: "playlist_content" },
+            class: "btn btn-outline-secondary me-2" %>
+      <%= link_to "Back",
+            new_playlist_playlist_song_path(playlist),
+            data: { turbo_frame: "playlist_content" },
+            class: "btn btn-outline-dark" %>
+    </div>
+    <!---------------------------END-TRY-AGAIN--&-BACK-BUTTON---------------------------->
   </div>
 </turbo-frame>
+<!---------------------------END-TURBO---------------------------->

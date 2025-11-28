@@ -77,6 +77,6 @@ end
 gem 'acts_as_favoritor'
 gem 'faker'
 gem 'pundit'
-gem "pg_search"
 gem 'rspotify'
 gem "cloudinary"
+gem "pg_search"

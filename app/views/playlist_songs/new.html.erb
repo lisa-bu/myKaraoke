@@ -1,32 +1,32 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@social</td>
-    </tr>
-  </tbody>
-</table>
-
-<h1>Add Song to Playlist</h1>
+<main>
+  <div class="container">
+    <h1>Based on queue</h1>
+    <section class="content">
+      <div class="scrolling-wrapper">
+        <% @songs.each do |song|%>
+          <div class="card">
+            <h2> <%= song.name %></h2>
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
+      <h1>Based on Spotify library</h1>
+      <div class="scrolling-wrapper">
+        <% @songs.each do |song|%>
+          <div class="card">
+            <h2> <%= song.name %></h2>
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
+    </section>
+  </div>
+  <button type="button" class="btn btn-warning">Surprise Me!</button>
+</main>
+<%= render partial: 'surprise_me' %>

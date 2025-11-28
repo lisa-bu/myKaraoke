@@ -1,9 +1,7 @@
 <div class="container">
-  <div class="search-form">
-    <%= render 'shared/search' %>
-  </div>
+    <%= render "shared/search" %>
   <div class="recommend-buttons">
-    <div class="recommendations">
+  <div class="recommendations">
       <%= link_to "Recommend",  new_playlist_playlist_song_path(@current_playlist), class: "btn btn-info" %>
       <%= link_to "Playlists", playlists_path, class: "btn btn-info" %>
     </div>
@@ -17,7 +15,7 @@
     <% if @current_playlist.present? %>
       <ul>
         <% @current_playlist.playlist_songs.each do |playlist_song| %>
-          <li >
+          <li>
             <strong><%= playlist_song.song.name %></strong>
             — <%= playlist_song.song.artist %>
             <i class="fa-solid fa-circle-check" data-action="click->swipe#hide" ></i>

@@ -1,0 +1,57 @@
+.banner {
+  background-size: contain;
+  background-position: center;
+  width: 100vw;
+  height: 100%;
+  background-repeat: no-repeat;
+  padding: 150px 0;
+  flex-direction: column;        // stack children vertically
+  justify-content: flex-end;     // push content (text + button) to bottom
+
+}
+
+.banner h1 {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.banner p {
+  font-size: 20px;
+  color: white;
+  opacity: .7;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 500px;                     // spacing between text and button
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 30px;       // vertical + horizontal space
+  font-size: 18px;          // text size
+  font-weight: bold;
+  color: white;             // text color
+  background-color: $orange; // bright orange
+  border: none;
+  border-radius: 25px;      // rounded edges
+  text-decoration: none;     // remove underline
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-bottom: 10px;
+
+
+  &:hover {
+    background-color: #ff8533; // lighter orange on hover
+    transform: translateY(-2px); // subtle lift effect
+  }
+
+  &:active {
+    transform: translateY(0); // back down when clicked
+  }
+}

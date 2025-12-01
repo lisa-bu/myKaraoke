@@ -1,5 +1,4 @@
-<!--------------------------------TURBO------------------------------>
-<turbo-frame id="playlist_content">
+<div class="playlist-container">
   <div class="container py-4">
     <!---------------------------SURPRISE---------------------------->
     <div class="text-center mb-4">
@@ -40,14 +39,11 @@
     <div class="text-center">
       <%= link_to "Try Again",
             surprise_playlist_playlist_songs_path(@playlist),
-            data: { turbo_frame: "playlist_content" },
             class: "btn btn-outline-secondary me-2" %>
       <%= link_to "Back",
             new_playlist_playlist_song_path(@playlist),
-            data: { turbo_frame: "playlist_content" },
             class: "btn btn-outline-dark" %>
     </div>
     <!---------------------------END-TRY-AGAIN--&-BACK-BUTTON---------------------------->
   </div>
-</turbo-frame>
-<!---------------------------END-TURBO---------------------------->
+</div>

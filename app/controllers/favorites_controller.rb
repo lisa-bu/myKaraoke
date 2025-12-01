@@ -12,7 +12,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     current_user.unfavorite(@favoritable)
-    redirect_to root_path
+    redirect_to home_path
   end
 
   private
@@ -22,7 +22,7 @@ class FavoritesController < ApplicationController
     elsif params[:playlist_id]
       @favoritable = Playlist.find(params[:playlist_id])
     else
-      redirect_to root_path
+      redirect_to home_path
     end
   end
 end

@@ -2,20 +2,11 @@
   <div class="container">
     <section class="content">
       <div style="text-align: center;">
-        <h1 style="
-      color: #504f4fff;
-      text-align: center;
-      background: #e0e0e0;
-      padding: 10px 20px;
-      border-radius: 40px;
-      display: inline-block;
-      font-size: 20px;
-      width: 310px;
-    ">Based on queue</h1>
+        <h1 class="text-start">Song Recommendations</h1>
       </div>
-      <div class="scrolling-wrapper">
+      <div class="scrolling-wrapper bg-transparent">
         <% @songs.shuffle.each do |song|%>
-          <div class="scrolling-card position-relative">
+          <div class="scrolling-card position-relative bg-transparent border border-0">
             <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>
@@ -25,20 +16,11 @@
         <% end  %>
       </div>
       <div style="text-align: center;">
-        <h1 style="
-            color: #504f4fff;
-            text-align: center;
-            background: #e0e0e0;
-            padding: 10px 20px;
-            border-radius: 40px;
-            display: inline-block;
-            font-size: 20px;
-            width: 310px;
-          ">Based on Spotify library</h1>
+        <h1 class="text-start">Based on your Spotify</h1>
       </div>
-      <div class="scrolling-wrapper">
+      <div class="scrolling-wrapper bg-transparent">
         <% @songs.shuffle.each do |song|%>
-          <div class="scrolling-card position-relative">
+          <div class="scrolling-card position-relative bg-transparent border border-0">
             <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>

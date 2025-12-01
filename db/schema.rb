@@ -88,8 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_28_060502) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "current_playlist_id"
     t.string "name"
+    t.bigint "current_playlist_id"
     t.string "spotify_uid"
     t.string "spotify_access_token"
     t.string "spotify_refresh_token"

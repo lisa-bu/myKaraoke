@@ -1,6 +1,6 @@
         <!-- search mode -->
         <div class="playlist-header">
-          <h1 class="playlist-title" style="color: black"><%= playlist.name %></h1>
+          <h1 class="playlist-title" style="color: white"><%= playlist.name %></h1>
 
           <%= link_to "Back",
                     playlist_path(playlist),
@@ -8,7 +8,7 @@
                     style: "color: orange"%>
         </div>
 
-        <h2 class="playlist-subtitle" style="color: black">Search Results</h2>
+        <h2 class="playlist-subtitle" style="color: white">Search Results</h2>
         <% if songs.any? %>
           <ul class="playlist-song-list">
             <% songs.each do |song| %>

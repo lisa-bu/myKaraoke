@@ -1,13 +1,18 @@
 <div class="container">
-  <%= render "shared/search", playlist: @current_playlist %>
-  <div class="stop mb-0">
-    <%= link_to "Recommend",  new_playlist_playlist_song_path(@current_playlist), class: "btn btn-info w-100" %>
-    <%= link_to "Playlists", playlists_path, class: "btn btn-info w-100" %>
-  </div>
-  <div class="stop">
+    <%= render "shared/search", playlist: @current_playlist %>
+    <div class="stop mb-0">
+      <%= link_to new_playlist_playlist_song_path(@current_playlist),
+      class: "card-category card-category-recommend" do %>Recommend<% end %>
+      <%= link_to playlists_path,
+      class: "card-category card-category-playlists" do %>Playlists<% end %>
+    </div>
+
+    <div class="stop">
     <%= link_to "Stop & Delete", playlist_path(@current_playlist), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-info w-100" %>
     <%= link_to "Stop Singing", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
   </div>
+
+
   <div class="playlist-container" data-controller="swipe">
     <% if @current_playlist.playlist_songs.count > 0 %>
       <ul class="mt-3">

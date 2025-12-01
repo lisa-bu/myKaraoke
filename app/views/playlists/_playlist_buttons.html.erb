@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center gap-4">
+  <%= link_to playlists_path, class: "btn btn-info", style: "width: 40px;" do %>
+    <i class="fa-solid fa-angle-left"></i>
+  <% end %>
+  <%= link_to user_path(current_user, current_playlist_id: playlist.id),
+            data: { turbo_method: :patch },
+            style: "width: 40px;",
+            class: "btn btn-info"  do %>
+    <i class="fa-solid fa-microphone"></i>
+  <% end %>
+  <%= link_to playlist_path(playlist),
+            class: "btn btn-info",
+            style: "width: 40px;",
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+    <i class="fa-solid fa-trash"></i>
+  <% end %>
+</div>

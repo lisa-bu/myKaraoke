@@ -43,6 +43,7 @@ class PlaylistsController < ApplicationController
 
   def update
     @playlist = Playlist.find(params[:id])
+    authorize @playlist
     if @playlist.update(playlist_params)
       redirect_to playlist_path(@playlist)
     else
@@ -52,15 +53,9 @@ class PlaylistsController < ApplicationController
 
   def destroy
     authorize @playlist
-    if @playlist.id == current_user.current_playlist_id
-      flash[:notice] = "Cannot delete your singing now playlist"
-      @playlists = policy_scope(Playlist)
-      @playlist = Playlist.new
-    else
-      @playlist.destroy
-    end
-
-    redirect_to playlists_path
+    User.where(current_playlist_id: @playlist.id).update_all(current_playlist_id: nil)
+    @playlist.destroy
+    redirect_to playlists_path, notice: "Playlist deleted."
   end
 
   private

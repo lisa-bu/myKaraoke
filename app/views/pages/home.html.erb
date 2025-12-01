@@ -14,22 +14,24 @@
 
 
   <div class="playlist-container" data-controller="swipe">
-    <ul class="playlist-song-list">
-    <% if @current_playlist.present? %>
+    <% if @current_playlist.playlist_songs.count > 0 %>
       <ul class="mt-3">
         <% @current_playlist.playlist_songs.each do |playlist_song| %>
-          <li>
-            <strong><%= playlist_song.song.name %></strong>
-            — <%= playlist_song.song.artist %>
+          <li class="d-flex align-items-center">
+            <%= image_tag playlist_song.song.image_url, class: "img-thumbnail", style: "width: 60px; height: 60px;" %>
+            <div class="flex-grow-1 text-center">
+              <strong><%= playlist_song.song.name %></strong>
+              — <%= playlist_song.song.artist %>
+            </div>
             <i class="fa-solid fa-circle-check" data-action="click->swipe#hide" ></i>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <p>No songs added yet! Search for one at the top or get one recommended</p>
+      <%= image_tag "undraw_playlist_lwhi.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
     <% end %>
   </div>
-  <div class="Stop">
+  <div class="Stop mt-4>
     <% unless current_user.spotify_access_token %>
       <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post, class: "btn btn-warning" %>
     <% end %>

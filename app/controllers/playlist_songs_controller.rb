@@ -29,7 +29,7 @@ class PlaylistSongsController < ApplicationController
     if @playlist_song.save
       if current_user.current_playlist_id == @playlist.id
         # raise
-        redirect_to root_path, notice: "Song added!"
+        redirect_to home_path, notice: "Song added!"
       else
         redirect_to playlist_path(@playlist), notice: "Song added!"
       end

@@ -9,8 +9,15 @@ class PlaylistPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def spotify?
+    true
+  end
+
   def show?
-    record.user == user
+  # SPOTIFY PLAYLISTS
+  return true if record.is_a?(RSpotify::Playlist)
+
+  record.user == user
   end
 
   def index?

@@ -74,4 +74,13 @@ class SpotifyClient
   def search_playlists(query, limit: 10)
     RSpotify::Playlist.search(query, limit: limit)
   end
+
+  # CURRENT USERS PLAYLISTS IMPORT
+  def user_playlists(current_user)
+    user = user_for(current_user)
+    return [] unless user
+
+    playlists = user.playlists
+    playlists || []
+  end
 end

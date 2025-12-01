@@ -1,11 +1,11 @@
 <%= render "shared/search", playlist: nil %>
 <div class="container">
-  <div class="modal fade " id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
+  <div class="modal fade" id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content bg-secondary">
         <div class="modal-header text-light">
-          <h5 class="modal-title text-light" id="newPlaylistModalLabel">Make a new playlist!</h5>
-          <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="newPlaylistModalLabel">Make a new playlist!</h5>
+          <button type="button" class="btn-close btn-light" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body text-light">
           <%= simple_form_for @playlist do |f| %>
@@ -16,10 +16,37 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
-  <div class="playlist-container row g-4">
+  <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
+    Make a new playlist!
+  </button>
+  <% if current_user.spotify_access_token.present? %>
+    <%= link_to "Show Spotify Playlists", "#spotify-playlists", class: "btn btn-success w-100 mb-3" %>
+  <% end %>
+  <!-- SPOTIFY PLAYLISTS -->
+  <% if @spotify_playlists.any? %>
+    <div id="spotify-playlists" class="mt-4">
+      <h4 class="text-light">Your Spotify Playlists</h4>
+      <div class="playlist-container row g-4">
+        <% @spotify_playlists.each do |sp| %>
+          <div class="col-6 h-100 playlist-card position-relative">
+            <%= link_to playlist_path("spotify_#{sp.id}"), class: "text-decoration-none" do %>
+              <div class="playlist-card-image">
+                <% if sp.images.present? %>
+                  <%= image_tag sp.images.first["url"], style: "width: 100%; object-fit: cover;" %>
+                <% end %>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-white"><%= sp.name %></h5>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <div class="playlist-container row g-4 mt-5">
     <% @playlists.each do |playlist| %>
-      <div class="col-6 h-100 playlist-card position-relative">
+      <div class="col-6 playlist-card position-relative">
         <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
           <div class="playlist-card-image">
             <% cover = playlist.songs.first&.image_url %>

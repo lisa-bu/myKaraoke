@@ -1,31 +1,44 @@
 class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:show, :update, :destroy ]
   def index
-    authorize Playlist
-    @playlists = policy_scope(Playlist)
-    @playlist = Playlist.new
+  authorize Playlist
+  @playlists = policy_scope(Playlist)
+  @playlist = Playlist.new
 
-    return unless params[:query].present?
+  # SPOTIFY PLAYLISTS!
+  @spotify_playlists = SpotifyClient.instance.user_playlists(current_user)
 
-    # query   = params[:query].strip
-    # pattern = "%#{query}%"
-    # @playlists = Playlist.where("name ILIKE ?", pattern)
-    query = params[:query].strip
-    @playlists = @playlists.search_by_name(query)
+  return unless params[:query].present?
+
+  query = params[:query].strip
+  @playlists = @playlists.search_by_name(query)
   end
 
   def show
+    # SPOTIFY PLAYLISTS FIRST — before anything else
+    if params[:id].start_with?("spotify_")
+      spotify_id = params[:id].sub("spotify_", "")
+
+      user = SpotifyClient.instance.user_for(current_user)
+
+      # Your RSpotify version requires: find(owner_id, playlist_id)
+      @playlist = RSpotify::Playlist.find(user.id, spotify_id)
+      @spotify_tracks = @playlist.tracks
+
+      skip_authorization
+      return
+    end
+
+    # LOCAL PLAYLISTS
     @playlist = Playlist.find(params[:id])
-    @songs = []
     authorize @playlist
 
-    return unless params[:query].present?
+    @songs = []
 
-    # query   = params[:query].strip
-    # pattern = "%#{query}%"
-    # @songs = Song.where("name ILIKE ? OR artist ILIKE ?", pattern, pattern)
-    query = params[:query].strip
-    @songs = Song.search_by_name_and_artist(query)
+    if params[:query].present?
+      query = params[:query].strip
+      @songs = Song.search_by_name_and_artist(query)
+    end
   end
 
   def create
@@ -63,13 +76,30 @@ class PlaylistsController < ApplicationController
     redirect_to playlists_path
   end
 
+  # # CURRENT USER SPOTIFY PLAYLISTS
+  # def spotify
+  #   @playlists = SpotifyClient.instance.user_playlists(current_user)
+  # end
+
   private
 
   def set_playlist
-    @playlist = Playlist.find(params[:id])
+  return if params[:id].start_with?("spotify_")
+
+  @playlist = Playlist.find(params[:id])
   end
 
   def playlist_params
     params.require(:playlist).permit(:name)
+  end
+
+  def load_spotify_playlist
+  spotify_id = params[:id].sub("spotify_", "")
+  user = SpotifyClient.instance.user_for(current_user)
+
+  @playlist = RSpotify::Playlist.find(current_user.spotify_uid, spotify_id)
+  @spotify_tracks = @playlist.tracks
+
+  render :show
   end
 end

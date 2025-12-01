@@ -1,5 +1,7 @@
 class SpotifyAuthController < ApplicationController
   def callback
+    authorize :spotify_auth
+
     auth = request.env["omniauth.auth"]
 
     current_user.update!(
@@ -13,6 +15,8 @@ class SpotifyAuthController < ApplicationController
   end
 
   def failure
+    authorize :spotify_auth
+
     redirect_to root_path, alert: "Spotify authentication failed."
   end
 end

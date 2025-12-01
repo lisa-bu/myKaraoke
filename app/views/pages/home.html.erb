@@ -1,10 +1,8 @@
 <div class="container">
-
-    <%= render "shared/search", playlist: @current_playlist %>
+  <%= render "shared/search", playlist: @current_playlist %>
   <div class="stop mb-0">
     <%= link_to "Recommend",  new_playlist_playlist_song_path(@current_playlist), class: "btn btn-info w-100" %>
     <%= link_to "Playlists", playlists_path, class: "btn btn-info w-100" %>
-
   </div>
   <div class="stop">
     <%= link_to "Stop & Delete", playlist_path(@current_playlist), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-info w-100" %>
@@ -26,8 +24,10 @@
     <% end %>
   </div>
   <div class="Stop">
+    <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post, class: "btn btn-warning" %>
     <% unless current_user.spotify_access_token %>
-      <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post, class: "btn btn-warning" %>
+    <% else %>
+      <button class="btn btn-secondary">Import playlists</button>
     <% end %>
   </div>
 </div>

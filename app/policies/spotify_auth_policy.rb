@@ -12,11 +12,11 @@ class SpotifyAuthPolicy < ApplicationPolicy
     # end
   end
 
-  def callback
+  def callback?
     true
   end
 
-  def failure
+  def failure?
     true
   end
 end

@@ -1,20 +1,22 @@
 <main>
   <div class="container">
-    <div style="text-align: center;">
-      <h1 style="
-    text-align: center;
-    background: #e0e0e0;
-    padding: 10px 20px;
-    border-radius: 40px;
-    display: inline-block;
-    font-size: 20px;
-    width: 340px;
-  ">Based on queue</h1>
-    </div>
     <section class="content">
+      <div style="text-align: center;">
+        <h1 style="
+      color: #504f4fff;
+      text-align: center;
+      background: #e0e0e0;
+      padding: 10px 20px;
+      border-radius: 40px;
+      display: inline-block;
+      font-size: 20px;
+      width: 310px;
+    ">Based on queue</h1>
+      </div>
       <div class="scrolling-wrapper">
-        <% @songs.each do |song|%>
-          <div class="scrolling-card">
+        <% @songs.shuffle.each do |song|%>
+          <div class="scrolling-card position-relative">
+            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>
               <%= f.submit "+ #{song.name}", class: "add-button" %>
@@ -24,18 +26,20 @@
       </div>
       <div style="text-align: center;">
         <h1 style="
-          text-align: center;
-          background: #e0e0e0;
-          padding: 10px 20px;
-          border-radius: 40px;
-          display: inline-block;
-          font-size: 20px;
-          width: 340px;
-        ">Based on Spotify library</h1>
+            color: #504f4fff;
+            text-align: center;
+            background: #e0e0e0;
+            padding: 10px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 20px;
+            width: 310px;
+          ">Based on Spotify library</h1>
       </div>
       <div class="scrolling-wrapper">
-        <% @songs.each do |song|%>
-          <div class="scrolling-card">
+        <% @songs.shuffle.each do |song|%>
+          <div class="scrolling-card position-relative">
+            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>
               <%= f.submit "+ #{song.name}", class: "add-button" %>
@@ -50,3 +54,4 @@
     %>
   </div>
 </main>
+</turbo-frame>

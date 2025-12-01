@@ -21,7 +21,10 @@
     <% @playlists.each do |playlist| %>
       <div class="col-6 h-100 playlist-card position-relative">
         <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
-          <div class="playlist-card-image"></div>
+          <div class="playlist-card-image">
+            <% cover = playlist.songs.first&.image_url %>
+            <%= image_tag cover, style: "width: 100%; object-fit: cover;" if cover %>
+          </div>
           <div class="card-body">
             <h5 class="card-title text-white"><%= playlist.name %></h5>
           </div>

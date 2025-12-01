@@ -13,6 +13,11 @@ class UsersController < ApplicationController
   def stop_singing
     @user = User.find(params[:id])
     authorize @user
+    playlist = Playlist.find_by(id: @user.current_playlist_id)
+    @user.update(current_playlist_id: nil)
+    if playlist && playlist.playlist_songs.empty?
+      playlist.destroy
+    end
     @user.update(current_playlist_id: nil)
     redirect_to root_path
   end

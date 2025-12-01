@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "pages#home"
+  root to: "pages#landing"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'search/index'
   get "/auth/spotify/callback", to: "spotify_auth#callback"
   get "/auth/failure",          to: "spotify_auth#failure"
-
+  get "/home", to: "pages#home"
   # Defines the root path route ("/")
   # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do

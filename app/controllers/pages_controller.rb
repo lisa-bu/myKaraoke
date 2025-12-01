@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  # skip_before_action :authenticate_user!, only: [ :home ]
+   skip_before_action :authenticate_user!, only: [ :landing ]
 
   def home
     @current_playlist = current_user.playlists.find_by(id: current_user.current_playlist_id)
@@ -9,5 +9,8 @@ class PagesController < ApplicationController
     )
     current_user.update!(current_playlist_id: @current_playlist.id)
     end
+  end
+  def landing
+
   end
 end

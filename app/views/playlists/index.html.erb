@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body text-light">
           <%= simple_form_for @playlist do |f| %>
-            <%= f.input :name %>
+            <%= f.input :name, label: false %>
             <%= f.submit 'Submit', class: 'btn btn-warning' %>
           <% end %>
         </div>
@@ -42,19 +42,18 @@
     <div class="modal-dialog">
       <div class="modal-content bg-secondary">
         <div class="modal-header text-light">
-          <h5 class="modal-title text-light" id="editPlaylistModalLabel<%= playlist.id %>">Edit Playlist Name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title text-light" id="editPlaylistModalLabel<%= playlist.id %>">Rename Your Playlist</h5>
+          <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <%= form_with model: playlist, url: playlist_path(playlist), method: :patch, local: true do |f| %>
           <div class="modal-body text-light">
             <div>
-              <%= f.label :name, "Playlist Name" %>
               <%= f.text_field :name, required: true %>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" data-bs-dismiss="modal">Cancel</button>
-            <%= f.submit "Save Changes" %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= f.submit "Save", class:"btn btn-warning" %>
           </div>
         <% end %>
       </div>

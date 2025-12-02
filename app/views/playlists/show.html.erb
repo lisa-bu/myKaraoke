@@ -1,12 +1,12 @@
 <%= render "shared/search", playlist: @playlist %>
 <div class="home-screen">
   <div class="playlist-container">
-    <%= render "shared/search", playlist: @playlist %>
+
     <% if params[:query].present? %>
       <%= render "shared/search_results", playlist: @playlist, songs: @songs %>
     <% else %>
       <!-- not search yet  -->
-      <h1 class="playlist-title text-white"><%= @playlist.name %></h1>
+      <h1 class="playlist-title text-white mb-3"><%= @playlist.name %></h1>
       <ul class="playlist-song-list">
         <% @playlist.playlist_songs.each do |playlist_song| %>
           <li class="playlist-song-row d-flex align-items-center">

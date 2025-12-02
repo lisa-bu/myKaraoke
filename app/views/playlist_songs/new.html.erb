@@ -5,7 +5,7 @@
         <h1 class="text-start">Song Recommendations</h1>
       </div>
       <div class="scrolling-wrapper bg-transparent">
-        <% @songs.shuffle.each do |song|%>
+        <% @my_karaoke_recs.shuffle.each do |song|%>
           <div class="scrolling-card position-relative bg-transparent border border-0">
             <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
@@ -19,7 +19,7 @@
         <h1 class="text-start">Based on your Spotify</h1>
       </div>
       <div class="scrolling-wrapper bg-transparent">
-        <% @songs.shuffle.each do |song|%>
+        <% @spotify_songs_1.shuffle.each do |song|%>
           <div class="scrolling-card position-relative bg-transparent border border-0">
             <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
@@ -30,7 +30,7 @@
         <% end  %>
       </div>
       <div class="scrolling-wrapper bg-transparent mt-3">
-        <% @songs.shuffle.each do |song|%>
+        <% @spotify_songs_2.shuffle.each do |song|%>
           <div class="scrolling-card position-relative bg-transparent border border-0">
             <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>

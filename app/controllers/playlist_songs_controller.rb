@@ -12,7 +12,10 @@ class PlaylistSongsController < ApplicationController
   def new
     @playlist_song = PlaylistSong.new
     authorize PlaylistSong
-    @songs = GetRecommendations.new(@playlist.playlist_songs).call
+    @spotify_songs_1 = Song.all.shuffle.take(10)
+    @spotify_songs_2 = Song.all.shuffle.take(10)
+
+    @my_karaoke_recs = GetRecommendations.new(@playlist.playlist_songs).call
   end
 
   def create

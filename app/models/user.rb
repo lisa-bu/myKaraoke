@@ -21,4 +21,8 @@ class User < ApplicationRecord
            class_name: "Friendship",
            foreign_key: "receiver_id"
   acts_as_favoritor
+
+  has_one_attached :photo
+
+
 end

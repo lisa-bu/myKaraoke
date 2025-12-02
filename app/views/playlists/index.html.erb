@@ -34,9 +34,9 @@
     <% end %>
   </div>
 
-  <div class="playlist-container row g-4">
+  <div class="playlists-grid row g-2">
     <% @playlists.each do |playlist| %>
-      <div class="col-6 h-100 playlist-card position-relative">
+      <div class="col-6 playlist-card position-relative">
         <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
           <div class="playlist-card-image">
             <% cover = playlist.songs.first&.image_url %>

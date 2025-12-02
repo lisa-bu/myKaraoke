@@ -2,7 +2,7 @@ class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:show, :update, :destroy ]
   def index
     authorize Playlist
-    @playlists = policy_scope(Playlist)
+    @playlists = policy_scope(Playlist).joins(:playlist_songs).distinct
     @playlist = Playlist.new
 
     return unless params[:query].present?

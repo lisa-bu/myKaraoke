@@ -1,5 +1,6 @@
 class SpotifyAuthController < ApplicationController
   def callback
+    skip_authorization
     auth = request.env["omniauth.auth"]
 
     current_user.update!(

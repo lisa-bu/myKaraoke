@@ -9,14 +9,14 @@
         </div>
         <div class="modal-body text-light">
           <%= simple_form_for @playlist do |f| %>
-            <%= f.input :name %>
+            <%= f.input :name, label: false %>
             <%= f.submit 'Submit', class: 'btn btn-warning' %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-info mb-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
+  <button type="button" class="btn btn-warning mb-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">Make a new playlist!</button>
   <% if current_user.spotify_access_token %>
     <%= button_to "Import Spotify Playlists", import_spotify_playlists_playlists_path, method: :post, class: "btn btn-success mb-4 ms-2" %>
   <% else %>
@@ -47,19 +47,18 @@
     <div class="modal-dialog">
       <div class="modal-content bg-secondary">
         <div class="modal-header text-light">
-          <h5 class="modal-title text-light" id="editPlaylistModalLabel<%= playlist.id %>">Edit Playlist Name</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title text-light" id="editPlaylistModalLabel<%= playlist.id %>">Rename Your Playlist</h5>
+          <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <%= form_with model: playlist, url: playlist_path(playlist), method: :patch, local: true do |f| %>
           <div class="modal-body text-light">
             <div>
-              <%= f.label :name, "Playlist Name" %>
               <%= f.text_field :name, required: true %>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" data-bs-dismiss="modal">Cancel</button>
-            <%= f.submit "Save Changes" %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= f.submit "Save", class:"btn btn-warning" %>
           </div>
         <% end %>
       </div>

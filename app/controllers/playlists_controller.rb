@@ -1,5 +1,6 @@
 class PlaylistsController < ApplicationController
-  before_action :set_playlist, only: [:show, :update, :destroy ]
+  before_action :set_playlist, only: [:show, :update, :destroy]
+
   def index
     authorize Playlist
     @playlists = policy_scope(Playlist).joins(:playlist_songs).distinct
@@ -56,6 +57,49 @@ class PlaylistsController < ApplicationController
     User.where(current_playlist_id: @playlist.id).update_all(current_playlist_id: nil)
     @playlist.destroy
     redirect_to playlists_path, notice: "Playlist deleted."
+  end
+
+  def import_spotify_playlists
+    authorize Playlist
+
+    unless current_user.spotify_access_token
+      redirect_to playlists_path, alert: "Please connect your Spotify account first."
+      return
+    end
+
+    spotify_playlists = SpotifyClient.instance.user_playlists(current_user)
+
+    if spotify_playlists.empty?
+      redirect_to playlists_path, notice: "No Spotify playlists found."
+      return
+    end
+
+    imported_count = 0
+    spotify_playlists.each do |spotify_playlist|
+      playlist = current_user.playlists.create(name: spotify_playlist.name)
+      next unless playlist.persisted?
+
+      tracks = SpotifyClient.instance.playlist_tracks(spotify_playlist.id, current_user)
+      tracks.each_with_index do |track, index|
+        next unless track&.external_ids && track.external_ids["isrc"]
+
+        song = Song.find_or_create_by(ISRC: track.external_ids["isrc"]) do |s|
+          s.name = track.name
+          s.artist = track.artists.map(&:name).join(", ")
+          s.spotify_id = track.id
+          s.image_url = track.album&.images&.first&.dig("url")
+          s.availability = track.available_markets || []
+        end
+
+        if song.persisted?
+          playlist.playlist_songs.create(song: song, position: index + 1)
+        end
+      end
+
+      imported_count += 1
+    end
+
+    redirect_to playlists_path, notice: "Imported #{imported_count} playlist(s) from Spotify!"
   end
 
   private

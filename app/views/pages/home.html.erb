@@ -11,6 +11,7 @@
     <%= link_to "Stop Singing", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
   </div>
   <div class="playlist-container" data-controller="swipe">
+    <%# <ul class="playlist-song-list"> %>
     <% if @current_playlist.playlist_songs.count > 0 %>
       <ul class="mt-3">
         <% @current_playlist.playlist_songs.each do |playlist_song| %>
@@ -23,10 +24,11 @@
             <i class="fa-solid fa-circle-check" data-action="click->swipe#hide" ></i>
           </li>
         <% end %>
-      </ul>
+      <%# </ul> %>
     <% else %>
       <%= image_tag "undraw_playlist_lwhi.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
     <% end %>
+   </ul>
   </div>
   <div class="mt-4" data-controller="spotify">
     <% unless current_user.spotify_access_token %>

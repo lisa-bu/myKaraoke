@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center gap-4 mt-4">
-  <%= link_to playlists_path, class: "btn btn-warning", style: "width: 40px;" do %>
+  <%= link_to :back, class: "btn btn-warning", style: "width: 40px;" do %>
     <i class="fa-solid fa-angle-left"></i>
   <% end %>
   <%= link_to user_path(current_user, current_playlist_id: playlist.id),

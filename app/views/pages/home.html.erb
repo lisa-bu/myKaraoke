@@ -18,10 +18,11 @@
           <li class="d-flex align-items-center"
               data-controller="spotify-player"
               data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
-            <%= image_tag playlist_song.song.image_url, class: "img-thumbnail", style: "width: 60px; height: 60px;" %>
-            <div class="flex-grow-1 text-center">
-              <strong><%= playlist_song.song.name %></strong>
-              — <%= playlist_song.song.artist %>
+            <%= image_tag playlist_song.song.image_url, class: "img-thumbnail", style: "width: 45px; height: 45px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" %>
+            <div class="song-info-wrapper flex-grow-1 mx-2" data-controller="marquee">
+              <div class="song-info-scroll">
+                <span class="song-text"><strong><%= playlist_song.song.name %></strong> — <%= playlist_song.song.artist %></span>
+              </div>
             </div>
             <button data-action="click->spotify-player#togglePlay"
               data-spotify-player-target="button"

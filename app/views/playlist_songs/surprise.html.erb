@@ -10,46 +10,47 @@
   </div>
   <!---------------------------END-BACK-ICON---------------------------->
   <div class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
-  <!---------------------------SURPRISE---------------------------->
-  <div class="text-center mb-2">
-    <h1 class="fw-bold text-white animate-pop" style="font-size: 3rem;">Surprise!</h1>
-  </div>
-  <!---------------------------END-SURPRISE---------------------------->
-  <!---------------------------SUBTITLE---------------------------->
-  <div class="text-center mb-2">
-    <p class="text-white" style="font-size: 0.9rem;">Your song for today is...</p>
-  </div>
-  <!---------------------------END-SUBTITLE---------------------------->
-  <!---------------------------ALBUM-ARTWORK---------------------------->
-  <div class="mx-auto mb-2 album-glow" style="max-width: 240px;">
-    <%= image_tag @song.image_url, class: "img-fluid rounded" %>
-  </div>
-  <!---------------------------END-ALBUM-ARTWORK---------------------------->
-  <!---------------------------SONG-&-ARTIST---------------------------->
-  <div class="text-center mb-2">
-    <h5 class="fw-bold text-white mb-1"><%= @song.name %></h5>
-    <p class="text-white-50 mb-1" style="font-size: 0.85rem;">by</p>
-    <h6 class="fw-semibold text-white mb-0"><%= @song.artist %></h6>
-  </div>
-  <!---------------------------END-SONG-&-ARTIST---------------------------->
-  <!---------------------------ADD-SONG-BUTTON---------------------------->
-  <div class="text-center mb-2">
-    <%= simple_form_for [@playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
-      <%= f.hidden_field :song_id, value: @song.id %>
-      <button type="submit" class="btn p-0 border-0 bg-transparent">
-        <i class="fa-solid fa-plus fa-2x" style="color: #f5af19; cursor: pointer;"></i>
-      </button>
-    <% end %>
-  </div>
-  <!---------------------------END-ADD-SONG-BUTTON---------------------------->
-  <!---------------------------TRY-AGAIN-BUTTON---------------------------->
-  <div class="text-center">
-    <%= link_to "Try Again",
+    <!---------------------------SURPRISE---------------------------->
+    <div class="text-center mb-2">
+      <h1 class="fw-bold text-white animate-pop" style="font-size: 3rem;">Surprise!</h1>
+    </div>
+    <!---------------------------END-SURPRISE---------------------------->
+    <!---------------------------SUBTITLE---------------------------->
+    <div class="text-center mb-2">
+      <p class="text-white" style="font-size: 0.9rem;">Your song for today is...</p>
+    </div>
+    <!---------------------------END-SUBTITLE---------------------------->
+    <!---------------------------ALBUM-ARTWORK---------------------------->
+    <div class="mx-auto mb-2 album-glow" style="max-width: 240px;">
+      <%= image_tag @song.image_url, class: "img-fluid rounded" %>
+    </div>
+    <!---------------------------END-ALBUM-ARTWORK---------------------------->
+    <!---------------------------SONG-&-ARTIST---------------------------->
+    <div class="text-center mb-2">
+      <h5 class="fw-bold text-white mb-1"><%= @song.name %></h5>
+      <p class="text-white-50 mb-1" style="font-size: 0.85rem;">by</p>
+      <h6 class="fw-semibold text-white mb-0"><%= @song.artist %></h6>
+    </div>
+    <!---------------------------END-SONG-&-ARTIST---------------------------->
+    <!---------------------------ADD-SONG-BUTTON---------------------------->
+    <div class="text-center mb-2">
+      <%= simple_form_for [@playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
+        <%= f.hidden_field :song_id, value: @song.id %>
+        <button type="submit" class="btn p-0 border-0 bg-transparent">
+          <i class="fa-solid fa-plus fa-2x" style="color: #f5af19; cursor: pointer;"></i>
+        </button>
+      <% end %>
+      <p class="fw-bold mt-1" style="font-size: 1.2rem; color: #f5af19;">Sing now!</p>
+    </div>
+    <!---------------------------END-ADD-SONG-BUTTON---------------------------->
+    <!---------------------------TRY-AGAIN-BUTTON---------------------------->
+    <div class="text-center">
+      <%= link_to "Try Again",
             surprise_playlist_playlist_songs_path(@playlist),
             class: "btn px-4 py-2 text-white fw-semibold",
             style: "background: linear-gradient(135deg, #f5af19 0%, #f12711 100%); border-radius: 25px;" %>
-  </div>
-  <!---------------------------END-TRY-AGAIN-BUTTON---------------------------->
+    </div>
+    <!---------------------------END-TRY-AGAIN-BUTTON---------------------------->
   </div>
 </div>
 <style>

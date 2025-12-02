@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :playlists, only: [:index, :show, :create, :update, :destroy] do
+    collection do
+      post :import_spotify_playlists
+    end
     resources :playlist_songs, only: [:new, :create] do
       get :surprise, on: :collection
     end

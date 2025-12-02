@@ -1,14 +1,15 @@
-<!---------------------------CONFETTI---------------------------->
-<div class="confetti-container" id="confetti-container"></div>
-<!---------------------------END-CONFETTI---------------------------->
-<!---------------------------BACK-ICON---------------------------->
-<div class="position-absolute" style="top: 1rem; left: 1rem; z-index: 10;">
-  <%= link_to new_playlist_playlist_song_path(@playlist), class: "text-white" do %>
-    <i class="fa-solid fa-arrow-left fa-lg"></i>
-  <% end %>
-</div>
-<!---------------------------END-BACK-ICON---------------------------->
-<div class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
+<div class="surprise-page position-relative flex-grow-1 d-flex flex-column overflow-hidden">
+  <!---------------------------CONFETTI---------------------------->
+  <div class="confetti-container" id="confetti-container"></div>
+  <!---------------------------END-CONFETTI---------------------------->
+  <!---------------------------BACK-ICON---------------------------->
+  <div class="position-absolute" style="top: 1rem; left: 1rem; z-index: 10;">
+    <%= link_to new_playlist_playlist_song_path(@playlist), class: "text-white" do %>
+      <i class="fa-solid fa-arrow-left fa-lg"></i>
+    <% end %>
+  </div>
+  <!---------------------------END-BACK-ICON---------------------------->
+  <div class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
   <!---------------------------SURPRISE---------------------------->
   <div class="text-center mb-2">
     <h1 class="fw-bold text-white animate-pop" style="font-size: 3rem;">Surprise!</h1>
@@ -49,8 +50,12 @@
             style: "background: linear-gradient(135deg, #f5af19 0%, #f12711 100%); border-radius: 25px;" %>
   </div>
   <!---------------------------END-TRY-AGAIN-BUTTON---------------------------->
+  </div>
 </div>
 <style>
+  .surprise-page {
+    background: #3a3a3a;
+  }
   @keyframes popIn {
     0% { transform: scale(0); opacity: 0; }
     50% { transform: scale(1.2); }

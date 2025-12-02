@@ -10,3 +10,18 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+// App layout wrapper
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

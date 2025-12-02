@@ -1,36 +1,30 @@
         <!-- search mode -->
 <div class="playlist-header" style="position: relative;">
-      <%# <h1 class="playlist-title" style="color: white"><%= playlist.name %></h1>
-      <%# <h2 class="playlist-subtitle" style="color: white"></h2> %>
-      <% if songs.any? %>
-      <ul class="playlist-song-list">
-        <% songs.each do |song| %>
-        <li class="playlist-song-row d-flex align-items-center">
-
+  <%# <h1 class="playlist-title" style="color: white"><%= playlist.name %></h1>
+<%# <h2 class="playlist-subtitle" style="color: white"></h2> %>
+<% if songs.any? %>
+  <ul class="playlist-song-list">
+    <% songs.each do |song| %>
+      <li class="playlist-song-row d-flex align-items-center">
         <%= image_tag(song.image_url.presence || "default_cover.png",
             class: "img-thumbnail me-3",
             style: "width: 56px; height: 56px; object-fit: cover;") %>
-
-          <div class="playlist-song-text flex-grow-1">
-            <strong class="playlist-song-name"><%= song.name %></strong>
-            <span class="playlist-song-artist"> — <%= song.artist %></span>
-          </div>
-
-            <%= simple_form_for PlaylistSong.new,
+        <div class="playlist-song-text flex-grow-1">
+          <strong class="playlist-song-name"><%= song.name %></strong>
+          <span class="playlist-song-artist"> — <%= song.artist %></span>
+        </div>
+        <%= simple_form_for PlaylistSong.new,
                   url: playlist_playlist_songs_path(playlist),
                   html: { class: "playlist-add-form mb-0" } do |f| %>
-
-              <%= f.hidden_field :song_id, value: song.id %>
-
-              <%= f.button :submit, "+",
+          <%= f.hidden_field :song_id, value: song.id %>
+          <%= f.button :submit, "+",
                     class: "playlist-add-btn btn btn-light btn-sm",
                     style: "color: orange" %>
-            <% end %>
-
-          </li>
         <% end %>
-      </ul>
-        <% else %>
-          <p>No songs found.</p>
-        <% end %>
-  </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No songs found.</p>
+<% end %>
+</div>

@@ -1,6 +1,7 @@
+// for adding song show page
 .add-button {
-  background-color: whitesmoke;
-  color: rgb(79, 78, 78);
+  background: linear-gradient(135deg, #ff9500, #ff5f00);
+  color: rgb(0, 0, 0);
   padding: 10px 20px;
   width: 265px;
   border-radius: 8px;
@@ -13,7 +14,8 @@
   left: 15px;         // distance from left of div
 
   &:hover {
-    background-color: #6a6a6a;
+    background: linear-gradient(135deg, #ff7b00, #ffffff);
+    transform: scale(1.05);
   }
 }
 

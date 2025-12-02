@@ -29,6 +29,17 @@
           </div>
         <% end  %>
       </div>
+      <div class="scrolling-wrapper bg-transparent mt-3">
+        <% @songs.shuffle.each do |song|%>
+          <div class="scrolling-card position-relative bg-transparent border border-0">
+            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
+            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+              <%= f.hidden_field :song_id, value: song.id %>
+              <%= f.submit "+ #{song.name}", class: "add-button" %>
+            <% end %>
+          </div>
+        <% end  %>
+      </div>
     </section>
     <%= link_to "Surprise Me!",
       surprise_playlist_playlist_songs_path(@playlist),

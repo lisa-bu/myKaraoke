@@ -2,6 +2,27 @@
 @import "home";
 @import "landing";
 
+.playlists-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #3a3a3a;
+  color: white;
+}
+
+.playlists-header {
+  flex-shrink: 0;
+  background: #3a3a3a;
+  padding-top: 1rem;
+}
+
+.playlists-scroll {
+  flex: 1;
+  overflow-y: auto;
+  background: #3a3a3a;
+  padding-bottom: 2rem;
+}
+
 .playlists-grid {
   width: 100%;
   margin: 0;

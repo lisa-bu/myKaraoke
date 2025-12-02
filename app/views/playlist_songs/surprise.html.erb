@@ -1,49 +1,143 @@
-<div class="playlist-container">
-  <div class="container py-4">
-    <!---------------------------SURPRISE---------------------------->
-    <div class="text-center mb-4">
-      <button class="btn btn-lg btn-warning w-100 rounded-pill py-3">
-        Surprise!
+<div class="surprise-page position-relative flex-grow-1 d-flex flex-column overflow-hidden">
+  <!---------------------------CONFETTI---------------------------->
+  <div class="confetti-container" id="confetti-container"></div>
+  <!---------------------------END-CONFETTI---------------------------->
+  <!---------------------------BACK-ICON---------------------------->
+  <div class="position-absolute" style="top: 1rem; left: 1rem; z-index: 10;">
+    <%= link_to new_playlist_playlist_song_path(@playlist), class: "text-white" do %>
+      <i class="fa-solid fa-arrow-left fa-lg"></i>
+    <% end %>
+  </div>
+  <!---------------------------END-BACK-ICON---------------------------->
+  <div class="container d-flex flex-column justify-content-center align-items-center flex-grow-1 px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
+  <!---------------------------SURPRISE---------------------------->
+  <div class="text-center mb-2">
+    <h1 class="fw-bold text-white animate-pop" style="font-size: 3rem;">Surprise!</h1>
+  </div>
+  <!---------------------------END-SURPRISE---------------------------->
+  <!---------------------------SUBTITLE---------------------------->
+  <div class="text-center mb-2">
+    <p class="text-white" style="font-size: 0.9rem;">Your song for today is...</p>
+  </div>
+  <!---------------------------END-SUBTITLE---------------------------->
+  <!---------------------------ALBUM-ARTWORK---------------------------->
+  <div class="mx-auto mb-2 album-glow" style="max-width: 240px;">
+    <%= image_tag @song.image_url, class: "img-fluid rounded" %>
+  </div>
+  <!---------------------------END-ALBUM-ARTWORK---------------------------->
+  <!---------------------------SONG-&-ARTIST---------------------------->
+  <div class="text-center mb-2">
+    <h5 class="fw-bold text-white mb-1"><%= @song.name %></h5>
+    <p class="text-white-50 mb-1" style="font-size: 0.85rem;">by</p>
+    <h6 class="fw-semibold text-white mb-0"><%= @song.artist %></h6>
+  </div>
+  <!---------------------------END-SONG-&-ARTIST---------------------------->
+  <!---------------------------ADD-SONG-BUTTON---------------------------->
+  <div class="text-center mb-2">
+    <%= simple_form_for [@playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
+      <%= f.hidden_field :song_id, value: @song.id %>
+      <button type="submit" class="btn p-0 border-0 bg-transparent">
+        <i class="fa-solid fa-plus fa-2x" style="color: #f5af19; cursor: pointer;"></i>
       </button>
-    </div>
-    <!---------------------------END-SURPRISE---------------------------->
-    <!---------------------------SUBTITLE---------------------------->
-    <div class="text-center mb-4">
-      <h4 class="fw-semibold text-dark">Your song today is...</h4>
-      <p class="text-muted mb-0">Your randomly generated song for today!</p>
-    </div>
-    <!---------------------------END-SUBTITLE---------------------------->
-    <!---------------------------ALBUM-ARTWORK---------------------------->
-    <div class="card shadow-sm mx-auto mb-4" style="max-width: 320px;">
-      <div class="card-img-top">
-        <%= image_tag @song.image_url, class: "img-fluid rounded-top" %>
-      </div>
-    </div>
-    <!---------------------------END-ALBUM-ARTWORK---------------------------->
-    <!---------------------------SONG-&-ARTIST---------------------------->
-    <div class="text-center mb-4">
-      <h3 class="fw-bold"><%= @song.name %></h3>
-      <p class="text-muted mb-0">by</p>
-      <h5 class="fw-semibold"><%= @song.artist %></h5>
-    </div>
-    <!---------------------------END-SONG-&-ARTIST---------------------------->
-    <!---------------------------ADD-SONG-BUTTON---------------------------->
-    <div class="text-center mb-5">
-      <%= simple_form_for [@playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
-        <%= f.hidden_field :song_id, value: @song.id %>
-        <%= f.button :submit, "+", class: "btn btn-light border rounded-circle px-4 py-2 fs-4 shadow-sm" %>
-      <% end %>
-    </div>
-    <!---------------------------END-ADD-SONG-BUTTON---------------------------->
-    <!---------------------------TRY-AGAIN--&-BACK-BUTTON---------------------------->
-    <div class="text-center">
-      <%= link_to "Try Again",
+    <% end %>
+  </div>
+  <!---------------------------END-ADD-SONG-BUTTON---------------------------->
+  <!---------------------------TRY-AGAIN-BUTTON---------------------------->
+  <div class="text-center">
+    <%= link_to "Try Again",
             surprise_playlist_playlist_songs_path(@playlist),
-            class: "btn btn-outline-secondary me-2" %>
-      <%= link_to "Back",
-            new_playlist_playlist_song_path(@playlist),
-            class: "btn btn-outline-dark" %>
-    </div>
-    <!---------------------------END-TRY-AGAIN--&-BACK-BUTTON---------------------------->
+            class: "btn px-4 py-2 text-white fw-semibold",
+            style: "background: linear-gradient(135deg, #f5af19 0%, #f12711 100%); border-radius: 25px;" %>
+  </div>
+  <!---------------------------END-TRY-AGAIN-BUTTON---------------------------->
   </div>
 </div>
+<style>
+  .surprise-page {
+    background: #3a3a3a;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-pop {
+    animation: popIn 0.5s ease-out forwards;
+  }
+
+  @keyframes glowPulse {
+    0% { box-shadow: 0 0 0 rgba(245, 175, 25, 0); }
+    50% { box-shadow: 0 0 40px rgba(245, 175, 25, 0.8), 0 0 80px rgba(245, 87, 108, 0.5); }
+    100% { box-shadow: 0 0 25px rgba(245, 175, 25, 0.6), 0 0 50px rgba(245, 87, 108, 0.3); }
+  }
+
+  .album-glow {
+    animation: glowPulse 1.5s ease-out forwards;
+    animation-delay: 0.3s;
+    border-radius: 8px;
+  }
+
+  .confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+  }
+
+  .confetti {
+    position: absolute;
+    top: -10px;
+    opacity: 0;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0.7;
+      transform: translateY(100vh) rotate(720deg);
+    }
+  }
+</style>
+<script>
+  function createConfetti() {
+    const container = document.getElementById("confetti-container");
+    if (!container || container.children.length > 0) return;
+
+    const colors = ["#f5af19", "#f12711", "#f093fb", "#f5576c", "#ffd700", "#ff6b6b", "#4ecdc4", "#ffffff"];
+    const shapes = ["square", "circle"];
+
+    for (let i = 0; i < 50; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+
+      const size = Math.random() * 10 + 5;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const left = Math.random() * 100;
+      const delay = Math.random() * 2;
+      const duration = Math.random() * 2 + 2;
+
+      confetti.style.width = size + "px";
+      confetti.style.height = size + "px";
+      confetti.style.backgroundColor = color;
+      confetti.style.left = left + "%";
+      confetti.style.animationDelay = delay + "s";
+      confetti.style.animationDuration = duration + "s";
+      confetti.style.borderRadius = shape === "circle" ? "50%" : "2px";
+
+      container.appendChild(confetti);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", createConfetti);
+  document.addEventListener("turbo:load", createConfetti);
+</script>

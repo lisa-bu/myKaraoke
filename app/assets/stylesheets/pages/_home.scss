@@ -1,7 +1,6 @@
 .container {
   width: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
+  flex: 1;
   background: #3a3a3a;
   background-attachment: fixed;
 
@@ -9,6 +8,7 @@
   flex-direction: column;
   padding: 1.5rem;
   color: white;
+  overflow: auto;
 }
 
 .recommend-buttons {

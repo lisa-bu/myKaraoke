@@ -17,6 +17,10 @@ class PlaylistPolicy < ApplicationPolicy
     true
   end
 
+  def import_spotify_playlists?
+    true
+  end
+
   def create?
     record.user == user
   end

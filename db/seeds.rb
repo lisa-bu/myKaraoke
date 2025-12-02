@@ -76,6 +76,7 @@ tracks.flatten.each do |track|
       song.difficulty_average = 0.0
       song.image_url = track.album.images.first["url"]
       song.ISRC =  track.external_ids["isrc"]
+      song.spotify_id = track.id
       song.availability = "n/a"
   end
 end

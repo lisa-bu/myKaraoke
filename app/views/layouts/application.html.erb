@@ -13,15 +13,20 @@
     <link rel="icon" type="image/png" href="<%= image_path 'icons/mykaraoke.png' %>">
     <!-- iOS -->
     <link rel="apple-touch-icon" href="<%= image_path 'icons/mykaraoke.png' %>">
+    <script src="https://open.spotify.com/embed-podcast/iframe-api/v1" async></script>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
   </head>
   <body>
-    <% unless current_page?(root_path) %>
-      <%= render "shared/navbar" %>
-    <% end %>
-    <%= render "shared/flashes" %>
-    <%= yield %>
+    <div class="app-wrapper">
+      <% unless current_page?(root_path) %>
+        <%= render "shared/navbar" %>
+      <% end %>
+      <%= render "shared/flashes" %>
+      <div class="app-content">
+        <%= yield %>
+      </div>
+    </div>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service_worker.js")

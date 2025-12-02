@@ -84,11 +84,11 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  background: rgba(117, 115, 115, 0.95);
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 
 
   ul {
@@ -97,24 +97,28 @@
     margin: 0;
 
     li {
-
-      padding: 1rem;
-      margin-bottom: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.5rem;
       background: #f8f9fa;
-      border-radius: 12px;
+      border-radius: 10px;
       color: #2c3e50;
       transition: all 0.2s ease;
-
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 
       &:hover {
         background: #e9ecef;
-        transform: translateX(8px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transform: translateX(4px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
       }
 
       strong {
         color: #1a1a2e;
-        font-size: 1.1rem;
+        font-size: 0.85rem;
+      }
+
+      .song-text {
+        font-size: 0.8rem;
+        white-space: nowrap;
       }
 
       &.hidden {
@@ -130,6 +134,29 @@
         transition: transform 0.1s ease;
         cursor: grabbing;
       }
+    }
+  }
+
+  .song-info-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .song-info-scroll {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .song-info-wrapper.has-overflow:hover .song-info-scroll {
+    animation: marquee 8s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 

@@ -1,8 +1,49 @@
-<div class="home-screen">
 <div class="container">
-<%= render "shared/search", playlist: nil %>
-<div class="container">
-  <div class="modal fade " id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
+<div class="playlists-page">
+  <!-- Sticky header section -->
+  <div class="playlists-header">
+    <%= render "shared/search", playlist: nil %>
+    <div class="playlists-buttons d-flex flex-column align-items-center gap-3 mb-3 px-3">
+      <button type="button" class="btn px-4 py-2 text-white fw-semibold w-100" style="background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); max-width: 280px;" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
+        <i class="fa-solid fa-plus me-2"></i>Make a new playlist!
+      </button>
+      <% if current_user.spotify_access_token %>
+        <%= button_to import_spotify_playlists_playlists_path, method: :post, class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;", form: { style: "display: contents;" } do %>
+          <i class="fa-brands fa-spotify me-2"></i>Import Spotify Playlists
+        <% end %>
+      <% else %>
+        <%= link_to "/auth/spotify", class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;" do %>
+          <i class="fa-brands fa-spotify me-2"></i>Connect Spotify to Import
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Scrollable playlists section -->
+  <div class="playlists-scroll">
+    <div class="playlists-grid row g-2 px-3">
+      <% @playlists.each do |playlist| %>
+        <div class="col-6 playlist-card position-relative">
+          <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
+            <div class="playlist-card-image">
+              <% cover = playlist.songs.first&.image_url %>
+              <%= image_tag cover, style: "width: 100%; object-fit: cover;" if cover %>
+            </div>
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <h5 class="card-title text-white"><%= playlist.name %></h5>
+            <% end %>
+            <i class="fa-solid fa-pen-to-square text-white"
+             style="cursor: pointer;"
+             data-bs-toggle="modal"
+             data-bs-target="#editPlaylistModal<%= playlist.id %>"></i>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="newPlaylistModal" tabindex="-1" aria-labelledby="newPlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: rgba(80, 80, 80, 0.95); border-radius: 20px; border: none; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
         <div class="modal-header border-0 pb-0">
@@ -21,61 +62,26 @@
     </div>
   </div>
 
-  <div class="d-flex flex-column align-items-center gap-3 mb-4">
-    <button type="button" class="btn px-4 py-2 text-white fw-semibold w-100" style="background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); max-width: 280px;" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
-      <i class="fa-solid fa-plus me-2"></i>Make a new playlist!
-    </button>
-    <% if current_user.spotify_access_token %>
-      <%= button_to import_spotify_playlists_playlists_path, method: :post, class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;", form: { style: "display: contents;" } do %>
-        <i class="fa-brands fa-spotify me-2"></i>Import Spotify Playlists
-      <% end %>
-    <% else %>
-      <%= link_to "/auth/spotify", class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;" do %>
-        <i class="fa-brands fa-spotify me-2"></i>Connect Spotify to Import
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="playlists-grid row g-2">
-    <% @playlists.each do |playlist| %>
-      <div class="col-6 playlist-card position-relative">
-        <%= link_to playlist_path(playlist), class: "text-decoration-none" do %>
-          <div class="playlist-card-image">
-            <% cover = playlist.songs.first&.image_url %>
-            <%= image_tag cover, style: "width: 100%; object-fit: cover;" if cover %>
+  <% @playlists.each do |playlist| %>
+    <div class="modal fade" id="editPlaylistModal<%= playlist.id %>" tabindex="-1" aria-labelledby="editPlaylistModalLabel<%= playlist.id %>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: rgba(80, 80, 80, 0.95); border-radius: 20px; border: none; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title text-white fw-bold" id="editPlaylistModalLabel<%= playlist.id %>">Rename Your Playlist</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="card-body d-flex justify-content-between align-items-center">
-            <h5 class="card-title text-white"><%= playlist.name %></h5>
+          <%= form_with model: playlist, url: playlist_path(playlist), method: :patch, local: true do |f| %>
+            <div class="modal-body text-light pt-3">
+              <%= f.text_field :name, required: true, class: "form-control", style: "border-radius: 12px; border: none; padding: 0.75rem 1rem;" %>
+            </div>
+            <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
+              <button type="button" class="btn px-4 py-2 fw-semibold" style="background: rgba(100, 100, 100, 0.8); color: white; border-radius: 999px; border: none;" data-bs-dismiss="modal">Cancel</button>
+              <%= f.submit "Save", class: "btn px-4 py-2 text-white fw-semibold", style: "background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);" %>
+            </div>
           <% end %>
-          <i class="fa-solid fa-pen-to-square text-white"
-           style="cursor: pointer;"
-           data-bs-toggle="modal"
-           data-bs-target="#editPlaylistModal<%= playlist.id %>"></i>
         </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-<% @playlists.each do |playlist| %>
-  <div class="modal fade" id="editPlaylistModal<%= playlist.id %>" tabindex="-1" aria-labelledby="editPlaylistModalLabel<%= playlist.id %>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background: rgba(80, 80, 80, 0.95); border-radius: 20px; border: none; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title text-white fw-bold" id="editPlaylistModalLabel<%= playlist.id %>">Rename Your Playlist</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <%= form_with model: playlist, url: playlist_path(playlist), method: :patch, local: true do |f| %>
-          <div class="modal-body text-light pt-3">
-            <%= f.text_field :name, required: true, class: "form-control", style: "border-radius: 12px; border: none; padding: 0.75rem 1rem;" %>
-          </div>
-          <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
-            <button type="button" class="btn px-4 py-2 fw-semibold" style="background: rgba(100, 100, 100, 0.8); color: white; border-radius: 999px; border: none;" data-bs-dismiss="modal">Cancel</button>
-            <%= f.submit "Save", class: "btn px-4 py-2 text-white fw-semibold", style: "background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);" %>
-          </div>
-        <% end %>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
 </div>

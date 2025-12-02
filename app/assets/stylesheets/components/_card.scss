@@ -10,15 +10,15 @@
   color: rgb(255, 146, 3);
   font-size: 18px;
   font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
 .card-category:hover {
-  transform: translateY(-1px);
+  transform: translateY(-3px);
   filter: brightness(1.05);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .card-category-recommend {

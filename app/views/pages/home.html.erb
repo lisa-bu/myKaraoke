@@ -1,4 +1,5 @@
-<div class="container">
+<div class="home-screen">
+  <div class="container">
     <%= render "shared/search", playlist: @current_playlist %>
     <div class="stop mb-0">
       <%= link_to new_playlist_playlist_song_path(@current_playlist),
@@ -38,4 +39,5 @@
       <%= link_to 'Sign in with Spotify', '/auth/spotify', method: :post, class: "btn btn-warning" %>
     <% end %>
   </div>
+</div>
 </div>

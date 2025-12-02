@@ -19,6 +19,17 @@ class SpotifyClient
     )
   end
 
+  def refresh_user_token_if_needed(user)
+    return unless user.spotify_expires_at <= Time.current
+
+    refreshed = RSpotify::User.refresh_token(user.spotify_refresh_token)
+
+    user.update!(
+      spotify_access_token: refreshed["access_token"],
+      spotify_expires_at:   Time.current + refreshed["expires_in"].to_i.seconds
+    )
+  end
+
   def user_for(current_user)
     return nil unless current_user.spotify_access_token
 

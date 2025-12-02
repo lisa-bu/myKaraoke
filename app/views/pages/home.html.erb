@@ -41,11 +41,11 @@
       <%= image_tag "undraw_playlist_lwhi.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
     <% end %>
   </div>
-  <div class="mt-4" data-controller="spotify">
+  <div class="mt-4" data-controller="spotify" style="display: flex; justify-content: center;">
     <% unless current_user.spotify_access_token %>
       <%= link_to '/auth/spotify',
         method: :post,
-        class: "btn spotify-btn w-100",
+        class: "btn spotify-btn w-70 ",
         data: { action: "click->spotify#confirm" } do %>
         <i class="fa-brands fa-spotify fa-2x" style="color: green;"></i>
       <% end %>

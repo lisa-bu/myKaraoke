@@ -25,3 +25,12 @@
   display: flex;
   flex-direction: column;
 }
+
+// Typography
+body {
+  font-family: "Crimson Text", Georgia, serif;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand, .card-category, .playlist-title, .btn {
+  font-family: "Lexend", "Helvetica", sans-serif;
+}

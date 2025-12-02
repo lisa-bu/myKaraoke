@@ -3,7 +3,8 @@ class PlaylistsController < ApplicationController
 
   def index
     authorize Playlist
-    @playlists = policy_scope(Playlist).joins(:playlist_songs).distinct
+    @scoped_playlists = policy_scope(Playlist).joins(:playlist_songs)
+    @playlists = @scoped_playlists.to_a.uniq { |p| p.id }
     @playlist = Playlist.new
 
     return unless params[:query].present?
@@ -12,7 +13,7 @@ class PlaylistsController < ApplicationController
     # pattern = "%#{query}%"
     # @playlists = Playlist.where("name ILIKE ?", pattern)
     query = params[:query].strip
-    @playlists = @playlists.search_by_name(query)
+    @playlists = @scoped_playlists.search_by_name(query).to_a.uniq { |p| p.id }
   end
 
   def show

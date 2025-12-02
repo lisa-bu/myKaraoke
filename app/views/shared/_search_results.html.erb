@@ -4,7 +4,7 @@
     <%# <h1 class="playlist-title" style="color: white"><%= playlist.name %></h1>
   <%# <h2 class="playlist-subtitle" style="color: white"></h2> %>
   <% if songs.any? %>
-    <ul class="playlist-song-list">
+    <ul class="playlist-song-list mt-5">
       <% songs.each do |song| %>
         <li class="d-flex align-items-center"
               data-controller="spotify-player"

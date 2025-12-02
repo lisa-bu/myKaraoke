@@ -1,16 +1,14 @@
-<div class="d-flex justify-content-center gap-4 mt-4">
-  <%= link_to :back, class: "btn btn-warning", style: "width: 40px;" do %>
+<div class="playlist-footer">
+  <%= link_to :back, class: "btn btn-warning playlist-footer-btn" do %>
     <i class="fa-solid fa-angle-left"></i>
   <% end %>
   <%= link_to user_path(current_user, current_playlist_id: playlist.id),
             data: { turbo_method: :patch },
-            style: "width: 40px;",
-            class: "btn btn-warning"  do %>
+            class: "btn btn-warning playlist-footer-btn" do %>
     <i class="fa-solid fa-microphone"></i>
   <% end %>
   <%= link_to playlist_path(playlist),
-            class: "btn btn-warning",
-            style: "width: 40px;",
+            class: "btn btn-warning playlist-footer-btn",
             data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
     <i class="fa-solid fa-trash"></i>
   <% end %>

@@ -9,59 +9,83 @@ export default class extends Controller {
   // Store the Spotify EmbedController instance
   embedController = null;
 
-  connect() {
-    // 2. Load the Spotify iFrame API
-    // We rely on the script being loaded on the page (from <script> tag in HTML)
+ connect() {
+  console.log("Spotify player connected for URI:", this.uriValue);
 
-    if (window.onSpotifyIframeApiReady) {
-      // Temporarily store the original function if it exists
-      const originalApiReady = window.onSpotifyIframeApiReady;
-      window.onSpotifyIframeApiReady = (IFrameAPI) => {
-        // Run the original function first, if any
-        if (originalApiReady) {
-          originalApiReady(IFrameAPI);
-        }
-
-        // Then, initialize this specific player
-        this.initializePlayer(IFrameAPI);
-      };
-    } else {
-      // If no other player has defined the callback yet, define it here
-      window.onSpotifyIframeApiReady = (IFrameAPI) => {
-        this.initializePlayer(IFrameAPI);
-      };
-    }
+  // Check if the API is already loaded
+  if (window.IFrameAPI) {
+    // API already loaded, initialize immediately
+    this.initializePlayer(window.IFrameAPI);
+  } else if (window.onSpotifyIframeApiReady) {
+    const originalApiReady = window.onSpotifyIframeApiReady;
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      if (originalApiReady) {
+        originalApiReady(IFrameAPI);
+      }
+      this.initializePlayer(IFrameAPI);
+    };
+  } else {
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      window.IFrameAPI = IFrameAPI; // Store for future use
+      this.initializePlayer(IFrameAPI);
+    };
   }
+}
 
   // 3. Method to create and store the EmbedController
-  initializePlayer(IFrameAPI) {
-    const element = this.containerTarget;
-    const options = {
-      uri: this.uriValue,
-      height: 0, // Set height to 0 to keep it hidden, just in case 'hidden' attribute is removed
-      width: 0, // Set width to 0 to keep it hidden
-    };
+initializePlayer(IFrameAPI) {
+  console.log("Initializing player with URI:", this.uriValue);
 
-    // Create the controller instance
+  if (!this.uriValue || this.uriValue === "spotify:track:") {
+    console.error("Invalid Spotify URI - missing track ID");
+    return;
+  }
+
+  const element = this.containerTarget;
+  const options = {
+    uri: this.uriValue,
+    height: 0,
+    width: 0,
+  };
+
+  // Add a small delay between initializations to avoid overwhelming Spotify's API
+  setTimeout(() => {
     IFrameAPI.createController(element, options, (EmbedController) => {
       this.embedController = EmbedController;
 
-      // Listen for playback state changes to update the button text
       EmbedController.addListener("playback_update", (e) => {
         this.updateButtonIcon(e.data.isPaused);
       });
 
-      // Initial state update
       this.updateButtonIcon(true);
+      console.log("Player initialized successfully for:", this.uriValue);
     });
-  }
+  }, Math.random() * 500); // Random delay 0-500ms to stagger initializations
+}
 
   // 4. Action method called when the button is clicked
   togglePlay() {
-    if (this.embedController) {
-      this.embedController.togglePlay();
-      // The button text will be updated by the 'playback_update' listener
+    if (!this.embedController) {
+      console.warn("Player not ready yet, trying to initialize...");
+      // Disable button temporarily
+      this.buttonTarget.disabled = true;
+      this.buttonTarget.style.opacity = "0.5";
+
+      if (window.IFrameAPI) {
+        this.initializePlayer(window.IFrameAPI);
+        // Try again after a delay
+        setTimeout(() => {
+          this.buttonTarget.disabled = false;
+          this.buttonTarget.style.opacity = "1";
+          if (this.embedController) {
+            this.embedController.togglePlay();
+          }
+        }, 1000);
+      }
+      return;
     }
+
+    this.embedController.togglePlay();
   }
 
   // 5. Helper to update button text

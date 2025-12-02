@@ -12,7 +12,7 @@ class PlaylistSongsController < ApplicationController
   def new
     @playlist_song = PlaylistSong.new
     authorize PlaylistSong
-    @songs = Song.all
+    @songs = GetRecommendations.new(@playlist.playlist_songs).call
   end
 
   def create

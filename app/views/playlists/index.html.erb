@@ -56,7 +56,16 @@
           <div class="modal-body text-light pt-3">
             <%= simple_form_for @playlist do |f| %>
               <%= f.input :name, label: false, input_html: { class: "form-control", style: "border-radius: 12px; border: none; padding: 0.75rem 1rem;" } %>
-              <%= f.input :photo, as: :file, label: false, input_html: { class: "form-control", style: "border-radius: 12px; border: none; padding: 0.75rem 1rem;" } %>
+              <div class="custom-file-upload" style="margin-top: 0.5rem;">
+                <label for="playlist_photo" class="btn w-100" style="background: rgba(100, 100, 100, 0.8); color: white; border-radius: 12px; border: none; padding: 0.75rem 1rem; cursor: pointer;">
+                  <i class="fa-solid fa-image me-2"></i><span id="photo-label">Add cover image</span>
+                </label>
+                <%= f.input :photo, as: :file, label: false, input_html: {
+                  id: "playlist_photo",
+                  style: "display: none;",
+                  onchange: "document.getElementById('photo-label').textContent = this.files[0]?.name || 'Add cover image'"
+                } %>
+              </div>
               <div class="text-center mt-3">
                 <%= f.submit 'Create Playlist', class: 'btn px-4 py-2 text-white fw-semibold', style: 'background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);' %>
               </div>

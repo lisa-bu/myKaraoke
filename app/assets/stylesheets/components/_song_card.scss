@@ -145,21 +145,23 @@
   padding: 0 16px;
   min-width: 0;
   overflow: hidden;
-  display: flex;
-  align-items: center;
 }
 
 .song-card-text {
   font-size: 1.1rem;
   font-weight: 500;
   color: #fff;
-  display: inline-block;
+  display: block;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // Scrolling text animation for long song names
 .song-card-info.scrolling .song-card-text {
   animation: marquee-scroll 8s linear infinite;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 @keyframes marquee-scroll {

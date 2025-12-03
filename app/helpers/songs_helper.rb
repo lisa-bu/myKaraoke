@@ -10,6 +10,8 @@ module SongsHelper
       badges << content_tag(:span, "JOY", class: "karaoke-badge karaoke-badge-joysound", title: "Available on Joysound")
     end
 
-    safe_join(badges, " ")
+    return "" if badges.empty?
+
+    content_tag(:div, safe_join(badges, ""), class: "karaoke-badges")
   end
 end

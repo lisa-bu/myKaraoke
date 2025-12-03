@@ -11,15 +11,25 @@ class GeniusClient
   # Search for a song and return the Genius URL
   def search(title, artist)
     query = "#{title} #{artist}".strip
+    Rails.logger.info "[GeniusClient] Searching for: #{query}"
+    Rails.logger.info "[GeniusClient] Access token present: #{@access_token.present?}"
+
     response = self.class.get(
       "#{BASE_URL}/search",
       headers: auth_headers,
       query: { q: query }
     )
 
-    return nil unless response.success?
+    Rails.logger.info "[GeniusClient] Search response status: #{response.code}"
+
+    unless response.success?
+      Rails.logger.error "[GeniusClient] Search failed: #{response.code} - #{response.message}"
+      return nil
+    end
 
     hits = response.dig("response", "hits")
+    Rails.logger.info "[GeniusClient] Found #{hits&.size || 0} hits"
+
     return nil if hits.blank?
 
     # Find the best match - prioritize exact artist matches
@@ -30,17 +40,33 @@ class GeniusClient
     end
 
     best_hit ||= hits.first
-    best_hit&.dig("result", "url")
+    url = best_hit&.dig("result", "url")
+    Rails.logger.info "[GeniusClient] Best match URL: #{url}"
+    url
   end
 
   # Fetch and scrape lyrics from a Genius URL
   def fetch_lyrics(genius_url)
     return nil if genius_url.blank?
 
-    response = self.class.get(genius_url, headers: browser_headers)
-    return nil unless response.success?
+    Rails.logger.info "[GeniusClient] Fetching lyrics from: #{genius_url}"
 
-    parse_lyrics(response.body)
+    response = self.class.get(genius_url, headers: browser_headers)
+
+    Rails.logger.info "[GeniusClient] Fetch response status: #{response.code}"
+
+    unless response.success?
+      Rails.logger.error "[GeniusClient] Fetch failed: #{response.code}"
+      return nil
+    end
+
+    Rails.logger.info "[GeniusClient] Response body length: #{response.body&.length || 0}"
+
+    lyrics = parse_lyrics(response.body)
+    Rails.logger.info "[GeniusClient] Parsed lyrics length: #{lyrics&.length || 0}"
+    Rails.logger.info "[GeniusClient] Lyrics found: #{lyrics.present?}"
+
+    lyrics
   end
 
   # Convenience method: search and fetch lyrics in one call

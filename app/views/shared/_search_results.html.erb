@@ -16,6 +16,7 @@
             <%= image_tag song.image_url, class: "song-card-image" %>
             <div class="song-card-info">
               <span class="song-card-text"><%= song.artist %> - <%= song.name %></span>
+              <%= karaoke_availability_badges(song) %>
             </div>
             <div class="song-card-play"
                  data-controller="spotify-player"

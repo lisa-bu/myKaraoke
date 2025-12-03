@@ -164,6 +164,7 @@ export default class extends Controller {
   }
 
   removeSong() {
+    const wasNowPlaying = this.element.classList.contains("now-playing")
     this.element.classList.add("removing")
 
     fetch(`/playlist_songs/${this.playlistSongIdValue}`, {
@@ -174,7 +175,14 @@ export default class extends Controller {
       }
     }).then(() => {
       setTimeout(() => {
+        // Get the next sibling before removing
+        const nextSibling = this.element.nextElementSibling
         this.element.remove()
+
+        // If this was the "now playing" song, promote the next one
+        if (wasNowPlaying && nextSibling && nextSibling.classList.contains("song-card-wrapper")) {
+          nextSibling.classList.add("now-playing")
+        }
       }, 300)
     }).catch(() => {
       this.element.classList.remove("removing", "swiped")

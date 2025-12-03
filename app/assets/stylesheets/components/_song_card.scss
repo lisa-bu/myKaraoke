@@ -256,3 +256,68 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
+
+// Done button (tick/check) for queue
+.done-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 24px;
+    color: #FFB347;
+    transition: transform 0.15s ease;
+  }
+
+  &:hover i {
+    transform: scale(1.1);
+  }
+
+  &:active i {
+    transform: scale(0.95);
+  }
+}
+
+// Now Playing - first song in queue (orange styling)
+.song-card-wrapper.now-playing {
+  .song-card {
+    background: linear-gradient(135deg, #f6a54f 0%, #fdcc87 40%, #ff7a00 100%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .song-card-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+  }
+
+  .song-card-text {
+    color: #fff;
+  }
+
+  // NOW PLAYING label
+  &::before {
+    content: "NOW PLAYING";
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 0.6rem;
+    color: #ffd699;
+    letter-spacing: 1px;
+    z-index: 10;
+  }
+
+  .song-card-under {
+    background: linear-gradient(145deg, #e0a050, #c08030);
+
+    .hint-left, .hint-right {
+      color: #fff;
+      opacity: 0.8;
+    }
+  }
+}

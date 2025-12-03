@@ -301,3 +301,30 @@
   padding: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+
+// home img
+.empty-session {
+  text-align: center;
+  color: white;
+  margin-top: 2rem;
+  opacity: 0.9;
+}
+
+.empty-session-icon {
+  width: 120px;
+  opacity: 0.4;
+  margin-bottom: 1rem;
+}
+
+.empty-session h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.empty-session p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
+}

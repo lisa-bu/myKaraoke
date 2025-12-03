@@ -64,8 +64,13 @@
         <% end %>
       </div>
     <% else %>
-      <%= image_tag "reshot-icon-note-white.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
-    <% end %>
+      <div class="empty-session">
+        <%= image_tag "reshot-icon-note-white.svg", class: "empty-session-icon" %>
+        <h3>Add songs to your Session</h3>
+        <p>Your karaoke session is empty.</p>
+        <p>Search for your first song at the top </p>
+      </div>
+  <% end %>
   </div>
   <div class="mt-4" data-controller="spotify" style="display: flex; justify-content: center;">
     <% unless current_user.spotify_access_token %>

@@ -5,7 +5,11 @@
       <% if params[:query].present? %>
         <%= render "shared/search_results", playlist: @playlist, songs: @songs %>
       <% else %>
-        <h1 class="playlist-title text-white mb-3 text-center"><%= @playlist.name %></h1>
+        <div class="playlist-title-wrapper text-center mb-3" data-controller="marquee">
+          <div class="song-info-scroll">
+            <h1 class="playlist-title text-white d-inline-block m-0"><%= @playlist.name %></h1>
+          </div>
+        </div>
         <ul class="playlist-song-list">
           <% @playlist.playlist_songs.each do |playlist_song| %>
             <li class="d-flex align-items-center"

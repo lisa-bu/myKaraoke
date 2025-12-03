@@ -1,5 +1,5 @@
 <div class="playlist-footer">
-  <%= link_to :back, class: "btn btn-warning playlist-footer-btn" do %>
+  <%= link_to (params[:query].present? ? playlist_path(playlist) : playlists_path), class: "btn btn-warning playlist-footer-btn" do %>
     <i class="fa-solid fa-angle-left"></i>
   <% end %>
   <%= link_to user_path(current_user, current_playlist_id: playlist.id),

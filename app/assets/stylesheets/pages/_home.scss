@@ -90,6 +90,15 @@
   box-shadow: none;
   backdrop-filter: none;
 
+  .playlist-title-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .playlist-title-wrapper.has-overflow:hover .song-info-scroll {
+    animation: marquee 8s linear infinite;
+  }
+
 
   ul {
     list-style: none;

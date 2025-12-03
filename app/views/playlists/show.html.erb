@@ -5,8 +5,12 @@
       <% if params[:query].present? %>
         <%= render "shared/search_results", playlist: @playlist, songs: @songs %>
       <% else %>
-        <h1 class="playlist-title text-white mb-3 text-center"><%= @playlist.name %></h1>
-        <div class="song-cards-list">
+        <div class="playlist-title-wrapper text-center mb-3" data-controller="marquee">
+          <div class="song-info-scroll">
+            <h1 class="playlist-title text-white d-inline-block m-0"><%= @playlist.name %></h1>
+          </div>
+        </div>
+        <ul class="playlist-song-list">
           <% @playlist.playlist_songs.each do |playlist_song| %>
             <div class="song-card-browse">
               <div class="song-card-stack">
@@ -22,8 +26,9 @@
                      data-controller="song-text"
                      data-action="click->song-text#toggle">
                   <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
-                  <div class="song-card-info" data-song-text-target="info">
+                    <div class="song-card-info" data-song-text-target="info">
                     <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %> - <%= playlist_song.song.name %></span>
+                    <%= karaoke_availability_badges(playlist_song.song) %>
                   </div>
                   <div class="song-card-play"
                        data-controller="spotify-player"

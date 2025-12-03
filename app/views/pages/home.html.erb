@@ -7,41 +7,58 @@
       class: "card-category card-category-playlists" do %>Playlists<% end %>
   </div>
   <div class="stop">
-    <%= link_to "Stop & Delete", playlist_path(@current_playlist), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-info w-100" %>
-    <%= link_to "Stop Singing", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
+    <%= link_to "End Session", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
   </div>
-  <div class="playlist-container" data-controller="swipe">
-    <ul class="playlist-song-list">
-      <% if @current_playlist.playlist_songs.count > 0 %>
-        <ul class="mt-3">
-          <% @current_playlist.playlist_songs.each do |playlist_song| %>
-            <li class="d-flex align-items-center"
-              data-controller="spotify-player"
-              data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
-              <%= image_tag playlist_song.song.image_url, class: "img-thumbnail", style: "width: 45px; height: 45px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" %>
-              <div class="song-info-wrapper flex-grow-1 mx-2" data-controller="marquee">
-                <div class="song-info-scroll">
-                  <span class="song-text"><strong><%= playlist_song.song.name %></strong> — <%= playlist_song.song.artist %></span>
-                </div>
-              </div>
+  <div class="playlist-container head-queue">
+    <div class="queue-header">
+      <h2>Current Karaoke Session</h2>
+      <p>
+        Now Playing in your<span><%= @current_playlist.name %></span> playlist
+      </p>
+    </div>
+    <% if @current_playlist.playlist_songs.count > 0 %>
+      <div class="song-cards-list song-cards-list--queue">
+        <% @current_playlist.playlist_songs.each_with_index do |playlist_song, index| %>
+          <div class="song-card-wrapper <%= 'now-playing' if index == 0 %>"
+               data-controller="song-card"
+               data-song-card-playlist-song-id-value="<%= playlist_song.id %>">
+            <!-- Delete button (revealed on swipe) - stays in place -->
+            <button class="song-card-delete" data-action="click->song-card#confirmDelete" data-song-card-target="deleteBtn">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <!-- Stack container - both cards move together -->
+            <div class="song-card-stack" data-song-card-target="stack">
+              <!-- Under-layer card (lighter grey) - tap for lyrics -->
               <%= link_to song_lyrics_path(playlist_song.song),
                   data: { turbo_stream: true },
-                  style: "background: none; border: none; cursor: pointer; padding: 8px; text-decoration: none;" do %>
-                <i class="fa-solid fa-microphone" style="color: #FF6B6B; font-size: 18px;"></i>
+                  class: "song-card-under" do %>
+                <span class="hint-left">tap to view lyrics</span>
+                <span class="hint-right">← swipe to remove song</span>
               <% end %>
-              <button data-action="click->spotify-player#togglePlay"
-                data-spotify-player-target="button"
-                style="background: none; border: none; cursor: pointer; padding: 8px;">
-                <i class="fa-solid fa-play"
-              data-spotify-player-target="icon"
-              style="color: #1DB954; font-size: 24px;"></i>
-              </button>
-              <div data-spotify-player-target="container" hidden></div>
-              <i class="fa-solid fa-circle-check" data-action="click->swipe#hide" ></i>
-            </li>
-          <% end %>
-        </ul>
-      </ul>
+              <!-- Main card (darker grey) -->
+              <div class="song-card" data-song-card-target="card">
+                <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
+                <div class="song-card-info">
+                  <span class="song-card-text"><%= playlist_song.song.artist %> - <%= playlist_song.song.name %></span>
+                </div>
+                <div class="song-card-play"
+                     data-controller="spotify-player"
+                     data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
+                  <button data-action="click->spotify-player#togglePlay"
+                    data-spotify-player-target="button"
+                    class="play-pause-btn">
+                    <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+                  </button>
+                  <div data-spotify-player-target="container" hidden></div>
+                </div>
+                <%# <button class="done-btn" data-action="click->song-card#confirmDelete">
+                  <i class="fa-solid fa-circle-check"></i> %>
+                <%# </button> %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     <% else %>
       <%= image_tag "reshot-icon-note-white.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
     <% end %>

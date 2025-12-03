@@ -89,7 +89,12 @@ class PlaylistsController < ApplicationController
           s.artist = track.artists.map(&:name).join(", ")
           s.spotify_id = track.id
           s.image_url = track.album&.images&.first&.dig("url")
-          s.availability = track.available_markets || []
+          s.availability = {}
+        end
+
+        # Queue job to check karaoke availability for new songs
+        if song.availability.blank?
+          CheckKaraokeAvailabilityJob.perform_later(song.id)
         end
 
         if song.persisted?

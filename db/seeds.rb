@@ -37,30 +37,32 @@ puts "Fetching songs from Spotify API..."
 
 artists = [
   "Taylor Swift",
-  "Drake",
   "The Weeknd",
-  "Bad Bunny",
   "Billie Eilish",
   "Ariana Grande",
   "Justin Bieber",
   "Dua Lipa",
   "Olivia Rodrigo",
   "Post Malone",
-  "Travis Scott",
-  "SZA",
-  "Doja Cat",
   "Ed Sheeran",
-  "Kendrick Lamar",
-  "Metro Boomin",
-  "Future",
-  "J Balvin",
-  "Karol G",
-  "Rosalía",
+  "Harry Styles",
+  "Adele",
+  "Bruno Mars",
+  "Lady Gaga",
+  "Beyoncé",
+  "Katy Perry",
+  "Rihanna",
+  "Miley Cyrus",
+  "Queen",
+  "Journey",
+  "ABBA",
+  "Whitney Houston",
+  "Bon Jovi",
+  "Backstreet Boys",
+  "Kelly Clarkson",
+  "TWICE",
   "BTS",
-  "NewJeans",
-  "The Kid LAROI",
-  "Jung Kook",
-  "Harry Styles"
+  "Sam Smith"
 ]
 
 tracks = artists.map do |artist|
@@ -77,7 +79,7 @@ tracks.flatten.each do |track|
       song.image_url = track.album.images.first["url"]
       song.ISRC =  track.external_ids["isrc"]
       song.spotify_id = track.id
-      song.availability = "n/a"
+      song.availability = {}
   end
 end
 
@@ -130,6 +132,23 @@ end
 songs.each do |song|
   avg = song.difficulty_ratings.average(:difficulty_level)
   song.update!(difficulty_average: avg || 0.0)
+end
+
+# Add mock karaoke availability data
+puts "Adding karaoke availability data..."
+
+songs.each_with_index do |song, index|
+  availability = case index % 10
+  when 0, 1, 2
+    { "dam" => { "available" => true }, "joysound" => { "available" => true } }
+  when 3, 4, 5
+    { "dam" => { "available" => true }, "joysound" => { "available" => false } }
+  when 6, 7, 8
+    { "dam" => { "available" => false }, "joysound" => { "available" => true } }
+  else
+    { "dam" => { "available" => false }, "joysound" => { "available" => false } }
+  end
+  song.update!(availability: availability)
 end
 
 puts "Finished!"

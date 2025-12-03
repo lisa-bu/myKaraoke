@@ -44,10 +44,15 @@ class PlaylistSongsController < ApplicationController
   end
 # plyalistid position
   def destroy
+    @playlist = @playlist_song.playlist
     authorize @playlist_song
 
     @playlist_song.destroy
-    redirect_to @playlist, notice: "Song removed!"
+
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+      format.html { redirect_to @playlist, notice: "Song removed!" }
+    end
   end
 
   private

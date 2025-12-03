@@ -1,46 +1,45 @@
-        <!-- search mode -->
-<div class="home-screen">
-  <div class="playlist-header" style="position: relative;">
-    <%# <h1 class="playlist-title" style="color: white"><%= playlist.name %></h1>
-  <%# <h2 class="playlist-subtitle" style="color: white"></h2> %>
+<!-- search mode -->
+<div class="song-cards-list">
   <% if songs.any? %>
-    <ul class="playlist-song-list mt-5">
-      <% songs.each do |song| %>
-        <li class="d-flex align-items-center"
-              data-controller="spotify-player"
-              data-spotify-player-uri-value="spotify:track:<%= song.spotify_id %>">
-          <%= image_tag song.image_url, class: "img-thumbnail", style: "width: 60px; height: 60px;" %>
-          <div class="flex-grow-1 text-center">
-            <strong><%= song.name %></strong>
-            — <%= song.artist %>
-            <%= karaoke_availability_badges(song) %>
-          </div>
+    <% songs.each do |song| %>
+      <div class="song-card-browse">
+        <div class="song-card-stack">
+          <!-- Under-layer card (lighter grey) - tap for lyrics -->
           <%= link_to song_lyrics_path(song),
               data: { turbo_stream: true },
-              style: "background: none; border: none; cursor: pointer; padding: 8px; text-decoration: none;" do %>
-            <i class="fa-solid fa-microphone" style="color: #FF6B6B; font-size: 18px;"></i>
+              class: "song-card-under" do %>
+            <span class="hint-left">tap to view lyrics</span>
+            <span class="hint-right">tap + to add to karaoke session</span>
           <% end %>
-          <button data-action="click->spotify-player#togglePlay"
-            data-spotify-player-target="button"
-            style="background: none; border: none; cursor: pointer; padding: 8px;">
-            <i class="fa-solid fa-play"
-              data-spotify-player-target="icon"
-              style="color: #1DB954; font-size: 24px;"></i>
-          </button>
-          <div data-spotify-player-target="container" hidden></div>
-          <%= simple_form_for PlaylistSong.new,
-                  url: playlist_playlist_songs_path(playlist),
-                  html: { class: "playlist-add-form mb-0" } do |f| %>
-            <%= f.hidden_field :song_id, value: song.id %>
-            <%= f.button :submit, "+",
-                    class: "playlist-add-btn btn btn-light btn-sm",
-                    style: "color: orange" %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+          <!-- Main card (darker grey) -->
+          <div class="song-card">
+            <%= image_tag song.image_url, class: "song-card-image" %>
+            <div class="song-card-info">
+              <span class="song-card-text"><%= song.artist %> - <%= song.name %></span>
+              <%= karaoke_availability_badges(song) %>
+            </div>
+            <div class="song-card-play"
+                 data-controller="spotify-player"
+                 data-spotify-player-uri-value="spotify:track:<%= song.spotify_id %>">
+              <button data-action="click->spotify-player#togglePlay"
+                      data-spotify-player-target="button"
+                      class="play-pause-btn">
+                <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+              </button>
+              <div data-spotify-player-target="container" hidden></div>
+            </div>
+            <%= button_to playlist_playlist_songs_path(current_user.current_playlist_id),
+                params: { playlist_song: { song_id: song.id } },
+                method: :post,
+                class: "add-to-queue-btn",
+                data: { turbo: false } do %>
+              <i class="fa-solid fa-plus"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% else %>
-    <p>No songs found.</p>
+    <p style="color: #6c757d; text-align: center; padding: 2rem;">No songs found.</p>
   <% end %>
-</div>
 </div>

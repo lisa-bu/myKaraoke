@@ -15,6 +15,7 @@
               <div class="song-info-wrapper flex-grow-1 mx-2" data-controller="marquee">
                 <div class="song-info-scroll">
                   <span class="song-text"><strong><%= playlist_song.song.name %></strong> — <%= playlist_song.song.artist %></span>
+                  <%= karaoke_availability_badges(playlist_song.song) %>
                 </div>
               </div>
               <%= link_to song_lyrics_path(playlist_song.song),

@@ -13,6 +13,7 @@
           <div class="flex-grow-1 text-center">
             <strong><%= song.name %></strong>
             — <%= song.artist %>
+            <%= karaoke_availability_badges(song) %>
           </div>
           <%= link_to song_lyrics_path(song),
               data: { turbo_stream: true },

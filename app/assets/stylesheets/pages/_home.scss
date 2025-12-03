@@ -168,17 +168,6 @@
   font-size: 0.9rem;
 }
 
-// label NOW PLAYING
-.playlist-song-list--queue li:first-child::before {
-  content: "NOW PLAYING";
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  font-size: 0.6rem;
-  color: #ffd699;
-  letter-spacing: 1px;
-}
-
   .song-info-wrapper {
     overflow: hidden;
     position: relative;
@@ -264,7 +253,8 @@
 
 .queue-header p {
   text-align: left;
-  font-size: 0.75rem;
+  font-size: 0.90rem;
+  font-weight: 300;
   color: #d6d6d6;
 
   padding: 0;

@@ -1,5 +1,8 @@
 import { Controller } from "@hotwired/stimulus";
 
+// Track the currently playing controller instance across all instances
+let currentlyPlayingController = null;
+
 // Connects to data-controller="spotify-player"
 export default class extends Controller {
   // 1. Define targets and values
@@ -8,6 +11,7 @@ export default class extends Controller {
 
   // Store the Spotify EmbedController instance
   embedController = null;
+  isPlaying = false;
 
  connect() {
   console.log("Spotify player connected for URI:", this.uriValue);
@@ -54,7 +58,15 @@ initializePlayer(IFrameAPI) {
       this.embedController = EmbedController;
 
       EmbedController.addListener("playback_update", (e) => {
+        this.isPlaying = !e.data.isPaused;
         this.updateButtonIcon(e.data.isPaused);
+
+        // Track which controller is currently playing
+        if (this.isPlaying) {
+          currentlyPlayingController = this;
+        } else if (currentlyPlayingController === this) {
+          currentlyPlayingController = null;
+        }
       });
 
       this.updateButtonIcon(true);
@@ -78,11 +90,21 @@ initializePlayer(IFrameAPI) {
           this.buttonTarget.disabled = false;
           this.buttonTarget.style.opacity = "1";
           if (this.embedController) {
-            this.embedController.togglePlay();
+            this.pauseOtherAndPlay();
           }
         }, 1000);
       }
       return;
+    }
+
+    this.pauseOtherAndPlay();
+  }
+
+  // Pause any other playing song before toggling this one
+  pauseOtherAndPlay() {
+    // If another song is playing, pause it first
+    if (currentlyPlayingController && currentlyPlayingController !== this && currentlyPlayingController.isPlaying) {
+      currentlyPlayingController.embedController.togglePlay();
     }
 
     this.embedController.togglePlay();
@@ -100,7 +122,12 @@ initializePlayer(IFrameAPI) {
 }
 
   disconnect() {
-    // Optional: Clean up the player when the controller is removed from the DOM
+    // Clean up the currently playing reference if this controller was playing
+    if (currentlyPlayingController === this) {
+      currentlyPlayingController = null;
+    }
+
+    // Clean up the player when the controller is removed from the DOM
     if (this.embedController) {
       this.embedController.destroy();
     }

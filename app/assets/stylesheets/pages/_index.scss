@@ -98,3 +98,30 @@
     font-size: 18px;
   }
 }
+
+// Marquee effect for playlist names
+.playlist-card {
+  .song-info-wrapper {
+    overflow: hidden;
+    position: relative;
+    max-width: 100px;
+  }
+
+  .song-info-scroll {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .song-info-wrapper.has-overflow:hover .song-info-scroll {
+    animation: playlist-marquee 8s linear infinite;
+  }
+
+  @keyframes playlist-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}

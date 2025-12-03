@@ -1,39 +1,63 @@
 .card-category {
+  position: relative;
   text-decoration: none;
-  background-size: cover;
-  background-position: center;
   height: 150px;
   width: 100%;
+  border-radius: 20px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: rgb(255, 146, 3);
-  font-size: 18px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  justify-content: center;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+  overflow: hidden;
+  transition: all 0.25s ease;
 }
 
-.card-category:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.05);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+// dark soft overlay
+.card-category::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0.15)
+  );
+  z-index: 0;
 }
+
+// glow light layer
+.card-category::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 70%);
+  z-index: 0;
+}
+
+.card-category > * {
+  position: relative;
+  z-index: 1;
+}
+
 
 .card-category-recommend {
-  background-image: linear-gradient(
-      rgba(0,0,0,0.35),
-      rgba(0,0,0,0.35)
-    ),
-    url("https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-image:
+    url("https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=2069&auto=format&fit=crop");
 }
 
 .card-category-playlists {
-  background-image: linear-gradient(
-      rgba(0,0,0,0.35),
-      rgba(0,0,0,0.35)
-    ),
+  background-image:
     url("https://images.unsplash.com/photo-1616356607338-fd87169ecf1a?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGxheWxpc3R8ZW58MHx8MHx8fDI%3D");
 }
 

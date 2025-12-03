@@ -288,6 +288,18 @@
   .song-card {
     background: linear-gradient(135deg, #f6a54f 0%, #fdcc87 40%, #ff7a00 100%);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+
+    // NOW PLAYING label — ผูกกับการ์ดโดยตรง
+    &::before {
+      content: "NOW PLAYING";
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      font-size: 0.6rem;
+      color: #000000;
+      letter-spacing: 1px;
+      z-index: 10;
+    }
   }
 
   .song-card-image {
@@ -297,25 +309,14 @@
   }
 
   .song-card-text {
-    color: #fff;
-  }
-
-  // NOW PLAYING label
-  &::before {
-    content: "NOW PLAYING";
-    position: absolute;
-    top: 8px;
-    right: 16px;
-    font-size: 0.6rem;
-    color: #ffd699;
-    letter-spacing: 1px;
-    z-index: 10;
+    color: #000000;
   }
 
   .song-card-under {
     background: linear-gradient(145deg, #e0a050, #c08030);
 
-    .hint-left, .hint-right {
+    .hint-left,
+    .hint-right {
       color: #fff;
       opacity: 0.8;
     }

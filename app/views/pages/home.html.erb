@@ -11,9 +11,9 @@
   </div>
   <div class="playlist-container head-queue">
     <div class="queue-header">
-      <h2>Queue</h2>
+      <h2>Current Karaoke Session</h2>
       <p>
-        Playing in <span><%= @current_playlist.name %></span>
+        Now Playing in your<span><%= @current_playlist.name %></span> playlist
       </p>
     </div>
     <% if @current_playlist.playlist_songs.count > 0 %>
@@ -51,9 +51,9 @@
                   </button>
                   <div data-spotify-player-target="container" hidden></div>
                 </div>
-                <button class="done-btn" data-action="click->song-card#confirmDelete">
-                  <i class="fa-solid fa-circle-check"></i>
-                </button>
+                <%# <button class="done-btn" data-action="click->song-card#confirmDelete">
+                  <i class="fa-solid fa-circle-check"></i> %>
+                <%# </button> %>
               </div>
             </div>
           </div>

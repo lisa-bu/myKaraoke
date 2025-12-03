@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "lyrics_container" do %>
+  <div id="lyrics_container">
+    <%= render "lyrics/modal", song: @song, lyrics: @lyrics %>
+  </div>
+<% end %>

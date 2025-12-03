@@ -81,3 +81,5 @@ gem 'rspotify'
 gem "cloudinary"
 gem "pg_search"
 gem "ruby_llm", "~> 1.2.0"
+gem "httparty"
+gem "nokogiri"

@@ -1,0 +1,183 @@
+// Song Card Component - Stacked Card Design
+.song-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px 0;
+}
+
+.song-card-wrapper {
+  position: relative;
+
+  &.removing {
+    animation: slideOutLeft 0.3s ease forwards;
+  }
+}
+
+@keyframes slideOutLeft {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Container for both cards that moves together on swipe
+.song-card-stack {
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.song-card-wrapper.swiped .song-card-stack {
+  transform: translateX(-25%);
+}
+
+.song-card-wrapper.swiping .song-card-stack {
+  transition: none;
+}
+
+// Under-layer card (lighter grey) - always visible, peeking at bottom
+.song-card-under {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background: linear-gradient(145deg, #c8c8c8, #b0b0b0);
+  border-radius: 16px;
+  padding: 94px 16px 6px 16px; // Main card height + small bottom padding
+  text-decoration: none;
+  color: #444;
+  font-size: 0.85rem;
+
+  &:hover {
+    text-decoration: none;
+    color: #333;
+  }
+
+  &:active {
+    background: linear-gradient(145deg, #bbb, #a0a0a0);
+  }
+}
+
+.hint-left,
+.hint-right {
+  font-style: normal;
+  opacity: 0.9;
+}
+
+// Main card (darker grey) - on top
+.song-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 94px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(145deg, #888, #666);
+  border-radius: 16px;
+  padding: 12px 16px;
+  color: #fff;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Delete button (revealed on swipe) - fixed position, doesn't move
+.song-card-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 94px;
+  width: 80px;
+  background: #e74c3c;
+  border: none;
+  border-radius: 0 16px 16px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  i {
+    font-size: 28px;
+    color: white;
+  }
+
+  &:hover {
+    background: #c0392b;
+  }
+
+  &:active {
+    background: #a93226;
+  }
+}
+
+.song-card-wrapper.swiped .song-card-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.song-card-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.song-card-info {
+  flex: 1;
+  padding: 0 16px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.song-card-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-card-play {
+  flex-shrink: 0;
+}
+
+.play-pause-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 32px;
+    color: #1DB954;
+    transition: transform 0.15s ease;
+  }
+
+  &:hover i {
+    transform: scale(1.1);
+  }
+
+  &:active i {
+    transform: scale(0.95);
+  }
+}

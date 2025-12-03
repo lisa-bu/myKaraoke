@@ -2,9 +2,13 @@
   <%= render "shared/search", playlist: @current_playlist %>
   <div class="stop mb-0">
     <%= link_to new_playlist_playlist_song_path(@current_playlist),
-      class: "card-category card-category-recommend" do %>Recommend<% end %>
+      class: "card-category card-category-recommend" do %>
+      <div class="card-category-title">Recommend</div>
+      <% end %>
     <%= link_to playlists_path,
-      class: "card-category card-category-playlists" do %>Playlists<% end %>
+      class: "card-category card-category-playlists" do %>
+      <div class="card-category-title">Playlists</div>
+        <% end %>
   </div>
   <div class="stop">
     <%= link_to "End Session", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>

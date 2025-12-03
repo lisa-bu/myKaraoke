@@ -45,6 +45,7 @@ export default class extends Controller {
     if (event.target.closest(".play-pause-btn")) return
 
     this.startX = event.touches[0].clientX
+    this.currentX = this.startX // Initialize to same position so click doesn't register as swipe
     this.isDragging = true
     this.element.classList.add("swiping")
   }
@@ -107,6 +108,7 @@ export default class extends Controller {
     if (event.target.closest(".play-pause-btn")) return
 
     this.startX = event.clientX
+    this.currentX = this.startX // Initialize to same position so click doesn't register as swipe
     this.isDragging = true
     this.element.classList.add("swiping")
     event.preventDefault()

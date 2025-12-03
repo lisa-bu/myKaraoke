@@ -18,10 +18,12 @@
                   <span class="hint-right">tap + to add to karaoke session</span>
                 <% end %>
                 <!-- Main card (darker grey) -->
-                <div class="song-card">
+                <div class="song-card"
+                     data-controller="song-text"
+                     data-action="click->song-text#toggle">
                   <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
-                  <div class="song-card-info">
-                    <span class="song-card-text"><%= playlist_song.song.artist %> - <%= playlist_song.song.name %></span>
+                  <div class="song-card-info" data-song-text-target="info">
+                    <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %> - <%= playlist_song.song.name %></span>
                   </div>
                   <div class="song-card-play"
                        data-controller="spotify-player"

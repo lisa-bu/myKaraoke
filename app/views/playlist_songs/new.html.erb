@@ -1,49 +1,51 @@
 <main class="flex-grow-1 d-flex flex-column overflow-hidden">
-  <div class="container d-flex flex-column flex-grow-1 overflow-auto">
+  <div class="container d-flex flex-column flex-grow-1 overflow-auto py-3">
     <section class="content flex-grow-1">
-      <div style="text-align: center;">
-        <h1 class="text-start">Song Recommendations</h1>
+      <div class="mb-2">
+        <h4 class="text-start mb-1">Our Song Recommendations</h4>
+        <p class="text-start mb-2" style="color: white;">Tap the add button to add a song to your karaoke session</p>
+        <p class="text-start mb-2" style="color: #ff9500;">Songs picked for you based on what you already have in your session</p>
       </div>
-      <div class="scrolling-wrapper bg-transparent">
+      <div class="scrolling-wrapper bg-transparent mb-4">
         <% @my_karaoke_recs.shuffle.each do |song|%>
           <div class="scrolling-card position-relative bg-transparent border border-0">
-            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
+            <%= image_tag song.image_url, alt: song.name, class: "song-image" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>
-              <%= f.submit "+ #{song.name}", class: "add-button" %>
+              <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
             <% end %>
+            <div class="song-info-card">
+              <span class="song-name"><%= song.name %></span>
+              <span class="song-artist"><%= song.artist %></span>
+            </div>
           </div>
         <% end  %>
       </div>
-      <div style="text-align: center;">
-        <h1 class="text-start">Based on your Spotify</h1>
+      <div class="mb-2">
+        <h4 class="text-start mb-1">Based On Your Spotify</h4>
+        <p class="text-start mb-2" style="color: #ff9500;">Songs picked from your listening history</p>
       </div>
       <div class="scrolling-wrapper bg-transparent">
         <% @spotify_songs_1.shuffle.each do |song|%>
           <div class="scrolling-card position-relative bg-transparent border border-0">
-            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
+            <%= image_tag song.image_url, alt: song.name, class: "song-image" %>
             <%= simple_form_for [@playlist, @playlist_song] do |f| %>
               <%= f.hidden_field :song_id, value: song.id %>
-              <%= f.submit "+ #{song.name}", class: "add-button" %>
+              <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
             <% end %>
-          </div>
-        <% end  %>
-      </div>
-      <div class="scrolling-wrapper bg-transparent mt-3">
-        <% @spotify_songs_2.shuffle.each do |song|%>
-          <div class="scrolling-card position-relative bg-transparent border border-0">
-            <%= image_tag song.image_url, alt: song.name, class: "song-image position-absolute" %>
-            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
-              <%= f.hidden_field :song_id, value: song.id %>
-              <%= f.submit "+ #{song.name}", class: "add-button" %>
-            <% end %>
+            <div class="song-info-card">
+              <span class="song-name"><%= song.name %></span>
+              <span class="song-artist"><%= song.artist %></span>
+            </div>
           </div>
         <% end  %>
       </div>
     </section>
-    <%= link_to "Surprise Me!",
-      surprise_playlist_playlist_songs_path(@playlist),
-      class: "btn btn-warning"
-    %>
+    <div class="stop" style="margin-top: 0; margin-bottom: 1rem;">
+      <%= link_to "Surprise Me!",
+        surprise_playlist_playlist_songs_path(@playlist),
+        class: "btn btn-info w-100"
+      %>
+    </div>
   </div>
 </main>

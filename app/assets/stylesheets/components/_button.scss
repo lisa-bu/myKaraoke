@@ -1,21 +1,63 @@
-// for adding song show page
-.add-button {
-  background: linear-gradient(135deg, #ff9500, #ff5f00);
-  color: rgb(0, 0, 0);
-  padding: 10px 20px;
-  width: 265px;
-  border-radius: 8px;
+// Add button in bottom-left corner of image
+.add-button-circle {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  color: #000;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 16px;
   border: none;
-  font-size: 16px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 
-  position: relative;
-  bottom: -100px;           // distance from bottom of div
-  left: 15px;         // distance from left of div
+  position: absolute;
+  bottom: 58px;             // above the song info area
+  left: 8px;
 
   &:hover {
-    background: linear-gradient(135deg, #ff7b00, #ffffff);
+    background: rgba(255, 255, 255, 0.8);
     transform: scale(1.05);
+  }
+
+  .plus-icon {
+    color: #e65c00;
+    font-weight: 900;
+    margin-right: 2px;
+  }
+}
+
+// Song info text area below image
+.song-info-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  position: absolute;
+  top: 188px;               // below the 180px image + 8px gap
+  left: 0;
+  right: 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  .song-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .song-artist {
+    font-size: 11px;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

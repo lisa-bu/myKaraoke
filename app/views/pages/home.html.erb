@@ -7,11 +7,18 @@
       class: "card-category card-category-playlists" do %>Playlists<% end %>
   </div>
   <div class="stop">
-    <%= link_to "Stop & Delete", playlist_path(@current_playlist), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-info w-100" %>
-    <%= link_to "Stop Singing", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
+    <%# <%= link_to "Stop & Delete", playlist_path(@current_playlist), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-info w-100" %>
+    <%= link_to "End Session", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
   </div>
-  <div class="playlist-container" data-controller="swipe">
-    <ul class="playlist-song-list">
+
+    <div class="playlist-container head-queue" data-controller="swipe">
+        <div class="queue-header">
+          <h2>Queue</h2>
+          <p>
+            Playing in <span><%= @current_playlist.name %></span>
+          </p>
+
+  <ul class="playlist-song-list playlist-song-list--queue mt-3">
       <% if @current_playlist.playlist_songs.count > 0 %>
         <ul class="mt-3">
           <% @current_playlist.playlist_songs.each do |playlist_song| %>
@@ -42,6 +49,7 @@
           <% end %>
         </ul>
       </ul>
+     </div>
     <% else %>
       <%= image_tag "reshot-icon-note-white.svg", alt: "Person wearing headphones", class: "p-3", style: "width: inherit;"%>
     <% end %>

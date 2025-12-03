@@ -5,6 +5,8 @@ export default class extends Controller {
 
   connect() {
     this.isScrolling = false
+    // Store the original full text before any truncation
+    this.originalText = this.textTarget.textContent
     this.checkOverflow()
   }
 
@@ -33,10 +35,9 @@ export default class extends Controller {
   }
 
   startScrolling() {
-    // Duplicate the text content for seamless loop
     const text = this.textTarget
-    const originalText = text.textContent
-    text.textContent = originalText + "     •     " + originalText
+    // Use the stored original text (not the truncated version)
+    text.textContent = this.originalText + "     •     " + this.originalText
 
     this.infoTarget.classList.add("scrolling")
     this.isScrolling = true
@@ -44,9 +45,8 @@ export default class extends Controller {
 
   stopScrolling() {
     const text = this.textTarget
-    // Remove the duplicated text
-    const parts = text.textContent.split("     •     ")
-    text.textContent = parts[0]
+    // Restore original text
+    text.textContent = this.originalText
 
     this.infoTarget.classList.remove("scrolling")
     this.isScrolling = false

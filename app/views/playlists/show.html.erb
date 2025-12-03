@@ -10,7 +10,7 @@
             <h1 class="playlist-title text-white d-inline-block m-0"><%= @playlist.name %></h1>
           </div>
         </div>
-        <ul class="playlist-song-list">
+        <div class="song-cards-list">
           <% @playlist.playlist_songs.each do |playlist_song| %>
             <div class="song-card-browse">
               <div class="song-card-stack">

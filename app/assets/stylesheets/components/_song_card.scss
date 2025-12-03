@@ -145,35 +145,53 @@
   padding: 0 16px;
   min-width: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .song-card-text {
   font-size: 1.1rem;
   font-weight: 500;
   color: #fff;
-  display: block;
+  display: inline-block;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+// Scrolling text animation for long song names
+.song-card-info.scrolling .song-card-text {
+  animation: marquee-scroll 8s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .song-card-play {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .play-pause-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 12px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 
   i {
     font-size: 32px;
     color: #1DB954;
     transition: transform 0.15s ease;
+    line-height: 1;
   }
 
   &:hover i {
@@ -289,7 +307,7 @@
     background: linear-gradient(135deg, #f6a54f 0%, #fdcc87 40%, #ff7a00 100%);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 
-    // NOW PLAYING label — ผูกกับการ์ดโดยตรง
+    // NOW PLAYING label - inside .song-card so it moves with swipe
     &::before {
       content: "NOW PLAYING";
       position: absolute;
@@ -309,14 +327,13 @@
   }
 
   .song-card-text {
-    color: #000000;
+    color: #3e3e3e;
   }
 
   .song-card-under {
     background: linear-gradient(145deg, #e0a050, #c08030);
 
-    .hint-left,
-    .hint-right {
+    .hint-left, .hint-right {
       color: #fff;
       opacity: 0.8;
     }

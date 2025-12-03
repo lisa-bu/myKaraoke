@@ -1,7 +1,10 @@
 .song-image {
-  height: 156px;
-  width: 300px;
+  height: 180px;
+  width: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 8px; /* optional */
+  border-radius: 16px; /* optional */
+  position: absolute;
+  top: 0;
+  left: 0;
 }

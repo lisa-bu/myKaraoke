@@ -10,16 +10,26 @@
       <div class="card-category-title">Playlists</div>
         <% end %>
   </div>
-  <div class="stop">
-    <%= link_to "End Session", stop_singing_user_path(current_user), data: { turbo_method: :patch}, class: "btn btn-info w-100" %>
+  <%# end session button %>
+  <div class="stop <%= 'stop-hidden' unless @current_playlist&.playlist_songs&.any? %>">
+    <%= link_to "End Session",
+          stop_singing_user_path(current_user),
+          data: { turbo_method: :patch },
+          class: "btn btn-info w-100" %>
   </div>
+
+
   <div class="playlist-container head-queue">
+
     <div class="queue-header">
       <h2>Current Karaoke Session</h2>
-      <p>
-        Now Playing in your <span><%= @current_playlist.name %></span> playlist
-      </p>
+        <% if @current_playlist.playlist_songs.any? %>
+          <p>
+            Now Playing in your <span><%= @current_playlist.name %></span> playlist
+          </p>
+        <% end %>
     </div>
+
     <% if @current_playlist.playlist_songs.count > 0 %>
       <div class="song-cards-list song-cards-list--queue">
         <% @current_playlist.playlist_songs.each_with_index do |playlist_song, index| %>
@@ -71,6 +81,7 @@
         <h3>Add songs to your Session</h3>
         <p>Your karaoke session is empty.</p>
         <p>Search for your first song at the top </p>
+        <p></p>
       </div>
   <% end %>
   </div>

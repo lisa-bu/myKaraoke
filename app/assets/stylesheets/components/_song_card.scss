@@ -2,8 +2,11 @@
 .song-cards-list {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding: 16px 0;
+  gap: 12px;
+  padding: 8px 0;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 570px;
 }
 
 .song-card-wrapper {

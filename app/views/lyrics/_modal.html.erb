@@ -1,0 +1,16 @@
+<div class="lyrics-overlay" data-controller="lyrics" data-action="keydown.esc@window->lyrics#close">
+  <div class="lyrics-modal">
+    <button class="lyrics-close-btn" data-action="click->lyrics#close">&times;</button>
+    <div class="lyrics-header">
+      <h3><%= song.name %></h3>
+      <p><%= song.artist %></p>
+    </div>
+    <div class="lyrics-content">
+      <% if lyrics.present? %>
+        <%= simple_format(lyrics) %>
+      <% else %>
+        <p class="lyrics-not-found">Lyrics not found for this song.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

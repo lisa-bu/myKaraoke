@@ -14,6 +14,11 @@
             <strong><%= song.name %></strong>
             — <%= song.artist %>
           </div>
+          <%= link_to song_lyrics_path(song),
+              data: { turbo_stream: true },
+              style: "background: none; border: none; cursor: pointer; padding: 8px; text-decoration: none;" do %>
+            <i class="fa-solid fa-microphone" style="color: #FF6B6B; font-size: 18px;"></i>
+          <% end %>
           <button data-action="click->spotify-player#togglePlay"
             data-spotify-player-target="button"
             style="background: none; border: none; cursor: pointer; padding: 8px;">

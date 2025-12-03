@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :songs, only: [:show] do
     resources :difficulty_ratings, only: [:create]
     resource :favorite, only: [:create, :destroy]
+    resource :lyrics, only: [:show]
   end
 
   resources :difficulty_ratings, only: [ :update]

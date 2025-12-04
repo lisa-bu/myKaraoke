@@ -21,32 +21,33 @@
     </div>
     <!---------------------------END-SUBTITLE---------------------------->
     <!---------------------------ALBUM-ARTWORK---------------------------->
-    <div class="mx-auto mb-2 album-glow" style="max-width: 240px;">
-      <%= image_tag @song.image_url, class: "img-fluid rounded" %>
+    <div class="mx-auto mb-2 album-glow position-relative" style="max-width: 240px; overflow: hidden; font-size: 0;"
+         data-controller="spotify-player"
+         data-spotify-player-uri-value="spotify:track:<%= @song.spotify_id %>">
+      <%= image_tag @song.image_url, class: "img-fluid rounded", style: "display: block; width: 100%;" %>
+      <div class="surprise-play-overlay">
+        <button data-action="click->spotify-player#togglePlay"
+          data-spotify-player-target="button"
+          class="surprise-play-btn">
+          <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+        </button>
+      </div>
+      <div data-spotify-player-target="container" hidden></div>
     </div>
     <!---------------------------END-ALBUM-ARTWORK---------------------------->
     <!---------------------------SONG-&-ARTIST---------------------------->
-    <div class="text-center mb-2" data-controller="spotify-player"
-          data-spotify-player-uri-value="spotify:track:<%= @song.spotify_id %>">
+    <div class="text-center mb-2">
       <h5 class="fw-bold text-white mb-1"><%= @song.name %></h5>
       <p class="text-white-50 mb-1" style="font-size: 0.85rem;">by</p>
       <h6 class="fw-semibold text-white mb-0"><%= @song.artist %></h6>
-      <button data-action="click->spotify-player#togglePlay"
-        data-spotify-player-target="button"
-        style="background: none; border: none; cursor: pointer; padding: 8px;">
-        <i class="fa-solid fa-play"
-          data-spotify-player-target="icon"
-          style="color: #1DB954; font-size: 24px;"></i>
-      </button>
-      <div data-spotify-player-target="container" hidden></div>
     </div>
     <!---------------------------END-SONG-&-ARTIST---------------------------->
     <!---------------------------ADD-SONG-BUTTON---------------------------->
     <div class="text-center mb-2">
       <%= simple_form_for [@playlist, PlaylistSong.new], data: { turbo: false } do |f| %>
         <%= f.hidden_field :song_id, value: @song.id %>
-        <button type="submit" class="btn p-0 border-0 bg-transparent">
-          <i class="fa-solid fa-plus fa-2x" style="color: #f5af19; cursor: pointer;"></i>
+        <button type="submit" class="surprise-add-btn">
+          <i class="fa-solid fa-plus"></i>
         </button>
       <% end %>
       <p class="fw-bold mt-1" style="font-size: 1.2rem; color: #f5af19;">Sing now!</p>
@@ -86,6 +87,74 @@
     animation: glowPulse 1.5s ease-out forwards;
     animation-delay: 0.3s;
     border-radius: 8px;
+    display: inline-block;
+  }
+
+  .surprise-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+
+  .surprise-play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .surprise-play-btn i {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.85);
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+
+  .surprise-play-btn:hover i {
+    transform: scale(1.1);
+    color: #fff;
+  }
+
+  .surprise-play-btn:active i {
+    transform: scale(0.95);
+  }
+
+  .surprise-add-btn {
+    background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 12px;
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .surprise-add-btn i {
+    font-size: 24px;
+    color: white;
+  }
+
+  .surprise-add-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 122, 0, 0.4);
+  }
+
+  .surprise-add-btn:active {
+    transform: scale(0.95);
   }
 
   .confetti-container {

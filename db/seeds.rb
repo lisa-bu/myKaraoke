@@ -67,7 +67,7 @@ artists = [
   "The Killers",
   "Smash Mouth",
   "Weezer",
-  "Linkin Park"
+  "Linkin Park",
   "Cher",
   "Tom Petty"
 ]

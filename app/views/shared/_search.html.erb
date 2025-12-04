@@ -8,13 +8,14 @@
     <div class="playlist-search-pill">
 
       <%# <span class="playlist-search-icon"></span> %>
+      <i class="fa-solid fa-magnifying-glass playlist-search-icon" style="color: black"></i>
 
       <%= text_field_tag :query,
                         params[:query],
-                        placeholder: "Search for song...",
+                        placeholder: "What song do you want to sing...",
                         class: "playlist-search-input" %>
 
-      <%= submit_tag "search", class: "playlist-search-button" %>
+      <%= submit_tag "Search", class: "playlist-search-button" %>
 
     </div>
 

@@ -10,3 +10,13 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+.navbar-lewagon .navbar-toggler {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.navbar-lewagon .navbar-toggler-icon {
+  filter: invert(55%) sepia(90%) saturate(900%) hue-rotate(2deg) brightness(100%) contrast(105%);
+}

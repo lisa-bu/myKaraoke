@@ -76,13 +76,15 @@
         <% end %>
       </div>
     <% else %>
-      <div class="empty-session">
-        <%= image_tag "reshot-icon-note-white.svg", class: "empty-session-icon" %>
-        <h3>Add songs to your Session</h3>
-        <p>Your karaoke session is empty</p>
-        <p>Search for your first song at the top </p>
-        <div class="karaoke-badges">
-          <p class="badges-copy">
+      <div class="current-session d-flex justify-content-center align-items-center">
+        <div class="empty-session text-center">
+          <%= image_tag "reshot-icon-note-white.svg", class: "empty-session-icon mb-3" %>
+
+          <h3 class="mb-2">Add songs to your Session</h3>
+          <p class="mb-1">Your karaoke session is empty</p>
+          <p class="mb-3">Search for your first song at the top</p>
+
+          <p class="badges-copy mb-0">
             Look for the
             <%= image_tag "DAM.png", class: "badge-icon", style: "height:20px;" %>
             <span class="badges-or">or</span>
@@ -90,6 +92,8 @@
             badge on each song to see where it’s available.
           </p>
         </div>
+      </div>
+
 
 
 

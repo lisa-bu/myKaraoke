@@ -27,7 +27,24 @@
 .banner-content {
   display: flex;
   flex-direction: column;
-  gap: 500px;                     // spacing between text and button
+  justify-content: space-between;
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.landing-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-tagline {
+  font-size: 24px !important;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  margin-bottom: 16px;
+  opacity: 1;
 }
 
 .landing_btn {

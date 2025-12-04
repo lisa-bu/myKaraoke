@@ -34,7 +34,8 @@
   background-color: #e8e8e8;
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
+  border-radius: 16px;
+  overflow: hidden;
   // Remove fixed height - let aspect-ratio handle it
 }
 
@@ -43,6 +44,17 @@
   background: transparent;
   // Ensure card doesn't overflow
   overflow: hidden;
+
+  .playlist-card-image {
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-body {
+    margin-top: -100%;
+    padding-top: calc(100% + 8px);
+    border-radius: 16px;
+  }
 }
 
 .card-body {

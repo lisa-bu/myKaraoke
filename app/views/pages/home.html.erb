@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 class="text-center fw-semibold fs-5 text-warning mb-2">Find Songs</h3>
+  <h3 class="text-left fw-semibold fs-5 text-warning mb-2">Find Songs</h3>
   <%= render "shared/search", playlist: @current_playlist %>
   <div class="stop mb-3">
     <%= link_to new_playlist_playlist_song_path(@current_playlist),
@@ -83,7 +83,6 @@
         <div class="empty-session text-center">
           <%= image_tag "reshot-icon-note-white.svg", class: "empty-session-icon mb-3" %>
           <p class="mb-2">Your karaoke session is empty...</p>
-
           <% if @last_playlist %>
             <div class="last-playlist-prompt mb-3">
               <p class="text-muted small mb-2">Pick up where you left off?</p>
@@ -96,7 +95,6 @@
           <% else %>
             <p class="mb-3">Find your next song at the top!</p>
           <% end %>
-
           <p class="badges-copy mb-0">
             See if your song is available at
             <%= image_tag "DAM.png", class: "badge-icon-home", style: "height:20px;" %>

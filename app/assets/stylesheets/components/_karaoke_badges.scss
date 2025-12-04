@@ -1,28 +1,47 @@
-// Karaoke availability badges container
-.karaoke-badges {
-  display: flex;
-  gap: 4px;
-  margin-top: 2px;
+.badges-copy {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-// Karaoke availability badges for DAM and Joysound
-.karaoke-badge {
-  display: inline-block;
-  font-size: 8px;
-  font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  line-height: 1;
+.badges-or {
+  margin: 0 4px;
+  font-size: 0.7rem;
+  opacity: 0.6;
 }
 
-.karaoke-badge-dam {
-  background-color: #2563eb;
-  color: white;
+// .badge-icon {
+//   height: 12px;
+//   margin: 0 2px;
+//   opacity: 0.55;
+//   filter: grayscale(100%) brightness(.9);
+//    vertical-align: middle;
+// }
+
+.badge-icon[src*="DAM"] {
+  height: 12px;
+  margin: 0 2px;
+  opacity: 0.75;
+
+  filter:
+    brightness(1.05)
+    saturate(0.8)
+    contrast(0.9);
 }
 
-.karaoke-badge-joysound {
-  background-color: #dc2626;
-  color: white;
+.badge-icon[src*="JOY"] {
+  height: 12px;
+  margin: 0 2px;
+  opacity: 0.75;
+
+  filter:
+    grayscale(20%)
+    saturate(85%)
+    brightness(1.2)
+    sepia(40%)
+    hue-rotate(-20deg);
+}
+
+.badge-icon {
+  vertical-align: middle;
 }

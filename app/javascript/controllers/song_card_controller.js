@@ -162,33 +162,19 @@ export default class extends Controller {
   confirmDelete(event) {
     event.preventDefault()
     event.stopPropagation()
-    this.removeSong()
+    this.hideSong()
   }
 
-  removeSong() {
+  hideSong() {
     const wasNowPlaying = this.element.classList.contains("now-playing")
-    this.element.classList.add("removing")
 
-    fetch(`/playlist_songs/${this.playlistSongIdValue}`, {
-      method: "DELETE",
-      headers: {
-        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-        "Accept": "text/vnd.turbo-stream.html"
-      }
-    }).then(() => {
-      setTimeout(() => {
-        // Get the next sibling before removing
-        const nextSibling = this.element.nextElementSibling
-        this.element.remove()
+    // Get the next sibling before hiding
+    const nextSibling = this.element.nextElementSibling
+    this.element.classList.add("hidden")
 
-        // If this was the "now playing" song, promote the next one
-        if (wasNowPlaying && nextSibling && nextSibling.classList.contains("song-card-wrapper")) {
-          nextSibling.classList.add("now-playing")
-        }
-      }, 300)
-    }).catch(() => {
-      this.element.classList.remove("removing", "swiped")
-      this.isSwiped = false
-    })
+    // If this was the "now playing" song, promote the next one
+    if (wasNowPlaying && nextSibling && nextSibling.classList.contains("song-card-wrapper")) {
+      nextSibling.classList.add("now-playing")
+    }
   }
 }

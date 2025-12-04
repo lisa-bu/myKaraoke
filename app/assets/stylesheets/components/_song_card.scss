@@ -15,6 +15,10 @@
   &.removing {
     animation: slideOutLeft 0.3s ease forwards;
   }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 @keyframes slideOutLeft {

@@ -19,6 +19,6 @@ export default class extends Controller {
 
   hide(event) {
     const listItem = event.target.closest('li')
-    listItem.remove()
+    listItem.classList.add('hidden')
   }
 }

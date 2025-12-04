@@ -20,10 +20,10 @@
   </div>
   <div class="playlist-container head-queue">
     <div class="queue-header">
-      <h2>Current Karaoke Session</h2>
+      <h2>Current karaoke session</h2>
       <% if @current_playlist.playlist_songs.any? %>
         <p>
-          Now Singing your <span><%= @current_playlist.name %></span> playlist
+          Now singing your <span><%= @current_playlist.name %></span> playlist
         </p>
       <% end %>
     </div>
@@ -87,9 +87,9 @@
 
           <p class="badges-copy mb-0">
             See if your song is available at
-            <%= image_tag "DAM.png", class: "badge-icon", style: "height:20px;" %>
+            <%= image_tag "DAM.png", class: "badge-icon-home", style: "height:20px;" %>
             <span class="badges-or">or</span>
-            <%= image_tag "JOY.png", class: "badge-icon", style: "height:20px;" %>
+            <%= image_tag "JOY.png", class: "badge-icon-home", style: "height:20px;" %>
 
           </p>
         </div>

@@ -68,6 +68,8 @@ artists = [
   "Smash Mouth",
   "Weezer",
   "Linkin Park"
+  "Cher",
+  "Tom Petty"
 ]
 
 tracks = artists.map do |artist|

@@ -1,33 +1,60 @@
 <main class="flex-grow-1 d-flex flex-column overflow-hidden">
   <div class="container d-flex flex-column flex-grow-1 overflow-auto py-3">
     <section class="content flex-grow-1">
-      <div class="mb-2">
-        <h4 class="text-start mb-1">Our Song Recommendations</h4>
-        <p class="text-start mb-2" style="color: white;">Tap the add button to add a song to your karaoke session</p>
-        <p class="text-start mb-2" style="color: #ff9500;">Songs picked for you based on what you already have in your session</p>
-      </div>
-      <div class="scrolling-wrapper bg-transparent mb-4">
-        <% @my_karaoke_recs.shuffle.each do |song|%>
-          <div class="scrolling-card position-relative bg-transparent border border-0">
-            <%= image_tag song.image_url, alt: song.name, class: "song-image" %>
-            <%= simple_form_for [@playlist, @playlist_song] do |f| %>
-              <%= f.hidden_field :song_id, value: song.id %>
-              <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
-            <% end %>
-            <div class="song-info-card">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="overflow-hidden" style="min-width: 0;">
-                  <span class="song-name d-block"><%= song.name %></span>
-                  <span class="song-artist d-block"><%= song.artist %></span>
+      <% if @crowd_pleaser_playlists.any? %>
+        <div class="mb-2">
+          <h4 class="text-start mb-1">Crowd Pleasers</h4>
+          <p class="text-start mb-2" style="color: #ff9500;">Tap a playlist to browse popular karaoke favorites</p>
+        </div>
+        <div class="scrolling-wrapper bg-transparent mb-4">
+          <% @crowd_pleaser_playlists.each do |cp_playlist| %>
+            <%= link_to crowd_pleaser_playlist_path(cp_playlist), class: "text-decoration-none" do %>
+              <div class="scrolling-card position-relative bg-transparent border border-0">
+                <% if cp_playlist.songs.first&.image_url %>
+                  <%= image_tag cp_playlist.songs.first.image_url, alt: cp_playlist.name, class: "song-image" %>
+                <% else %>
+                  <div class="song-image d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #ff9500, #ff6b00);">
+                    <span style="font-size: 2rem;">&#127926;</span>
+                  </div>
+                <% end %>
+                <div class="song-info-card">
+                  <span class="song-name d-block"><%= cp_playlist.name %></span>
+                  <span class="song-artist d-block"><%= cp_playlist.songs.count %> songs</span>
                 </div>
-                <div class="flex-shrink-0">
-                  <%= karaoke_availability_badges(song) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @my_karaoke_recs.any? %>
+        <div class="mb-2">
+          <h4 class="text-start mb-1">Our Song Recommendations</h4>
+          <p class="text-start mb-2" style="color: white;">Tap the add button to add a song to your karaoke session</p>
+          <p class="text-start mb-2" style="color: #ff9500;">Songs picked for you based on what you already have in your session</p>
+        </div>
+        <div class="scrolling-wrapper bg-transparent mb-4">
+          <% @my_karaoke_recs.shuffle.each do |song|%>
+            <div class="scrolling-card position-relative bg-transparent border border-0">
+              <%= image_tag song.image_url, alt: song.name, class: "song-image" %>
+              <%= simple_form_for [@playlist, @playlist_song] do |f| %>
+                <%= f.hidden_field :song_id, value: song.id %>
+                <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
+              <% end %>
+              <div class="song-info-card">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="overflow-hidden" style="min-width: 0;">
+                    <span class="song-name d-block"><%= song.name %></span>
+                    <span class="song-artist d-block"><%= song.artist %></span>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <%= karaoke_availability_badges(song) %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end  %>
-      </div>
+          <% end  %>
+        </div>
+      <% end %>
       <div class="mb-2">
         <h4 class="text-start mb-1">Based On Your Spotify</h4>
         <p class="text-start mb-2" style="color: #ff9500;">Songs picked from your listening history</p>

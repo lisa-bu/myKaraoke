@@ -12,18 +12,25 @@ class GetRecommendations
     return [] if song_list.empty?
 
     prompt = <<~PROMPT
-    Based on the following songs (up to 10):
-    #{song_list.first(10).join("\n")}
+      You are recommending karaoke songs.
+      You are skilled at reading the mood, energy, and style of the currently selected songs and choosing the next best songs to sing.
 
-    Recommend 10 **different** songs that would be good choices to sing at karaoke.
-    Do **not** include any of the provided songs in your recommendations.
+      INPUT SONGS (do not recommend these):
+      #{song_list.first(10).join("\n")}
 
-    Return the result as **ONLY** a JSON array of 10 objects.
-    Each object must contain exactly:
-      - "name": the song title
-      - "artist": the performing artist
+      TASK:
+      Recommend exactly 10 **different** songs that fit well with the mood and vibe of the input list.
+      All recommended songs **must currently exist in either the JOYSOUND or DAM karaoke libraries**.
+      Do **not** include any of the provided songs.
 
-    Return no extra text, no explanations, no code fencing.
+      OUTPUT FORMAT (follow this exactly):
+      - Return **ONLY** a JSON array of 10 objects.
+      - Each object must contain exactly:
+          "name"   — the song title (string)
+          "artist" — the performing artist (string)
+      - No extra text, no commentary, no labels, and no code fences.
+
+      If you cannot find 10 valid songs that meet the criteria, return a JSON array (possibly empty) with no explanation.
     PROMPT
 
     chat = RubyLLM.chat

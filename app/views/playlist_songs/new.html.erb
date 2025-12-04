@@ -1,5 +1,11 @@
 <main class="flex-grow-1 d-flex flex-column overflow-hidden">
   <div class="container d-flex flex-column flex-grow-1 overflow-auto py-3">
+    <div class="stop mb-3">
+      <%= link_to "Surprise Me!",
+        surprise_playlist_playlist_songs_path(@playlist),
+        class: "btn btn-info w-100"
+      %>
+    </div>
     <section class="content flex-grow-1">
       <% if @crowd_pleaser_playlists.any? %>
         <div class="mb-2">
@@ -82,11 +88,5 @@
         <% end  %>
       </div>
     </section>
-    <div class="stop" style="margin-top: 0; margin-bottom: 1rem;">
-      <%= link_to "Surprise Me!",
-        surprise_playlist_playlist_songs_path(@playlist),
-        class: "btn btn-info w-100"
-      %>
-    </div>
   </div>
 </main>

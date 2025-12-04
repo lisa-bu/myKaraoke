@@ -1,7 +1,7 @@
 <div class="container">
   <h3 class="text-center fw-semibold fs-5 text-warning mb-2">Add songs to your session!</h3>
   <%= render "shared/search", playlist: @current_playlist %>
-  <div class="stop mb-0">
+  <div class="stop mb-3">
     <%= link_to new_playlist_playlist_song_path(@current_playlist),
       class: "card-category card-category-recommend" do %>
       <div class="card-category-title">Get Inspired</div>
@@ -10,13 +10,6 @@
       class: "card-category card-category-playlists" do %>
       <div class="card-category-title">Your Playlists</div>
         <% end %>
-  </div>
-  <%# end session button %>
-  <div class="stop <%= 'stop-hidden' unless @current_playlist&.playlist_songs&.any? %>">
-    <%= link_to "End Session",
-          stop_singing_user_path(current_user),
-          data: { turbo_method: :patch },
-          class: "btn btn-info w-100" %>
   </div>
   <div class="playlist-container head-queue">
     <div class="queue-header">
@@ -75,6 +68,13 @@
             </div>
           </div>
         <% end %>
+        <%# end session button - appears after last song %>
+        <div class="song-card-wrapper end-session-wrapper">
+          <%= link_to "End Session",
+                stop_singing_user_path(current_user),
+                data: { turbo_method: :patch },
+                class: "btn btn-secondary w-100" %>
+        </div>
       </div>
     <% else %>
       <div class="current-session d-flex justify-content-center align-items-center">

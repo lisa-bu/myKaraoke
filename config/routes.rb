@@ -33,6 +33,12 @@ Rails.application.routes.draw do
 
   resources :friendships, only: [:create, :update, :destroy]
 
+  resources :crowd_pleaser_playlists, only: [:show] do
+    member do
+      post :add_to_session
+    end
+  end
+
   resources :users, only: [:update] do
     member  do
       patch :stop_singing

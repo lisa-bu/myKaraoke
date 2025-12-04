@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_012818) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_04_024900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_012818) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "crowd_pleaser_playlist_songs", force: :cascade do |t|
+    t.bigint "crowd_pleaser_playlist_id", null: false
+    t.bigint "song_id", null: false
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["crowd_pleaser_playlist_id"], name: "idx_on_crowd_pleaser_playlist_id_a3ec45bcae"
+    t.index ["song_id"], name: "index_crowd_pleaser_playlist_songs_on_song_id"
+  end
+
+  create_table "crowd_pleaser_playlists", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "difficulty_ratings", force: :cascade do |t|
@@ -130,6 +148,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_012818) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "crowd_pleaser_playlist_songs", "crowd_pleaser_playlists"
+  add_foreign_key "crowd_pleaser_playlist_songs", "songs"
   add_foreign_key "difficulty_ratings", "songs"
   add_foreign_key "difficulty_ratings", "users"
   add_foreign_key "friendships", "users", column: "asker_id"

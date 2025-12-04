@@ -16,6 +16,7 @@ class PlaylistSongsController < ApplicationController
     @spotify_songs_2 = Song.all.shuffle.take(10)
 
     @my_karaoke_recs = GetRecommendations.new(@playlist.playlist_songs).call
+    @crowd_pleaser_playlists = CrowdPleaserPlaylist.all
   end
 
   def create

@@ -62,7 +62,10 @@ artists = [
   "Kelly Clarkson",
   "TWICE",
   "BTS",
-  "Sam Smith"
+  "Sam Smith",
+  "Britney Spears",
+  "Cher",
+  "Tom Petty"
 ]
 
 tracks = artists.map do |artist|

@@ -1,10 +1,12 @@
 <div class="playlist-show-page">
   <div class="playlist-show-content">
     <%= render "shared/search", playlist: @playlist %>
-    <div class="playlist-container">
-      <% if params[:query].present? %>
+    <% if params[:query].present? %>
+      <div class="playlist-container">
         <%= render "shared/search_results", playlist: @playlist, songs: @songs %>
-      <% else %>
+      </div>
+    <% else %>
+    <div class="playlist-container">
         <div class="playlist-title-wrapper text-center mb-3" data-controller="marquee">
           <div class="song-info-scroll">
             <h1 class="playlist-title text-white d-inline-block m-0"><%= @playlist.name %></h1>
@@ -66,8 +68,10 @@
             <% end %>
           <% end %>
         </div>
-      <% end %>
     </div>
+    <% end %>
   </div>
-  <%= render "playlist_buttons", playlist: @playlist %>
+  <% unless params[:query].present? %>
+    <%= render "playlist_buttons", playlist: @playlist %>
+  <% end %>
 </div>

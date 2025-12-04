@@ -279,4 +279,8 @@ crowd_pleaser_data.each do |playlist_name, songs_data|
   puts "Created playlist: #{playlist_name} with #{playlist.songs.count} songs"
 end
 
+# Seed demo song lyrics
+puts "Adding demo song lyrics..."
+Rake::Task["lyrics:seed"].invoke
+
 puts "Finished!"

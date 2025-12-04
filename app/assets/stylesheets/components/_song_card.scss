@@ -264,27 +264,64 @@
   letter-spacing: 0.5px;
 }
 
+// Add to queue button (orange square with rounded edges)
+
+.add-to-queue-btn {
+
+ background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%);
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ padding: 8px;
+ width: 30px;
+ height: 30px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+ i {
+ font-size: 20px;
+ color: white;
+ }
+
+ &:hover {
+ transform: scale(1.05);
+ box-shadow: 0 4px 12px rgba(255, 122, 0, 0.4);
+ }
+
+ &:active {
+ transform: scale(0.95);
+ }
+
+}
+
 // Add to queue button (orange +)
 .add-to-queue-btn {
-  background: none;
+  background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%);
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   padding: 8px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   i {
-    font-size: 28px;
-    color: #FF8C00;
+    font-size: 20px;
+    color: white;
     transition: transform 0.15s ease;
   }
 
-  &:hover i {
-    transform: scale(1.1);
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(255, 122, 0, 0.4);
   }
 
-  &:active i {
+  &:active {
     transform: scale(0.95);
   }
 }

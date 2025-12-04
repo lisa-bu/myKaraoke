@@ -23,6 +23,9 @@ class GetRecommendations
       All recommended songs **must currently exist in either the JOYSOUND or DAM karaoke libraries**.
       Do **not** include any of the provided songs.
 
+      All recommended songs must be the **original studio version** by the **original artist**.
+      Do **not** recommend remastered, re-recorded, live, acoustic, demo, remix, cover, soundtrack, musical, tribute, compilation, or Glee-style versions.
+
       OUTPUT FORMAT (follow this exactly):
       - Return **ONLY** a JSON array of 10 objects.
       - Each object must contain exactly:
@@ -54,12 +57,32 @@ class GetRecommendations
             song.image_url = track.album.images.first["url"]
             song.ISRC =  track.external_ids["isrc"]
             song.spotify_id = track.id
-            song.availability = "n/a"
+            song.availability = {}
+        end
+
+        # Assign mock karaoke availability if not already set
+        if !created_song.availability.is_a?(Hash) || created_song.availability.empty?
+          created_song.update!(availability: mock_availability(created_song.id))
         end
 
         songs << created_song
       end
     end
     songs.uniq
+  end
+
+  private
+
+  def mock_availability(song_id)
+    case song_id % 20
+    when 0..6
+      { "dam" => { "available" => true }, "joysound" => { "available" => true } }
+    when 7..12
+      { "dam" => { "available" => true }, "joysound" => { "available" => false } }
+    when 13..18
+      { "dam" => { "available" => false }, "joysound" => { "available" => true } }
+    else
+      { "dam" => { "available" => false }, "joysound" => { "available" => false } }
+    end
   end
 end

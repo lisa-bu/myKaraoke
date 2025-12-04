@@ -4,11 +4,11 @@
     <%= link_to new_playlist_playlist_song_path(@current_playlist),
       class: "card-category card-category-recommend" do %>
       <div class="card-category-title">Recommend</div>
-      <% end %>
+    <% end %>
     <%= link_to playlists_path,
       class: "card-category card-category-playlists" do %>
       <div class="card-category-title">Playlists</div>
-        <% end %>
+    <% end %>
   </div>
   <%# end session button %>
   <div class="stop <%= 'stop-hidden' unless @current_playlist&.playlist_songs&.any? %>">
@@ -17,19 +17,15 @@
           data: { turbo_method: :patch },
           class: "btn btn-info w-100" %>
   </div>
-
-
   <div class="playlist-container head-queue">
-
     <div class="queue-header">
       <h2>Current Karaoke Session</h2>
-        <% if @current_playlist.playlist_songs.any? %>
-          <p>
-            Now Singing your <span><%= @current_playlist.name %></span> playlist
-          </p>
-        <% end %>
+      <% if @current_playlist.playlist_songs.any? %>
+        <p>
+          Now Singing your <span><%= @current_playlist.name %></span> playlist
+        </p>
+      <% end %>
     </div>
-
     <% if @current_playlist.playlist_songs.count > 0 %>
       <div class="song-cards-list song-cards-list--queue">
         <% @current_playlist.playlist_songs.each_with_index do |playlist_song, index| %>
@@ -55,7 +51,11 @@
                    data-action="click->song-text#toggle">
                 <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
                 <div class="song-card-info" data-song-text-target="info">
-                  <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %> - <%= playlist_song.song.name %></span>
+                  <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.name %></span>
+                  <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %></span>
+                  <div class="flex-shrink-0">
+                    <%= karaoke_availability_badges(playlist_song.song) %>
+                  </div>
                 </div>
                 <div class="song-card-play"
                      data-controller="spotify-player"
@@ -87,10 +87,8 @@
           <%= image_tag "JOY.png",class: "img-fluid",style: "height:12px;" %>
           <span class="text-light small">badge on each song to see where it’s available</span>
         </div>
-
-
       </div>
-  <% end %>
+    <% end %>
   </div>
   <div class="mt-4" data-controller="spotify" style="display: flex; justify-content: center;">
     <% unless current_user.spotify_access_token %>

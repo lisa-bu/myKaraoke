@@ -15,8 +15,15 @@
               <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
             <% end %>
             <div class="song-info-card">
-              <span class="song-name"><%= song.name %></span>
-              <span class="song-artist"><%= song.artist %></span>
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="overflow-hidden" style="min-width: 0;">
+                  <span class="song-name d-block"><%= song.name %></span>
+                  <span class="song-artist d-block"><%= song.artist %></span>
+                </div>
+                <div class="flex-shrink-0">
+                  <%= karaoke_availability_badges(song) %>
+                </div>
+              </div>
             </div>
           </div>
         <% end  %>
@@ -34,8 +41,15 @@
               <button type="submit" class="add-button-circle"><span class="plus-icon">+</span> Add to session</button>
             <% end %>
             <div class="song-info-card">
-              <span class="song-name"><%= song.name %></span>
-              <span class="song-artist"><%= song.artist %></span>
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="overflow-hidden" style="min-width: 0;">
+                  <span class="song-name d-block"><%= song.name %></span>
+                  <span class="song-artist d-block"><%= song.artist %></span>
+                </div>
+                <div class="flex-shrink-0">
+                  <%= karaoke_availability_badges(song) %>
+                </div>
+              </div>
             </div>
           </div>
         <% end  %>

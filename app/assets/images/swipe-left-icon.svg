@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 32" fill="none" stroke="url(#swipeGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="swipeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF8C00" />
+      <stop offset="100%" style="stop-color:#FFD700" />
+    </linearGradient>
+  </defs>
+  <!-- Arrow pointing left -->
+  <polyline points="16,8 4,16 16,24"/>
+  <!-- Curved line suggesting swipe motion -->
+  <path d="M12,16 Q30,16 45,16 Q55,16 60,12" />
+</svg>

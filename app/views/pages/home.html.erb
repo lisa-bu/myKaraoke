@@ -43,14 +43,25 @@
               <%= link_to song_lyrics_path(playlist_song.song),
                   data: { turbo_stream: true },
                   class: "song-card-under" do %>
-                <span class="hint-left">tap to view lyrics</span>
-                <span class="hint-right">← swipe to remove song</span>
+                <span class="hint-center">Lyrics</span>
               <% end %>
               <!-- Main card (darker grey) -->
               <div class="song-card" data-song-card-target="card"
                    data-controller="song-text"
                    data-action="click->song-text#toggle">
-                <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
+                <div class="song-card-image-wrapper">
+                  <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
+                  <div class="song-card-play-overlay"
+                       data-controller="spotify-player"
+                       data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
+                    <button data-action="click->spotify-player#togglePlay"
+                      data-spotify-player-target="button"
+                      class="play-pause-btn-overlay">
+                      <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+                    </button>
+                    <div data-spotify-player-target="container" hidden></div>
+                  </div>
+                </div>
                 <div class="song-card-info" data-song-text-target="info">
                   <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.name %></span>
                   <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %></span>
@@ -58,19 +69,10 @@
                     <%= karaoke_availability_badges(playlist_song.song) %>
                   </div>
                 </div>
-                <div class="song-card-play"
-                     data-controller="spotify-player"
-                     data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
-                  <button data-action="click->spotify-player#togglePlay"
-                    data-spotify-player-target="button"
-                    class="play-pause-btn">
-                    <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
-                  </button>
-                  <div data-spotify-player-target="container" hidden></div>
+                <div class="song-card-done">
+                  <%= image_tag "swipe-left-icon.svg", class: "swipe-icon" %>
+                  <span class="done-text">Done!</span>
                 </div>
-                <%# <button class="done-btn" data-action="click->song-card#confirmDelete">
-                  <i class="fa-solid fa-circle-check"></i> %>
-                <%# </button> %>
               </div>
             </div>
           </div>

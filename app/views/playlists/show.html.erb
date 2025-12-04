@@ -52,15 +52,6 @@
                     <% end %>
                     <span class="add-text">Add!</span>
                   </div>
-                  <% if current_user.current_playlist_id.present? %>
-                    <%= button_to playlist_playlist_songs_path(current_user.current_playlist_id),
-                        params: { playlist_song: { song_id: playlist_song.song.id } },
-                        method: :post,
-                        class: "add-to-queue-btn",
-                        data: { turbo: false } do %>
-                      <i class="fa-solid fa-plus"></i>
-                    <% end %>
-                  <% end %>
                 </div>
               </div>
             </div>

@@ -3,7 +3,8 @@ class LyricsController < ApplicationController
 
   def show
     @song = Song.find(params[:song_id])
-    @lyrics = GeniusClient.instance.lyrics_for(@song.name, @song.artist)
+    # Only use hardcoded lyrics - Genius API disabled for demo
+    @lyrics = @song.lyrics
 
     respond_to do |format|
       format.turbo_stream

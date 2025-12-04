@@ -62,7 +62,14 @@ artists = [
   "Kelly Clarkson",
   "TWICE",
   "BTS",
-  "Sam Smith"
+  "Sam Smith",
+  "Britney Spears",
+  "The Killers",
+  "Smash Mouth",
+  "Weezer",
+  "Linkin Park",
+  "Cher",
+  "Tom Petty"
 ]
 
 tracks = artists.map do |artist|
@@ -149,6 +156,127 @@ songs.each_with_index do |song, index|
     { "dam" => { "available" => false }, "joysound" => { "available" => false } }
   end
   song.update!(availability: availability)
+end
+
+# Create crowd-pleaser playlists
+puts "Creating crowd-pleaser playlists..."
+
+CrowdPleaserPlaylistSong.destroy_all
+CrowdPleaserPlaylist.destroy_all
+
+crowd_pleaser_data = {
+  "Party Anthems" => [
+    { name: "Party in the U.S.A.", artist: "Miley Cyrus" },
+    { name: "Wannabe", artist: "Spice Girls" },
+    { name: "I Wanna Dance with Somebody", artist: "Whitney Houston" },
+    { name: "We Found Love", artist: "Rihanna" },
+    { name: "Uptown Funk", artist: "Mark Ronson" },
+    { name: "Blinding Lights", artist: "The Weeknd" },
+    { name: "Hey Ya!", artist: "Outkast" },
+    { name: "Firework", artist: "Katy Perry" },
+    { name: "Tik Tok", artist: "Kesha" },
+    { name: "Can't Stop the Feeling!", artist: "Justin Timberlake" }
+  ],
+  "Power Ballads" => [
+    { name: "I Will Always Love You", artist: "Whitney Houston" },
+    { name: "Total Eclipse of the Heart", artist: "Bonnie Tyler" },
+    { name: "My Heart Will Go On", artist: "Celine Dion" },
+    { name: "I Don't Want to Miss a Thing", artist: "Aerosmith" },
+    { name: "Nothing Compares 2 U", artist: "Sinead O'Connor" },
+    { name: "All By Myself", artist: "Celine Dion" },
+    { name: "Purple Rain", artist: "Prince" },
+    { name: "Against All Odds", artist: "Phil Collins" },
+    { name: "Careless Whisper", artist: "George Michael" },
+    { name: "Hero", artist: "Mariah Carey" }
+  ],
+  "90s Hits" => [
+    { name: "Baby One More Time", artist: "Britney Spears" },
+    { name: "I Want It That Way", artist: "Backstreet Boys" },
+    { name: "No Scrubs", artist: "TLC" },
+    { name: "Waterfalls", artist: "TLC" },
+    { name: "Creep", artist: "TLC" },
+    { name: "MMMBop", artist: "Hanson" },
+    { name: "Torn", artist: "Natalie Imbruglia" },
+    { name: "Iris", artist: "Goo Goo Dolls" },
+    { name: "Wonderwall", artist: "Oasis" },
+    { name: "Smells Like Teen Spirit", artist: "Nirvana" }
+  ],
+  "Golden Hits" => [
+    { name: "Hey Jude", artist: "The Beatles" },
+    { name: "Let It Be", artist: "The Beatles" },
+    { name: "Stand by Me", artist: "Ben E. King" },
+    { name: "My Girl", artist: "The Temptations" },
+    { name: "(You Make Me Feel Like) A Natural Woman", artist: "Aretha Franklin" },
+    { name: "I Heard It Through the Grapevine", artist: "Marvin Gaye" },
+    { name: "Can't Help Falling in Love", artist: "Elvis Presley" },
+    { name: "Twist and Shout", artist: "The Beatles" },
+    { name: "Respect", artist: "Aretha Franklin" },
+    { name: "What a Wonderful World", artist: "Louis Armstrong" }
+  ],
+  "Alternative" => [
+    { name: "Smells Like Teen Spirit", artist: "Nirvana" },
+    { name: "Mr. Brightside", artist: "The Killers" },
+    { name: "Seven Nation Army", artist: "The White Stripes" },
+    { name: "Creep", artist: "Radiohead" },
+    { name: "Zombie", artist: "The Cranberries" },
+    { name: "Don't Look Back in Anger", artist: "Oasis" },
+    { name: "Sugar, We're Goin Down", artist: "Fall Out Boy" },
+    { name: "Welcome to the Black Parade", artist: "My Chemical Romance" },
+    { name: "Californication", artist: "Red Hot Chili Peppers" },
+    { name: "In the End", artist: "Linkin Park" }
+  ],
+  "Hip-Hop" => [
+    { name: "Hotline Bling", artist: "Drake" },
+    { name: "Yeah!", artist: "Usher" },
+    { name: "Empire State of Mind", artist: "Jay-Z" },
+    { name: "No Scrubs", artist: "TLC" },
+    { name: "Crazy in Love", artist: "Beyoncé" },
+    { name: "Super Bass", artist: "Nicki Minaj" },
+    { name: "Lose Yourself", artist: "Eminem" },
+    { name: "Gold Digger", artist: "Kanye West" },
+    { name: "Say My Name", artist: "Destiny's Child" },
+    { name: "Kiss Me More", artist: "Doja Cat" }
+  ]
+}
+
+crowd_pleaser_data.each do |playlist_name, songs_data|
+  playlist = CrowdPleaserPlaylist.create!(
+    name: playlist_name,
+    description: "A collection of #{playlist_name.downcase}"
+  )
+
+  songs_data.each_with_index do |song_data, index|
+    # Search for the song via Spotify
+    tracks = SpotifyClient.instance.search_tracks("#{song_data[:name]} #{song_data[:artist]}")
+    track = tracks.first
+
+    if track
+      song = Song.find_or_create_by!(ISRC: track.external_ids["isrc"]) do |s|
+        s.name = track.name
+        s.artist = track.artists.first.name
+        s.difficulty_average = 0.0
+        s.image_url = track.album.images.first["url"]
+        s.spotify_id = track.id
+        s.availability = { "dam" => { "available" => true }, "joysound" => { "available" => true } }
+      end
+
+      # Ensure crowd pleaser songs are available on both DAM and JOYSOUND
+      unless song.availability.dig("dam", "available") && song.availability.dig("joysound", "available")
+        song.update!(availability: { "dam" => { "available" => true }, "joysound" => { "available" => true } })
+      end
+
+      CrowdPleaserPlaylistSong.create!(
+        crowd_pleaser_playlist: playlist,
+        song: song,
+        position: index + 1
+      )
+      puts "  Added: #{song.name} - #{song.artist}"
+    else
+      puts "  Could not find: #{song_data[:name]} by #{song_data[:artist]}"
+    end
+  end
+
+  puts "Created playlist: #{playlist_name} with #{playlist.songs.count} songs"
 end
 
 puts "Finished!"

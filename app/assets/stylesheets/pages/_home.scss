@@ -356,7 +356,7 @@
 }
 
 .empty-session-icon {
-  width: 50px;
+  width: 70px;
   opacity: 0.4;
   margin-bottom: 1rem;
 }
@@ -380,4 +380,52 @@
 }
 .stop {
   transition: opacity 0.25s ease;
+}
+
+// icon dam & joy at home
+
+.badges-copy {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.badges-or {
+  margin: 0 4px;
+  font-size: 0.7rem;
+}
+
+// .badge-icon {
+//   height: 12px;
+//   margin: 0 2px;
+//   opacity: 0.55;
+//   filter: grayscale(100%) brightness(.9);
+//    vertical-align: middle;
+// }
+
+.badge-icon-home[src*="DAM"] {
+  height: 12px;
+  margin: 0 2px;
+  opacity: 0.75;
+
+  filter:
+    brightness(1.05)
+    saturate(0.8)
+    contrast(0.9);
+}
+
+.badge-icon-home[src*="JOY"] {
+  height: 12px;
+  margin: 0 2px;
+  opacity: 0.75;
+
+  filter:
+    grayscale(30%)
+    saturate(85%)
+    brightness(1.2)
+    sepia(40%)
+    hue-rotate(-20deg);
+}
+
+.badge-icon-home {
+  vertical-align: middle;
 }

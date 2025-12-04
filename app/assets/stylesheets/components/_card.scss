@@ -1,81 +1,110 @@
 .card-category {
   position: relative;
   text-decoration: none;
-  height: 150px;
+  height: 120px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 16px;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background-size: cover;
-  background-position: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
   color: #fff;
 
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.4px;
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 
   overflow: hidden;
   transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+    color: #fff;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
-// dark soft overlay
-.card-category::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.65),
-    rgba(0,0,0,0.15)
-  );
-  z-index: 0;
-}
-
-// glow light layer
-.card-category::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 70%);
-  z-index: 0;
-}
-
-.card-category > * {
+.card-category-title {
   position: relative;
   z-index: 1;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
+// Decorative icon element
+.card-category-icon {
+  position: absolute;
+  right: -10px;
+  bottom: -15px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.3;
+  transform: rotate(15deg);
+  z-index: 0;
 
+  i {
+    font-size: 90px;
+    color: #fff;
+  }
+}
+
+// "Get Inspired" card - warm orange/coral gradient
 .card-category-recommend {
-  background-image:
-    url("https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=2069&auto=format&fit=crop");
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: rotate(15deg);
+  }
+
+  &::after {
+    content: "✨";
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    font-size: 50px;
+    opacity: 0.4;
+    transform: rotate(15deg);
+  }
 }
 
+// "Your Playlists" card - cool blue/purple gradient
 .card-category-playlists {
-  background-image:
-    url("https://images.unsplash.com/photo-1616356607338-fd87169ecf1a?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGxheWxpc3R8ZW58MHx8MHx8fDI%3D");
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: rotate(15deg);
+  }
+
+  &::after {
+    content: "🎵";
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    font-size: 50px;
+    opacity: 0.4;
+    transform: rotate(15deg);
+  }
 }
-
-
-
-
-// .card-category--danger {
-//   background-image: linear-gradient(
-//       rgba(0,0,0,0.45),
-//       rgba(0,0,0,0.45)
-//     ),
-//     url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
-// }
-
-// .card-category--stop {
-//   background-image: linear-gradient(
-//       rgba(0,0,0,0.45),
-//       rgba(0,0,0,0.45)
-//     ),
-//     url("https://images.unsplash.com/photo-1518972559570-7cc1309f3229");
-// }

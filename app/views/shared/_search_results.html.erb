@@ -8,28 +8,39 @@
           <%= link_to song_lyrics_path(song),
               data: { turbo_stream: true },
               class: "song-card-under" do %>
-            <span class="hint-left">tap to view lyrics</span>
-            <span class="hint-right">tap + to add to karaoke session</span>
+            <span class="hint-center">Lyrics</span>
           <% end %>
           <!-- Main card (darker grey) -->
           <div class="song-card"
                data-controller="song-text"
                data-action="click->song-text#toggle">
-            <%= image_tag song.image_url, class: "song-card-image" %>
+            <div class="song-card-image-wrapper">
+              <%= image_tag song.image_url, class: "song-card-image" %>
+              <div class="song-card-play-overlay"
+                   data-controller="spotify-player"
+                   data-spotify-player-uri-value="spotify:track:<%= song.spotify_id %>">
+                <button data-action="click->spotify-player#togglePlay"
+                  data-spotify-player-target="button"
+                  class="play-pause-btn-overlay">
+                  <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+                </button>
+                <div data-spotify-player-target="container" hidden></div>
+              </div>
+            </div>
             <div class="song-card-info" data-song-text-target="info">
               <span class="song-card-text" data-song-text-target="text"><%= song.name %></span>
               <span class="song-card-text" data-song-text-target="text"><%= song.artist %></span>
               <%= karaoke_availability_badges(song) %>
             </div>
-            <div class="song-card-play"
-                 data-controller="spotify-player"
-                 data-spotify-player-uri-value="spotify:track:<%= song.spotify_id %>">
-              <button data-action="click->spotify-player#togglePlay"
-                data-spotify-player-target="button"
-                class="play-pause-btn">
-                <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
-              </button>
-              <div data-spotify-player-target="container" hidden></div>
+            <div class="song-card-add">
+              <%= button_to playlist_playlist_songs_path(current_user.current_playlist_id),
+                  params: { playlist_song: { song_id: song.id } },
+                  method: :post,
+                  class: "add-to-queue-btn",
+                  data: { turbo: false } do %>
+                <i class="fa-solid fa-plus"></i>
+              <% end %>
+              <span class="add-text">Add!</span>
             </div>
             <% if current_user.current_playlist_id.present? %>
               <%= button_to playlist_playlist_songs_path(current_user.current_playlist_id),

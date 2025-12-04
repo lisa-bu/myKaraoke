@@ -9,6 +9,8 @@ class Song < ApplicationRecord
 
   has_many :playlist_songs, dependent: :destroy
   has_many :playlists, through: :playlist_songs
+  has_many :crowd_pleaser_playlist_songs, dependent: :destroy
+  has_many :crowd_pleaser_playlists, through: :crowd_pleaser_playlist_songs
   has_many :difficulty_ratings, dependent: :destroy
 
   validates :name, presence: true

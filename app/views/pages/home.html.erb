@@ -1,28 +1,22 @@
 <div class="container">
+  <h3 class="text-center fw-semibold fs-5 text-warning mb-2">Add songs to your session!</h3>
   <%= render "shared/search", playlist: @current_playlist %>
-  <div class="stop mb-0">
+  <div class="stop mb-3">
     <%= link_to new_playlist_playlist_song_path(@current_playlist),
       class: "card-category card-category-recommend" do %>
-      <div class="card-category-title">Recommend</div>
-    <% end %>
+      <div class="card-category-title">Get Inspired</div>
+      <% end %>
     <%= link_to playlists_path,
       class: "card-category card-category-playlists" do %>
-      <div class="card-category-title">Playlists</div>
-    <% end %>
-  </div>
-  <%# end session button %>
-  <div class="stop <%= 'stop-hidden' unless @current_playlist&.playlist_songs&.any? %>">
-    <%= link_to "End Session",
-          stop_singing_user_path(current_user),
-          data: { turbo_method: :patch },
-          class: "btn btn-info w-100" %>
+      <div class="card-category-title">Your Playlists</div>
+        <% end %>
   </div>
   <div class="playlist-container head-queue">
     <div class="queue-header">
-      <h2>Current Karaoke Session</h2>
+      <h2>Current karaoke session</h2>
       <% if @current_playlist.playlist_songs.any? %>
         <p>
-          Now Singing your <span><%= @current_playlist.name %></span> playlist
+          Now singing your <span><%= @current_playlist.name %></span> playlist
         </p>
       <% end %>
     </div>
@@ -42,14 +36,25 @@
               <%= link_to song_lyrics_path(playlist_song.song),
                   data: { turbo_stream: true },
                   class: "song-card-under" do %>
-                <span class="hint-left">tap to view lyrics</span>
-                <span class="hint-right">← swipe to remove song</span>
+                <span class="hint-center">Lyrics</span>
               <% end %>
               <!-- Main card (darker grey) -->
               <div class="song-card" data-song-card-target="card"
                    data-controller="song-text"
                    data-action="click->song-text#toggle">
-                <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
+                <div class="song-card-image-wrapper">
+                  <%= image_tag playlist_song.song.image_url, class: "song-card-image" %>
+                  <div class="song-card-play-overlay"
+                       data-controller="spotify-player"
+                       data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
+                    <button data-action="click->spotify-player#togglePlay"
+                      data-spotify-player-target="button"
+                      class="play-pause-btn-overlay">
+                      <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
+                    </button>
+                    <div data-spotify-player-target="container" hidden></div>
+                  </div>
+                </div>
                 <div class="song-card-info" data-song-text-target="info">
                   <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.name %></span>
                   <span class="song-card-text" data-song-text-target="text"><%= playlist_song.song.artist %></span>
@@ -57,39 +62,37 @@
                     <%= karaoke_availability_badges(playlist_song.song) %>
                   </div>
                 </div>
-                <div class="song-card-play"
-                     data-controller="spotify-player"
-                     data-spotify-player-uri-value="spotify:track:<%= playlist_song.song.spotify_id %>">
-                  <button data-action="click->spotify-player#togglePlay"
-                    data-spotify-player-target="button"
-                    class="play-pause-btn">
-                    <i class="fa-solid fa-play" data-spotify-player-target="icon"></i>
-                  </button>
-                  <div data-spotify-player-target="container" hidden></div>
+                <div class="song-card-done">
+                  <%= image_tag "swipe-left-icon.svg", class: "swipe-icon" %>
+                  <span class="done-text">Done!</span>
                 </div>
-                <%# <button class="done-btn" data-action="click->song-card#confirmDelete">
-                  <i class="fa-solid fa-circle-check"></i> %>
-                <%# </button> %>
               </div>
             </div>
           </div>
         <% end %>
+        <%# end session button - appears after last song %>
+        <div class="song-card-wrapper end-session-wrapper">
+          <%= link_to "End Session",
+                stop_singing_user_path(current_user),
+                data: { turbo_method: :patch },
+                class: "btn btn-secondary w-100" %>
+        </div>
       </div>
     <% else %>
       <div class="current-session d-flex justify-content-center align-items-center">
         <div class="empty-session text-center ">
           <%= image_tag "reshot-icon-note-white.svg", class: "empty-session-icon mb-3" %>
 
-          <h3 class="mb-2">Add songs to your Session</h3>
-          <p class="mb-1">Your karaoke session is empty</p>
-          <p class="mb-3">Search for your first song at the top</p>
+          <%# <h3 class="mb-2">Add songs to your Session</h3> %>
+          <p class="mb-1">Your karaoke session is empty...</p>
+          <p class="mb-3">Find for your next song at the top!</p>
 
           <p class="badges-copy mb-0">
-            Look for the
-            <%= image_tag "DAM.png", class: "badge-icon", style: "height:20px;" %>
+            See if your song is available at
+            <%= image_tag "DAM.png", class: "badge-icon-home", style: "height:20px;" %>
             <span class="badges-or">or</span>
-            <%= image_tag "JOY.png", class: "badge-icon", style: "height:20px;" %>
-            badge on each song to see where it’s available.
+            <%= image_tag "JOY.png", class: "badge-icon-home", style: "height:20px;" %>
+
           </p>
         </div>
       </div>

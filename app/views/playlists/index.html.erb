@@ -3,19 +3,23 @@
     <!-- Sticky header section -->
     <div class="playlists-header">
       <%= render "shared/search", playlist: nil %>
-      <div class="playlists-buttons d-flex flex-column align-items-center gap-3 mb-3 px-3">
-        <button type="button" class="btn px-4 py-2 text-white fw-semibold w-100" style="background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); max-width: 280px;" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
-          <i class="fa-solid fa-plus me-2"></i>Make a new playlist!
-        </button>
-        <% if current_user.spotify_access_token %>
-          <%= button_to import_spotify_playlists_playlists_path, method: :post, class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;", form: { style: "display: contents;" } do %>
-            <i class="fa-brands fa-spotify me-2"></i>Import Spotify Playlists
+      <div class="playlists-buttons row g-2 mb-3 px-3">
+        <div class="col-6">
+          <button type="button" class="btn w-100 py-2 text-white fw-semibold" style="background: linear-gradient(135deg, #FF7A00 0%, #FFB347 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); font-size: 0.8rem;" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
+            <i class="fa-solid fa-plus me-1"></i>New Playlist
+          </button>
+        </div>
+        <div class="col-6">
+          <% if current_user.spotify_access_token %>
+            <%= button_to import_spotify_playlists_playlists_path, method: :post, class: "btn w-100 py-2 text-white fw-semibold", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); font-size: 0.8rem;", form: { style: "display: contents;" } do %>
+              <i class="fa-brands fa-spotify me-1"></i>Import Spotify
+            <% end %>
+          <% else %>
+            <%= link_to "/auth/spotify", class: "btn w-100 py-2 text-white fw-semibold", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); font-size: 0.8rem;" do %>
+              <i class="fa-brands fa-spotify me-1"></i>Connect Spotify
+            <% end %>
           <% end %>
-        <% else %>
-          <%= link_to "/auth/spotify", class: "btn px-4 py-2 text-white fw-semibold w-100", style: "background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%); border-radius: 999px; border: none; box-shadow: 0 4px 14px rgba(29, 185, 84, 0.35); max-width: 280px;" do %>
-            <i class="fa-brands fa-spotify me-2"></i>Connect Spotify to Import
-          <% end %>
-        <% end %>
+        </div>
       </div>
     </div>
     <!-- Scrollable playlists section -->
